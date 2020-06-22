@@ -1,8 +1,9 @@
-import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { GlobalConfigReader, GlobalConfig } from "./GlobalConfigReader";
-import { Message } from "view-design";
-import store from "@/store";
 import router from "@/router";
+import store from "@/store";
+import Axios, { AxiosInstance, AxiosResponse } from "axios";
+import { Message } from "view-design";
+import { GlobalConfigReader } from "./GlobalConfigReader";
+import GlobalConfig from "@/model/common/GlobalConfig";
 
 /**
  * Ajax请求工具工厂类，通过getRequestInstance方法获取request实例，request对象封装了向后端服务发送请求的方法
@@ -10,7 +11,6 @@ import router from "@/router";
  */
 export default class RequestFactory {
   private static request: AxiosInstance | undefined;
-  private static message: Message = new Message();
   /**
    * 获取request实例
    * @returns request的单例
@@ -30,7 +30,7 @@ export default class RequestFactory {
       RequestFactory.request.interceptors.request.use(
         (config: any) => {
           // 验证token，有则进行url添加token，然后发送请求
-          const token: string = store.getters("getToken");
+          const token: string = store.getters.getToken;
           if (token) {
             // 这里是url只能有一个？号，如果url已有问号，则拼接为&
             let end = `__sid=${token}`;
@@ -77,7 +77,7 @@ export default class RequestFactory {
             response.data.isValidCodeLogin != undefined &&
             !response.data.isValidCodeLogin
           ) {
-            RequestFactory.message.warning(
+            Message.prototype.warning(
               response.data.message ? response.data.message : "登录失败"
             );
             router.push("/login");
@@ -86,7 +86,7 @@ export default class RequestFactory {
           // if (resp.code !== 2000 || !resp.flag) {
           if (resp.data.result != undefined && resp.data.result !== "true") {
             // console.log("res.code !== 2000");
-            RequestFactory.message.warning(
+            Message.prototype.warning(
               resp.data.message ? resp.data.message : "系统异常"
             );
             return Promise.reject(response);
@@ -98,10 +98,10 @@ export default class RequestFactory {
           // 异常处理
           const resp = error.response;
           if (!resp) {
-            RequestFactory.message.error("暂时连不上服务器，请与管理员联系");
+            Message.prototype.error("暂时连不上服务器，请与管理员联系");
             return Promise.reject(error);
           }
-          RequestFactory.message.error(
+          Message.prototype.error(
             resp.data && resp.data.message
               ? resp.data.message
               : `系统异常，错误码为：${resp.status}`
@@ -125,5 +125,12 @@ export default class RequestFactory {
     }
     // 不能使用反向代理的生产环境直接读取后端服务地址
     return globalConfig.serverURL;
+  }
+
+  /**
+   * 清空request实例
+   */
+  static clearRequest(): void {
+    RequestFactory.request = undefined;
   }
 }

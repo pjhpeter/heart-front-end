@@ -1,5 +1,6 @@
-import { GlobalConfigReader, GlobalConfig } from "@/utils/GlobalConfigReader";
+import { GlobalConfigReader } from "@/utils/GlobalConfigReader";
 import { LocalStorageKeys } from "@/constants/LocalStorageKeys";
+import GlobalConfig from "@/model/common/GlobalConfig";
 
 /**
  * GlobalConfigReader单元测试
@@ -36,5 +37,9 @@ describe("GlobalConfigReader", () => {
       "127.0.0.1"
     );
     expect(globalConfig).toEqual(globalConfigExpect);
+  });
+
+  afterEach(() => {
+    localStorage.clear();
   });
 });

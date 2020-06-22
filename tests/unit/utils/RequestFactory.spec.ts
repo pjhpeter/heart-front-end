@@ -4,6 +4,7 @@ import { LocalStorageKeys } from "@/constants/LocalStorageKeys";
 
 afterEach(() => {
   localStorage.clear();
+  RequestFactory.clearRequest();
 });
 
 /*
@@ -51,5 +52,17 @@ describe("测试getRequestInstance方法", () => {
       baseURL: "/dev-api",
       timeout: 5000
     });
+  });
+});
+
+describe("测试发请求", () => {
+  it("测试请求拦截器", async () => {
+    const request: AxiosInstance = RequestFactory.getRequestInstance();
+    const response = await request({
+      // 测试环境下不知道怎么使用vue.config.js配置的请求代理，只能自己拼接url
+      url: `${process.env.VUE_APP_BASE_URL}/authInfo`,
+      method: "get"
+    });
+    expect(response.data.result).toBe("true");
   });
 });

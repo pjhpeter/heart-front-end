@@ -1,18 +1,6 @@
 import { plainToClassFromExist } from "class-transformer";
 import { LocalStorageKeys } from "@/constants/LocalStorageKeys";
-
-/**
- * 配置项映射类
- */
-export class GlobalConfig {
-  reverseProxy!: boolean;
-  serverURL!: string;
-
-  constructor(reverseProxy = true, serverURL = "") {
-    this.reverseProxy = reverseProxy;
-    this.serverURL = serverURL;
-  }
-}
+import GlobalConfig from "@/model/common/GlobalConfig";
 
 /**
  * 全局配置项读取器
@@ -21,6 +9,7 @@ export class GlobalConfig {
 export class GlobalConfigReader {
   /**
    * 读取全局配置文件，考虑到需要热加载配置项，这里不做单例处理
+   * @returns 全局配置对象
    */
   static readGlobalConfig(): GlobalConfig {
     // 读取全局配置
