@@ -18,7 +18,7 @@ export const getters: GetterTree<UserState, RootState> = {
    * @param state 用户模块状态对象
    * @returns 用户信息
    */
-  getUserInfo(state: UserState): UserInfo | null {
+  getUser(state: UserState): UserInfo | null {
     return state.user;
   }
 };

@@ -1,6 +1,6 @@
 import router from "@/router";
 import store from "@/store";
-import Axios, { AxiosInstance, AxiosResponse } from "axios";
+import Axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 import { Message } from "view-design";
 import { GlobalConfigReader } from "./GlobalConfigReader";
 import GlobalConfig from "@/model/common/GlobalConfig";
@@ -28,27 +28,29 @@ export default class RequestFactory {
 
       // 请求拦截器，----这种按照自己的业务来旧习惯
       RequestFactory.request.interceptors.request.use(
-        (config: any) => {
-          // 验证token，有则进行url添加token，然后发送请求
-          const token: string = store.getters.getToken;
-          if (token) {
-            // 这里是url只能有一个？号，如果url已有问号，则拼接为&
-            let end = `__sid=${token}`;
-            if (config.url.indexOf("?") > -1) {
-              end = `&${end}`;
-              config.url += end;
-            } else {
-              end = `?${end}`;
-              config.url += end;
-            }
-          } else if (config.url.indexOf("/login") > -1) {
-            let end = "__sid=";
-            if (config.url.indexOf("?") > -1) {
-              end = `&${end}`;
-              config.url += end;
-            } else {
-              end = `?${end}`;
-              config.url += end;
+        (config: AxiosRequestConfig) => {
+          if (config && config.url) {
+            // 验证token，有则进行url添加token，然后发送请求
+            const token: string = store.getters.getToken;
+            if (token) {
+              // 这里是url只能有一个？号，如果url已有问号，则拼接为&
+              let end = `__sid=${token}`;
+              if (config.url.indexOf("?") > -1) {
+                end = `&${end}`;
+                config.url += end;
+              } else {
+                end = `?${end}`;
+                config.url += end;
+              }
+            } else if (config.url.indexOf("/login") > -1) {
+              let end = "__sid=";
+              if (config.url.indexOf("?") > -1) {
+                end = `&${end}`;
+                config.url += end;
+              } else {
+                end = `?${end}`;
+                config.url += end;
+              }
             }
           }
           return config;
@@ -65,7 +67,6 @@ export default class RequestFactory {
           // 所以一般都需要自定义返回码规则
           // 统一异常处理
           // 判断会话是否过期，如果过期返回登录页
-          // console.log("request.js ", response);
           if (response.data.result === "login") {
             // 清理本地的用户信息
             // 进行登出的function(){}。。。
@@ -83,9 +84,7 @@ export default class RequestFactory {
             router.push("/login");
           }
           const resp = response;
-          // if (resp.code !== 2000 || !resp.flag) {
           if (resp.data.result != undefined && resp.data.result !== "true") {
-            // console.log("res.code !== 2000");
             Message.prototype.warning(
               resp.data.message ? resp.data.message : "系统异常"
             );
