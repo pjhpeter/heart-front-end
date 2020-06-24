@@ -1,5 +1,5 @@
-import { Menu } from "view-design";
 import VueRouter from "vue-router";
+import { Menu } from "@/model/menu/Menu";
 
 /**
  * 菜单状态信息接口

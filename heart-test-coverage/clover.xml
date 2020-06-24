@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1592926537660" clover="3.2.0">
-  <project timestamp="1592926537660" name="All files">
-    <metrics statements="121" coveredstatements="94" conditionals="46" coveredconditionals="25" methods="26" coveredmethods="18" elements="193" coveredelements="137" complexity="0" loc="121" ncloc="121" packages="7" files="14" classes="14"/>
+<coverage generated="1592992260605" clover="3.2.0">
+  <project timestamp="1592992260605" name="All files">
+    <metrics statements="124" coveredstatements="99" conditionals="46" coveredconditionals="25" methods="28" coveredmethods="22" elements="198" coveredelements="146" complexity="0" loc="124" ncloc="124" packages="7" files="15" classes="15"/>
     <package name="constants">
       <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="LocalStorageKeys.ts" path="D:\work\workspace-ts-study\heart-front-end\src\constants\LocalStorageKeys.ts">
@@ -46,10 +46,16 @@
       </file>
     </package>
     <package name="store.modules.menu">
-      <metrics statements="9" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
       <file name="actions.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\modules\menu\actions.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
+      </file>
+      <file name="getters.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\modules\menu\getters.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
       </file>
       <file name="index.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\modules\menu\index.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -60,10 +66,10 @@
         <line num="14" count="1" type="stmt"/>
       </file>
       <file name="mutations.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\modules\menu\mutations.ts">
-        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
       </file>
     </package>
     <package name="store.modules.user">

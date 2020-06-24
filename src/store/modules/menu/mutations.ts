@@ -1,7 +1,7 @@
 import { MutationTree } from "vuex";
 import { MenuState } from "./types";
-import { Menu } from "view-design";
 import VueRouter from "vue-router";
+import { Menu } from "@/model/menu/Menu";
 
 export const mutations: MutationTree<MenuState> = {
   /**
