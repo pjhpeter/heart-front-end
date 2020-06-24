@@ -1,7 +1,7 @@
 import router from "@/router";
 import store from "@/store";
 import Axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
-import { Message } from "view-design";
+// import { Message } from "view-design";
 import { GlobalConfigReader } from "./GlobalConfigReader";
 import GlobalConfig from "@/model/common/GlobalConfig";
 
@@ -73,21 +73,21 @@ export default class RequestFactory {
             store.dispatch("doRemoveUser");
             router.push("/login");
           }
-          // debugger;
           if (
             response.data.isValidCodeLogin != undefined &&
             !response.data.isValidCodeLogin
           ) {
-            Message.prototype.warning(
-              response.data.message ? response.data.message : "登录失败"
-            );
+            // TODO:还不知道怎么直接调用消息框
+            // Message.prototype.warning(
+            //   response.data.message ? response.data.message : "登录失败"
+            // );
             router.push("/login");
           }
           const resp = response;
           if (resp.data.result != undefined && resp.data.result !== "true") {
-            Message.prototype.warning(
-              resp.data.message ? resp.data.message : "系统异常"
-            );
+            // Message.prototype.warning(
+            //   resp.data.message ? resp.data.message : "系统异常"
+            // );
             return Promise.reject(response);
           }
           return response;
@@ -97,14 +97,14 @@ export default class RequestFactory {
           // 异常处理
           const resp = error.response;
           if (!resp) {
-            Message.prototype.error("暂时连不上服务器，请与管理员联系");
+            // Message.prototype.error("暂时连不上服务器，请与管理员联系");
             return Promise.reject(error);
           }
-          Message.prototype.error(
-            resp.data && resp.data.message
-              ? resp.data.message
-              : `系统异常，错误码为：${resp.status}`
-          );
+          // Message.prototype.error(
+          //   resp.data && resp.data.message
+          //     ? resp.data.message
+          //     : `系统异常，错误码为：${resp.status}`
+          // );
           return Promise.reject(error);
         }
       );

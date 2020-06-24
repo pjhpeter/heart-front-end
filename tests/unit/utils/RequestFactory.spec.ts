@@ -1,6 +1,6 @@
 import RequestFactory from "@/utils/RequestFactory";
 import { AxiosInstance } from "axios";
-import { LocalStorageKeys } from "@/constants/LocalStorageKeys";
+import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
 
 afterEach(() => {
   localStorage.clear();

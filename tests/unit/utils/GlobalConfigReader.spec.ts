@@ -1,5 +1,5 @@
 import { GlobalConfigReader } from "@/utils/GlobalConfigReader";
-import { LocalStorageKeys } from "@/constants/LocalStorageKeys";
+import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
 import GlobalConfig from "@/model/common/GlobalConfig";
 
 /**

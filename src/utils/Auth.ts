@@ -1,4 +1,4 @@
-import { LocalStorageKeys } from "@/constants/LocalStorageKeys";
+import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
 import { UserInfo } from "@/model/user/UserInfo";
 
 /**

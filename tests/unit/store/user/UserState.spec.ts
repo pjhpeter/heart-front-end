@@ -1,6 +1,6 @@
 import { mutations } from "@/store/modules/user/mutations";
 import { getters } from "@/store/modules/user/getters";
-import { LocalStorageKeys } from "@/constants/LocalStorageKeys";
+import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
 import { UserState } from "@/store/modules/user/types";
 import { UserInfo } from "@/model/user/UserInfo";
 
