@@ -1,4 +1,4 @@
-import Request from "@/decorator/request/Get";
+import Request from "@/decorator/request/Request";
 import { RequestMethod } from "@/constants/enum/RequestMethod";
 
 // 伪造一个函数
@@ -13,6 +13,8 @@ class Test {
     failure
   )
   getData(data?: any): void {
+    this.result = data.result;
+    this.result = data.result;
     this.result = data.result;
   }
 }
