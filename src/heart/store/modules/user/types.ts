@@ -1,4 +1,4 @@
-import { UserInfo } from "@/model/user/UserInfo";
+import UserInfo from "@/heart/model/user/UserInfo";
 
 /**
  * 用户状态信息

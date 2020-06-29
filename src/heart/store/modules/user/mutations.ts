@@ -1,6 +1,6 @@
 import { MutationTree } from "vuex";
 import { UserState } from "./types";
-import { UserInfo } from "@/heart/model/user/UserInfo";
+import UserInfo from "@/heart/model/user/UserInfo";
 import Auth from "@/heart/utils/Auth";
 
 export const mutations: MutationTree<UserState> = {

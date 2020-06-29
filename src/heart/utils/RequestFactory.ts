@@ -17,8 +17,16 @@ export default class RequestFactory {
    */
   static getRequestInstance(): AxiosInstance {
     if (!RequestFactory.request) {
+      let baseURL: string;
+      // 判断是否测试环境
+      if (process.env.NODE_ENV === "test") {
+        // 如果是测试环境，直接设置baseURL为mock的url
+        baseURL = process.env.VUE_APP_BASE_URL;
+      } else {
+        baseURL = RequestFactory.buildBaseURL();
+      }
       RequestFactory.request = Axios.create({
-        baseURL: RequestFactory.buildBaseURL(),
+        baseURL,
         timeout: 5000
         // 如果用Authorization头来传token的话可以参考下面方式写
         // headers: {

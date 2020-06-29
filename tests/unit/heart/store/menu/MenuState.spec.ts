@@ -1,7 +1,7 @@
 import { mutations } from "@/heart/store/modules/menu/mutations";
 import { getters } from "@/heart/store/modules/menu/getters";
 import { MenuState } from "@/heart/store/modules/menu/types";
-import { Menu } from "@/heart/model/menu/Menu";
+import Menu from "@/heart/model/menu/Menu";
 import VueRouter from "vue-router";
 import { createLocalVue } from "@vue/test-utils";
 import { VueConstructor } from "vue/types/umd";

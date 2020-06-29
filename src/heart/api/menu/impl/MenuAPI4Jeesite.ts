@@ -1,0 +1,76 @@
+import MenuAPI from "../MenuAPI";
+import Menu from "@/heart/model/menu/Menu";
+import Request from "@/heart/decorator/request/Request";
+import { RequestMethod } from "@/heart/constants/enum/RequestMethod";
+import store from "@/heart/store";
+
+/**
+ * 针对Jeesite的菜单数据解析
+ * @author 彭嘉辉
+ */
+export default class MenuAPI4Jeesite implements MenuAPI {
+  /**
+   * 生成菜单树
+   * @param data 响应的数据，调用方法时不必传入
+   */
+  @Request("/menuTree.json", RequestMethod.GET, (error: any) => false)
+  fetchMenuTree(data?: any): boolean {
+    try {
+      const menuTree: Array<Menu> = [];
+      this.parseMenuData(data, menuTree);
+      store.commit("menu/setMenuTree", menuTree);
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  }
+
+  /**
+   * 专门处理Jeesite响应数据不规范的问题多写的方法，无语....
+   * @param menuData 后端响应的菜单JSON数据
+   * @param menuTree 前端需要的菜单对象数组
+   * @param parent 上级菜单对象
+   */
+  private parseMenuData(menuData: any, menuTree: Array<Menu>, parent?: Menu) {
+    if (menuData._root_) {
+      this.doParse(menuData._root_, menuTree, parent);
+    } else {
+      this.doParse(menuData, menuTree, parent);
+    }
+  }
+
+  /**
+   * 解析后端响应的菜单JSON数据
+   * @param menuData 后端响应的菜单JSON数据
+   * @param menuTree 前端需要的菜单对象数组
+   * @param parent 上级菜单对象
+   */
+  private doParse(menuData: any, menuTree: Array<Menu>, parent?: Menu) {
+    menuData.forEach((menu: any) => {
+      if (!menu.childList && !menu.menuUrl) return;
+      // 把多余的url去掉部分
+      const menuUrl = menu.menuUrl.substr(menu.menuUrl.indexOf("/a/") + 2);
+      // 生成菜单对象
+      const menuItem: Menu = {
+        menuCode: menu.menuCode,
+        menuIcon: menu.menuIcon,
+        menuName: menu.menuName,
+        menuUrl: menuUrl && !menu.childList ? menuUrl : Math.random() + "",
+        parent
+      };
+
+      // 如果有子菜单则继续递归解析
+      if (menu.childList) {
+        const children: Array<Menu> = [];
+        this.doParse(menu.childList, children, menuItem);
+        if (children.length > 0) {
+          menuItem.children = children;
+        }
+      }
+
+      // 生成菜单树
+      menuTree.push(menuItem);
+    });
+  }
+}

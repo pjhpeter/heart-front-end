@@ -11,16 +11,20 @@ import { AxiosInstance, AxiosResponse } from "axios";
  *
  * class Example {
  *  // 暂时不知道怎么转义@，@前面的\是为了保持格式，真正代码是没有的
- *  \@Request(this, "/test", RequestMethod.GET, (error) = {
+ *  \@Request(this, "/test", RequestMethod.GET, (error: any) = {
  *      console.log("这是错误信息", error.message);
  *  })
+ *  // 如果调用方法时不传参，则只需要接收data参数作为响应数据即可
  *  fetchData(data? any): object {
  *    console.log("这是响应数据", data);
  *    return data;
  *  }
  *
- *  \@Request("/login", RequestMethod.POST)
- *  login(data?: any): void {
+ *  \@Request("/login", RequestMethod.POST, (params: object, error: any) = {
+ *      console.log("这是错误信息", error.message);
+ *  })
+ *  // params是调用方法是传入的参数，必须是JSON格式的对象，建议使用属性接口
+ *  login(params: object, data?: any): void {
  *     console.log("这是响应数据", data);
  *  }
  * }
@@ -52,22 +56,30 @@ export default function Request(
 ) {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
     const request: AxiosInstance = RequestFactory.getRequestInstance();
-    const originalMethod = descriptor.value;
+    const originalMethod: Function = descriptor.value;
     // 这里不能用ES6的写法来定义匿名函数，否则无法获取this
     // 接收调用方法时传入的data作为请求参数，需要JSON格式对象
-    descriptor.value = async function(data?: object) {
+    descriptor.value = async function(params?: object) {
       try {
         const response: AxiosResponse<any> = await request({
           url,
           method: method ? method : RequestMethod.GET,
-          data: data ? data : undefined
+          data: params ? params : undefined
         });
+        if (params) {
+          // 为了不影响方法参数逻辑，如果方法需要传入参数的话，响应数据则在传入参数的后一个参数
+          return originalMethod.call(this, params, response.data);
+        }
         return originalMethod.call(this, response.data);
       } catch (error) {
         if (failure) {
+          if (params) {
+            // 为了不影响方法参数逻辑，如果方法需要传入参数的话，响应数据则在传入参数的后一个参数
+            return failure.call(this, params, error);
+          }
           return failure.call(this, error);
         }
-        return error;
+        throw error;
       }
     };
   };

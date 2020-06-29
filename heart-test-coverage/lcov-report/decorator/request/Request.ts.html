@@ -22,16 +22,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/12</span>
+                <span class='fraction'>11/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>5/10</span>
             </div>
         
             
@@ -43,9 +43,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/12</span>
+                <span class='fraction'>11/16</span>
             </div>
         
             
@@ -130,8 +130,20 @@
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,22 +193,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -210,42 +234,46 @@ import { AxiosInstance, AxiosResponse } from "axios";
 &nbsp;
 /**
  * 封装HTTP请求的方法装饰器，在方法上添加此装饰器，则方法会被作为请求成功后的回调函数执行，并将传入data参数作为响应结果。
- * 
+ *
  * 使用例子：
  * ```ts
  * import { RequestMethod } from "@/heart/constants/enum/RequestMethod";
- * 
+ *
  * class Example {
  *  // 暂时不知道怎么转义@，@前面的\是为了保持格式，真正代码是没有的
- *  \@Request(this, "/test", RequestMethod.GET, (error) = {
+ *  \@Request(this, "/test", RequestMethod.GET, (error: any) = {
  *      console.log("这是错误信息", error.message);
  *  })
+ *  // 如果调用方法时不传参，则只需要接收data参数作为响应数据即可
  *  fetchData(data? any): object {
  *    console.log("这是响应数据", data);
  *    return data;
  *  }
- * 
- *  \@Request("/login", RequestMethod.POST)
- *  login(data?: any): void {
+ *
+ *  \@Request("/login", RequestMethod.POST, (params: object, error: any) = {
+ *      console.log("这是错误信息", error.message);
+ *  })
+ *  // params是调用方法是传入的参数，必须是JSON格式的对象，建议使用属性接口
+ *  login(params: object, data?: any): void {
  *     console.log("这是响应数据", data);
  *  }
  * }
  * ```
  * 调用上面定义的方法时，需要添加async和await关键字修饰，如需添加请求参数，调用方法时可传入JSON格式的数据。
- * 
+ *
  * 使用例子：
  * ```ts
  * let example: Example = new Example();
  * async () =&gt; {
  *  let data = await example.fetchData();
  *  console.log("这是响应数据", data);
- * 
+ *
  *  // 传入的是请求参数，必须是JSON格式
  *  await example.login({username: "test", password: "abcd1234"});
  * }
- * 
+ *
  * ```
- * 
+ *
  * @param url 请求路径
  * @param method 请求方法，默认是get，建议使用RequestMethod枚举赋值
  * @param failure 请求失败回调函数，接收错误信息error
@@ -258,22 +286,30 @@ export default function Request(
 ) {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) =&gt; {
     const request: AxiosInstance = RequestFactory.getRequestInstance();
-    const originalMethod = descriptor.value;
+    const originalMethod: Function = descriptor.value;
     // 这里不能用ES6的写法来定义匿名函数，否则无法获取this
     // 接收调用方法时传入的data作为请求参数，需要JSON格式对象
-    descriptor.value = async function(data?: object) {
+    descriptor.value = async function(params?: object) {
       try {
         const response: AxiosResponse&lt;any&gt; = await request({
           url,
           method: method ? method : <span class="branch-1 cbranch-no" title="branch not covered" >RequestMethod.GET,</span>
-          data: data ? data : undefined
+          data: params ? params : undefined
         });
+        if(params) {
+          // 为了不影响方法参数逻辑，如果方法需要传入参数的话，响应数据则在传入参数的后一个参数
+          return originalMethod.call(this, params, response.data);
+        }
         return originalMethod.call(this, response.data);
       } catch (error) {
 <span class="cstat-no" title="statement not covered" >        if (failure) {</span>
+<span class="cstat-no" title="statement not covered" >          if(params) {</span>
+            // 为了不影响方法参数逻辑，如果方法需要传入参数的话，响应数据则在传入参数的后一个参数
+<span class="cstat-no" title="statement not covered" >            return f</span>ailure.call(this, params, error);
+          }
 <span class="cstat-no" title="statement not covered" >          return f</span>ailure.call(this, error);
         }
-<span class="cstat-no" title="statement not covered" >        return e</span>rror;
+<span class="cstat-no" title="statement not covered" >        throw e</span>rror;
       }
     };
   };
@@ -285,7 +321,7 @@ export default function Request(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Jun 25 2020 11:33:38 GMT+0800 (GMT+08:00)
+                at Mon Jun 29 2020 18:34:54 GMT+0800 (GMT+08:00)
             </div>
         </div>
         <script src="..\..\prettify.js"></script>

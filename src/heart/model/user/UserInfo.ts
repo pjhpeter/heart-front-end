@@ -1,10 +1,10 @@
-import { Extend } from "../common/Extend";
+import Extend from "../common/Extend";
 
 /**
  * 针对登录成功后，jeesite返回的用户信息接口
  * @author 彭嘉辉
  */
-export interface UserInfo {
+export default interface UserInfo {
   // 用户唯一标识
   userCode?: string;
   // 登录账号

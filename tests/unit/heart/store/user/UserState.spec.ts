@@ -2,7 +2,7 @@ import { mutations } from "@/heart/store/modules/user/mutations";
 import { getters } from "@/heart/store/modules/user/getters";
 import { LocalStorageKeys } from "@/heart/constants/enum/LocalStorageKeys";
 import { UserState } from "@/heart/store/modules/user/types";
-import { UserInfo } from "@/heart/model/user/UserInfo";
+import UserInfo from "@/heart/model/user/UserInfo";
 
 describe("测试mutations", () => {
   let state: UserState;

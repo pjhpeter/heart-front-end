@@ -2,7 +2,7 @@ import { GetterTree } from "vuex";
 import { MenuState } from "./types";
 import { RootState } from "@/heart/store/types";
 import VueRouter from "vue-router";
-import { Menu } from "@/heart/model/menu/Menu";
+import Menu from "@/heart/model/menu/Menu";
 
 export const getters: GetterTree<MenuState, RootState> = {
   /**

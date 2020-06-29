@@ -1,5 +1,5 @@
 import { LocalStorageKeys } from "@/heart/constants/enum/LocalStorageKeys";
-import { UserInfo } from "@/heart/model/user/UserInfo";
+import UserInfo from "@/heart/model/user/UserInfo";
 
 /**
  * 用户信息对localStorage的读写操作接口
@@ -18,7 +18,9 @@ export default class Auth {
    * @returns 令牌
    */
   static getToken(): string {
-    let token = localStorage.getItem(LocalStorageKeys.USER_TOKEN);
+    let token: string | null = localStorage.getItem(
+      LocalStorageKeys.USER_TOKEN
+    );
     if (!token) {
       token = "";
     }
@@ -39,7 +41,9 @@ export default class Auth {
    * @returns 用户信息
    */
   static getUserInfo(): UserInfo | null {
-    const userInfoStr = localStorage.getItem(LocalStorageKeys.USER_INFO);
+    const userInfoStr: string | null = localStorage.getItem(
+      LocalStorageKeys.USER_INFO
+    );
     if (!userInfoStr) {
       return null;
     }

@@ -16,7 +16,6 @@ export class GlobalConfigReader {
     const globalConfigStr: string | null = localStorage.getItem(
       LocalStorageKeys.GLOBAL_CONFIG
     );
-    // let globalConfigStr: string | null = localStorage.getItem("global-config");
     // 没有配置则返回默认配置
     if (globalConfigStr === null) {
       return new GlobalConfig();

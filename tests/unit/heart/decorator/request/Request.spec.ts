@@ -1,6 +1,6 @@
 import Request from "@/heart/decorator/request/Request";
 import { RequestMethod } from "@/heart/constants/enum/RequestMethod";
-import { LoginParams } from "@/heart/model/user/LoginParams";
+import LoginParams from "@/heart/model/user/LoginParams";
 
 // 伪造一个函数
 const failure = jest.fn();
@@ -10,21 +10,14 @@ class Test {
   token?: string;
 
   // 测试环境下不知道怎么使用vue.config.js配置的请求代理，只能自己拼接url
-  @Request(
-    `${process.env.VUE_APP_BASE_URL}/authInfo`,
-    RequestMethod.GET,
-    failure
-  )
+  @Request("/authInfo", RequestMethod.GET, failure)
   getData(data?: any): string {
     this.result = data.result;
     return this.result;
   }
 
-  @Request(
-    `${process.env.VUE_APP_BASE_URL}/login?__login=true&__ajax=json`,
-    RequestMethod.POST
-  )
-  login(data?: any): void {
+  @Request("/login?__login=true&__ajax=json", RequestMethod.POST)
+  login(LoginParams: LoginParams, data?: any): void {
     this.token = data.sessionid;
   }
 }
