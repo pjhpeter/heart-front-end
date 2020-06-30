@@ -51,12 +51,17 @@ export default class MenuAPI4Jeesite implements MenuAPI {
       if (!menu.childList && !menu.menuUrl) return;
       // 把多余的url去掉部分
       const menuUrl = menu.menuUrl.substr(menu.menuUrl.indexOf("/a/") + 2);
+      // 是否叶子节点，有menuUrl属性，及不存在子节点则认定为叶子节点
+      const isLeaf: boolean = menuUrl && !menu.childList;
       // 生成菜单对象
       const menuItem: Menu = {
         menuCode: menu.menuCode,
         menuIcon: menu.menuIcon,
         menuName: menu.menuName,
-        menuUrl: menuUrl && !menu.childList ? menuUrl : Math.random() + "",
+        menuUrl: isLeaf ? menuUrl : Math.random() + "",
+        component: isLeaf
+          ? (resolve: any) => require([`@/views${menuUrl}`], resolve)
+          : undefined,
         parent
       };
 

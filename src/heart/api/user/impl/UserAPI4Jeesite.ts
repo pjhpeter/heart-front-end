@@ -9,7 +9,7 @@ import { RequestMethod } from "@/heart/constants/enum/RequestMethod";
  * 针对Jeesite后端接口的用户操作
  * @author 彭嘉辉
  */
-export default class UserAPI4Jeesit implements UserAPI {
+export default class UserAPI4Jeesit implements UserAPI<UserInfo> {
   /**
    * 用户登录
    * @param loginParams 登录参数
@@ -42,5 +42,18 @@ export default class UserAPI4Jeesit implements UserAPI {
       return true;
     }
     return false;
+  }
+
+  /**
+   * 获取当前用户信息
+   * @param data 响应数据，调用方法时不必传入
+   * @returns 当前用户信息对象
+   */
+  @Request("/sys/user/info.json", RequestMethod.GET, (error: any) => null)
+  getUserInfo(data?: any): UserInfo | null {
+    if (data.user) {
+      return data.user as UserInfo;
+    }
+    return null;
   }
 }

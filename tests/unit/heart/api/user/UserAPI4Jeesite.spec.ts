@@ -5,7 +5,7 @@ import store from "@/heart/store";
 import UserInfo from "@/heart/model/user/UserInfo";
 import { LocalStorageKeys } from "@/heart/constants/enum/LocalStorageKeys";
 
-let userAPI: UserAPI;
+let userAPI: UserAPI<UserInfo>;
 beforeAll(() => {
   userAPI = new UserAPI4Jeesit();
 });
@@ -65,4 +65,12 @@ describe("测试logout方法", () => {
 
 afterEach(() => {
   localStorage.clear();
+});
+
+describe("测试getUserInfo方法", () => {
+  it("获取当前用户数据", async () => {
+    expect.assertions(1);
+    const userInfo: UserInfo | null = await userAPI.getUserInfo();
+    expect(userInfo).not.toBeNull();
+  });
 });
