@@ -1,6 +1,6 @@
-import { LocalStorageKeys } from "@/heart/constants/enum/LocalStorageKeys";
-import Auth from "@/heart/utils/Auth";
-import UserInfo from "@/heart/model/user/UserInfo";
+import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
+import Auth from "@/utils/Auth";
+import UserInfo from "@/model/user/UserInfo";
 
 describe("测试setToken方法", () => {
   it("保存token-'test'", () => {

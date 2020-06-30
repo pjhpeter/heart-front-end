@@ -1,7 +1,7 @@
-import MenuAPI4Jeesite from "@/heart/api/menu/impl/MenuAPI4Jeesite";
-import MenuAPI from "@/heart/api/menu/MenuAPI";
-import store from "@/heart/store";
-import Menu from "@/heart/model/menu/Menu";
+import MenuAPI4Jeesite from "@/api/menu/impl/MenuAPI4Jeesite";
+import MenuAPI from "@/api/menu/MenuAPI";
+import store from "@/store";
+import Menu from "@/model/menu/Menu";
 
 // doParse是私有方法，不能外部调用，所以注释掉这个测试用例，已经经过单元测试了
 // describe("测试doParse方法", () => {

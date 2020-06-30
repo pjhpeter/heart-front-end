@@ -1,9 +1,9 @@
 import { NavigationGuardNext, Route } from "vue-router";
-import router from "./heart/router";
-import store from "./heart/store";
-import UserAPI from "./heart/api/user/UserAPI";
-import UserInfo from "./heart/model/user/UserInfo";
-import UserAPI4Jeesit from "./heart/api/user/impl/UserAPI4Jeesite";
+import router from "./router";
+import store from "./store";
+import UserAPI from "./api/user/UserAPI";
+import UserInfo from "./model/user/UserInfo";
+import UserAPI4Jeesit from "./api/user/impl/UserAPI4Jeesite";
 
 // 导出beforeEach方法，方便单元测试
 export async function beforeEach(

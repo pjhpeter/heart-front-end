@@ -1,6 +1,6 @@
-import Request from "@/heart/decorator/request/Request";
-import { RequestMethod } from "@/heart/constants/enum/RequestMethod";
-import LoginParams from "@/heart/model/user/LoginParams";
+import Request from "@/decorator/request/Request";
+import { RequestMethod } from "@/constants/enum/RequestMethod";
+import LoginParams from "@/model/user/LoginParams";
 
 // 伪造一个函数
 const failure = jest.fn();

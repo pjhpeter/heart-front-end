@@ -1,9 +1,9 @@
-import LoginParams from "@/heart/model/user/LoginParams";
-import UserAPI4Jeesit from "@/heart/api/user/impl/UserAPI4Jeesite";
-import UserAPI from "@/heart/api/user/UserAPI";
-import store from "@/heart/store";
-import UserInfo from "@/heart/model/user/UserInfo";
-import { LocalStorageKeys } from "@/heart/constants/enum/LocalStorageKeys";
+import LoginParams from "@/model/user/LoginParams";
+import UserAPI4Jeesit from "@/api/user/impl/UserAPI4Jeesite";
+import UserAPI from "@/api/user/UserAPI";
+import store from "@/store";
+import UserInfo from "@/model/user/UserInfo";
+import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
 
 let userAPI: UserAPI<UserInfo>;
 beforeAll(() => {

@@ -1,7 +1,6 @@
-import { LocalStorageKeys } from "@/heart/constants/enum/LocalStorageKeys";
 import { beforeEach } from "@/promission";
+import store from "@/store";
 import { Route } from "vue-router";
-import store from "@/heart/store";
 
 let path = "/";
 const next = jest.fn((nextPath: any) => {
