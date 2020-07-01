@@ -23,19 +23,17 @@ export default class Home extends Vue {
   showModule(menuInfo: string): void {
     // menuUrl-menuName
     const menuInfoArr: Array<string> = menuInfo.split("-");
-    this.$nextTick(() => {
-      // 手动实例化模态框实例
-      new Vue({
-        render(createElement): VNode {
-          return createElement(BaseModal, {
-            props: {
-              menuUrl: menuInfoArr[0],
-              title: menuInfoArr[1]
-            }
-          });
-        }
-      }).$mount();
-    });
+    // 手动实例化模态框实例
+    new Vue({
+      render(createElement): VNode {
+        return createElement(BaseModal, {
+          props: {
+            menuUrl: menuInfoArr[0],
+            title: menuInfoArr[1]
+          }
+        });
+      }
+    }).$mount();
   }
 }
 </script>
