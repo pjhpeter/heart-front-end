@@ -1,0 +1,12 @@
+$fontFamily: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+$baseModalHeight: 500px;
+
+.base-modal {
+    .ivu-modal{
+        top: 20px;
+        .ivu-modal-body {
+            height: $baseModalHeight;
+            overflow-y: auto;
+        }
+    }
+}

@@ -8,21 +8,22 @@ import store from "@/store";
  * 针对Jeesite的菜单数据解析
  * @author 彭嘉辉
  */
-export default class MenuAPI4Jeesite implements MenuAPI {
+export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
   /**
    * 生成菜单树
    * @param data 响应的数据，调用方法时不必传入
+   * @returns 菜单树对象
    */
-  @Request("/menuTree.json", RequestMethod.GET, (error: any) => false)
-  fetchMenuTree(data?: any): boolean {
+  @Request("/menuTree.json", RequestMethod.GET, (error: any) => null)
+  fetchMenuTree(data?: any): Array<Menu> | null {
     try {
       const menuTree: Array<Menu> = [];
       this.parseMenuData(data, menuTree);
       store.commit("menu/setMenuTree", menuTree);
-      return true;
+      return menuTree;
     } catch (error) {
-      console.log(error.message);
-      return false;
+      console.error(error.message);
+      return null;
     }
   }
 

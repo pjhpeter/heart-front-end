@@ -1,6 +1,9 @@
+const path = require("path");
+
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
+
   devServer: {
     port: 1111,
     host: "localhost",
@@ -20,6 +23,13 @@ module.exports = {
           ["^" + process.env.VUE_APP_PROXY_URI]: "" // 用变量名来做key需要用中括号包裹
         }
       }
+    }
+  },
+
+  pluginOptions: {
+    "style-resources-loader": {
+      preProcessor: "scss",
+      patterns: [path.resolve(__dirname, "./src/assets/common/variables.scss")]
     }
   }
 };

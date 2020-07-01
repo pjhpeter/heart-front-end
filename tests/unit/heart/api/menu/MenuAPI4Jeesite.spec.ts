@@ -56,11 +56,11 @@ import Menu from "@/model/menu/Menu";
 
 describe("测试fetchMenuTree方法", () => {
   it("生成菜单树", async () => {
-    const menuAPI: MenuAPI = new MenuAPI4Jeesite();
-    const result: boolean = await menuAPI.fetchMenuTree();
-    expect(result).toBeTruthy();
-
-    const menuTree: Array<Menu> = store.getters["menu/getMenuTree"];
+    const menuAPI: MenuAPI<Menu> = new MenuAPI4Jeesite();
+    const menuTree: Array<Menu> | null = await menuAPI.fetchMenuTree();
     expect(menuTree).not.toBeNull();
+
+    const stateMenuTree: Array<Menu> = store.getters["menu/getMenuTree"];
+    expect(stateMenuTree).not.toBeNull();
   });
 });
