@@ -1,6 +1,7 @@
 <template>
   <div id="home">
     <menu-container @menuClick="showModule" />
+    <i class="iconfont icon-user"></i>
   </div>
 </template>
 
