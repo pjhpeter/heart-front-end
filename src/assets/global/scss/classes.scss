@@ -4,6 +4,39 @@
 .base-modal {
     .ivu-modal{
         top: 20px;
+        // 模态框头部
+        .ivu-modal-header {
+            height: 40px;
+            // 标题
+            .title {
+                color: $title;
+                font-size: 18px;
+            }
+            // 按钮组
+            .button-group {
+                position: absolute;
+                top: 0;
+                right: 0;
+                // 按钮默认样式
+                .ivu-btn {
+                    box-shadow: none !important;
+                    color: $content;
+                    width: 40px;
+                    height: 40px;
+                    padding: 0;
+                }
+                // 最大化和最小化按钮
+                .fullscreen-button:hover,.reset-screen-button:hover,.hide-button:hover {
+                    background-color: $background;
+                }
+                // 关闭按钮
+                .close-button:hover {
+                    background-color: $error;
+                    color: #ffffff;
+                }
+            }
+        }
+        // 模态框内容部分
         .ivu-modal-body {
             height: $baseModalHeight;
             overflow-y: auto;

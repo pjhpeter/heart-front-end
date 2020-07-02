@@ -15,6 +15,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-reset-screen:before {
+  content: "\e604";
+}
+
+.icon-fullscreen:before {
+  content: "\e610";
+}
+
+.icon-hide:before {
+  content: "\e669";
+}
+
+.icon-close:before {
+  content: "\e603";
+}
+
 .icon-lock:before {
   content: "\e602";
 }
