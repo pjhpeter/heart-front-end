@@ -1,8 +1,15 @@
 <template>
   <div class="tab-container">
-    <i v-for="(tabInfo, index) in tabs" :key="index">{{
-      tabInfo.backgroundColor
-    }}</i>
+    <div class="tab-icon" v-for="(tabInfo, index) in tabs" :key="index">
+      <Row class="tab-row" type="flex" justify="center" align="middle">
+        <Col span="8">
+          <div
+            v-text="tabInfo.modal.title.substring(0, 1)"
+            :style="{ backgroundColor: tabInfo.backgroundColor }"
+          ></div>
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
 
@@ -28,5 +35,23 @@ export default class TabContainer extends Vue {
 
 <style lang="scss" scoped>
 .tab-container {
+  .tab-icon {
+    display: inline-block;
+    height: $footerHeight;
+    width: $footerHeight;
+    color: white;
+    font-size: 16;
+    font-weight: 700;
+    .tab-row {
+      height: 100%;
+      div {
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        line-height: 30px;
+        border-radius: 5px;
+      }
+    }
+  }
 }
 </style>

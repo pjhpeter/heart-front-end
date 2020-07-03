@@ -108,6 +108,7 @@ export default class Home extends Vue {
    * 删除指定的底部栏模块图标
    */
   removeTab(modal: any) {
+    console.log(modal);
     this.tabs.every((tabInfo: TabInfo, index: number) => {
       if (tabInfo.modal._uid === modal._uid) {
         this.tabs.splice(index, 1);

@@ -4,10 +4,10 @@
       <!-- 菜单点击事件只能返回MenuItem的name属性，为了后续操作方便，把name属性赋值成menuRrl+menuName -->
       <MenuItem
         v-if="!menu.children"
-        :name="`${menu.menuUrl}-${menu.menuName}-${menu.menuIcon}`"
+        :name="`${menu.menuUrl}-${menu.menuName}-${getMenuIconColor(menu)}`"
       >
         <span
-          :style="{ backgroundColor: getMenuIconColor(menu) }"
+          :style="{ backgroundColor: menu.menuIcon }"
           v-text="menu.menuName.substring(0, 1)"
         ></span>
         {{ menu.menuName }}
@@ -32,6 +32,8 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import Menu from "../../../model/menu/Menu";
 import { MENU_ICON_COLORS } from "../../../constants/values/Global";
 
+let currentMenuColorIndex = 0;
+
 @Component({
   name: "menu-tree"
 })
@@ -42,7 +44,6 @@ export default class MenuTree extends Vue {
     default: []
   })
   menuTree!: Array<Menu>;
-  currentMenuColorIndex = 0;
 
   /**
    * 计算菜单icon背景色，只不过是在MENU_ICON_COLORS数组中按顺序读取每一个元素
@@ -52,18 +53,18 @@ export default class MenuTree extends Vue {
   private getMenuIconColor(menu: Menu): string {
     const colors = MENU_ICON_COLORS;
     // 当前应用的颜色
-    const color = colors[this.currentMenuColorIndex];
-    // 保存当前模块图标的背景颜色
-    menu.menuIcon = color;
+    const color = colors[currentMenuColorIndex];
 
-    if (this.currentMenuColorIndex === MENU_ICON_COLORS.length - 1) {
+    if (currentMenuColorIndex === MENU_ICON_COLORS.length - 1) {
       // 下标已经到最后则重置
-      this.currentMenuColorIndex = 0;
+      currentMenuColorIndex = 0;
     } else {
       // 将下标后移
-      this.currentMenuColorIndex++;
+      currentMenuColorIndex++;
     }
 
+    // 保存当前模块图标的背景颜色
+    menu.menuIcon = color;
     return color;
   }
 }
