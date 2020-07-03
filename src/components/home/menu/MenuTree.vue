@@ -32,6 +32,9 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import Menu from "../../../model/menu/Menu";
 import { MENU_ICON_COLORS } from "../../../constants/values/Global";
 
+// 本来写在组件变量里面，不过Vue会警告可能出现无限循环，所以计数器写在这里
+let currentMenuColorIndex = 0;
+
 @Component({
   name: "menu-tree"
 })
@@ -43,22 +46,20 @@ export default class MenuTree extends Vue {
   })
   menuTree!: Array<Menu>;
 
-  currentMenuColorIndex = 0;
-
   /**
    * 计算菜单icon背景色，只不过是在MENU_ICON_COLORS数组中按顺序读取每一个元素
    */
   private getMenuIconColor(): string {
     const colors = MENU_ICON_COLORS;
     // 当前应用的颜色
-    const color = colors[this.currentMenuColorIndex];
+    const color = colors[currentMenuColorIndex];
 
-    if (this.currentMenuColorIndex === MENU_ICON_COLORS.length - 1) {
+    if (currentMenuColorIndex === MENU_ICON_COLORS.length - 1) {
       // 下标已经到最后则重置
-      this.currentMenuColorIndex = 0;
+      currentMenuColorIndex = 0;
     } else {
       // 将下标后移
-      this.currentMenuColorIndex++;
+      currentMenuColorIndex++;
     }
 
     return color;

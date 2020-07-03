@@ -1,5 +1,5 @@
 <template>
   <div>
-    文件日志
+    这是文件日志
   </div>
 </template>

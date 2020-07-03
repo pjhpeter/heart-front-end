@@ -40,10 +40,19 @@ export default class MenuContainer extends Vue {
   /**
    * 触发父组件的menuClick事件，将menuInfo传给父组件
    */
-  @Emit("menuClick")
+  @Emit("menu-click")
   onMenuClick(menuInfo: string) {
     // menuUrl-menuName
     return menuInfo;
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.menu-container {
+  position: fixed;
+  left: 0;
+  bottom: $footerHeight;
+  z-index: 1001;
+}
+</style>

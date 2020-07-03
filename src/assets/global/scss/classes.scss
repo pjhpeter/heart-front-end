@@ -2,6 +2,7 @@
 
 // 基础模态框样式
 .base-modal {
+    overflow: hidden;
     .ivu-modal{
         top: 20px;
         // 模态框头部
@@ -19,7 +20,7 @@
                 right: 0;
                 // 按钮默认样式
                 .ivu-btn {
-                    box-shadow: none !important;
+                    box-shadow: none;
                     color: $content;
                     width: 40px;
                     height: 40px;

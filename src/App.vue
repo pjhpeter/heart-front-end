@@ -17,7 +17,18 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  font-family: $fontFamily;
+  font-family: $fontFamily !important;
+  height: 100%;
+  width: 100%;
+  #app {
+    height: 100%;
+    overflow: hidden;
+  }
 }
 </style>

@@ -1,7 +1,13 @@
 <template>
-  <div id="home">
-    <menu-container @menuClick="showModule" />
-    <i class="iconfont icon-user"></i>
+  <div class="home">
+    <Layout>
+      <Content class="content"></Content>
+      <Footer class="footer">
+        <start-button @start-click="showOrHideMenu" />
+      </Footer>
+      <Footer class="footer-background"></Footer>
+    </Layout>
+    <menu-container @menu-click="showModule" v-show="isShowedMenu" />
   </div>
 </template>
 
@@ -14,14 +20,19 @@ import BaseModal from "@/components/commons/BaseModal.vue";
 
 @Component({
   components: {
-    MenuContainer: () => import("@/components/home/menu/MenuContainer.vue")
+    MenuContainer: () => import("@/components/home/menu/MenuContainer.vue"),
+    StartButton: () => import("@/components/home/footer/StartButton.vue")
   }
 })
 export default class Home extends Vue {
+  isShowedMenu = false;
+
   /**
    * 获取menu-container传回来的menuInfo，内容是menuUrl-menuName
    */
   showModule(menuInfo: string): void {
+    this.showOrHideMenu();
+
     // menuUrl-menuName
     const menuInfoArr: Array<string> = menuInfo.split("-");
     // 手动实例化模态框实例
@@ -36,5 +47,49 @@ export default class Home extends Vue {
       }
     }).$mount();
   }
+
+  /**
+   * 隐藏或显示开始菜单
+   */
+  showOrHideMenu() {
+    this.isShowedMenu = !this.isShowedMenu;
+  }
 }
 </script>
+
+<style lang="scss">
+$blur: 35px;
+
+.home {
+  height: 100%;
+  overflow: hidden;
+  .ivu-layout {
+    height: 100%;
+    .content {
+      height: 100%;
+      background-image: url("../../assets/home/images/background.jpg");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+    .footer,
+    .footer-background {
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      height: $footerHeight;
+      padding: 0 !important;
+      background-color: rgba($color: #ffffff, $alpha: 0.7);
+      box-sizing: content-box;
+      z-index: 10010;
+      border-top: 1px solid rgba($color: $background, $alpha: 0.2);
+    }
+    .footer-background {
+      z-index: 10000;
+      background: url("../../assets/home/images/background.jpg") center / cover
+        no-repeat fixed;
+      -webkit-filter: blur(10px);
+      filter: blur(10px);
+    }
+  }
+}
+</style>
