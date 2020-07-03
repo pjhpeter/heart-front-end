@@ -15,66 +15,82 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+// 取消模态框最大化
 .icon-reset-screen:before {
   content: "\e604";
 }
 
+// 模态框最大化
 .icon-fullscreen:before {
   content: "\e610";
 }
 
+// 模态框最小化
 .icon-hide:before {
   content: "\e669";
 }
 
+// 模态框关闭
 .icon-close:before {
   content: "\e603";
 }
 
+// 锁定
 .icon-lock:before {
   content: "\e602";
 }
 
+// 主题
 .icon-theme:before {
   content: "\e66f";
 }
 
+// 修改密码
 .icon-edit:before {
   content: "\e88d";
 }
 
+// 文件夹
 .icon-folder:before {
   content: "\e65a";
 }
 
+// 左下角的开始按钮
 .icon-app:before {
   content: "\e660";
 }
 
+// 邮件
 .icon-email:before {
   content: "\e608";
 }
 
+// 消息
 .icon-message:before {
   content: "\e74c";
 }
 
+// 密码
 .icon-password:before {
   content: "\e626";
 }
 
+// 搜索
 .icon-search:before {
   content: "\e607";
 }
 
+// 删除
 .icon-delete:before {
   content: "\e721";
 }
 
+// 用户
 .icon-user:before {
   content: "\e60e";
 }
 
+// 新增
 .icon-add:before {
   content: "\e60f";
 }

@@ -6,12 +6,15 @@
         v-if="!menu.children"
         :name="`${menu.menuUrl}-${menu.menuName}`"
       >
-        <Icon :type="menu.menuIcon" />
+        <span
+          :style="{ backgroundColor: getMenuIconColor() }"
+          v-text="menu.menuName.substring(0, 1)"
+        ></span>
         {{ menu.menuName }}
       </MenuItem>
       <Submenu v-if="menu.children" :name="menu.menuCode">
         <template slot="title">
-          <Icon :type="menu.menuIcon" />
+          <i class="iconfont icon-folder"></i>
           {{ menu.menuName }}
         </template>
         <menu-tree :menuTree="menu.children" />
@@ -27,6 +30,7 @@
  */
 import { Vue, Component, Prop } from "vue-property-decorator";
 import Menu from "../../../model/menu/Menu";
+import { MENU_ICON_COLORS } from "../../../constants/values/Global";
 
 @Component({
   name: "menu-tree"
@@ -38,5 +42,60 @@ export default class MenuTree extends Vue {
     default: []
   })
   menuTree!: Array<Menu>;
+
+  currentMenuColorIndex = 0;
+
+  /**
+   * 计算菜单icon背景色，只不过是在MENU_ICON_COLORS数组中按顺序读取每一个元素
+   */
+  private getMenuIconColor(): string {
+    const colors = MENU_ICON_COLORS;
+    // 当前应用的颜色
+    const color = colors[this.currentMenuColorIndex];
+
+    if (this.currentMenuColorIndex === MENU_ICON_COLORS.length - 1) {
+      // 下标已经到最后则重置
+      this.currentMenuColorIndex = 0;
+    } else {
+      // 将下标后移
+      this.currentMenuColorIndex++;
+    }
+
+    return color;
+  }
 }
 </script>
+
+<style lang="scss">
+.menu-tree {
+  background-color: $background;
+  .ivu-menu-item-active:not(.ivu-menu-submenu) {
+    color: $title !important;
+    background: none !important;
+    z-index: 1 !important;
+    &::after {
+      width: 0 !important;
+    }
+  }
+  .ivu-menu-item,
+  .ivu-menu-submenu-title {
+    color: $title;
+    &:hover {
+      background-color: rgba($color: $lightPrimary, $alpha: 0.3);
+      color: $title;
+    }
+    span {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+  }
+}
+</style>
