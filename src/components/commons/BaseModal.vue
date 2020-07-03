@@ -46,7 +46,7 @@
 
 <script lang="ts">
 /**
- * 基础对话框，用于展示开始菜单的模块
+ * 基础对话框
  * @author 彭嘉辉
  */
 import { Vue, Component, Prop, Emit } from "vue-property-decorator";
@@ -66,38 +66,45 @@ export default class BaseModal extends Vue {
   title!: string;
   @Prop({
     type: String,
-    required: true,
     default: ""
   })
   menuUrl!: string;
+  @Prop()
+  onClose?: Function;
   isShow = true;
   isDraggable = true;
   isFullscreen = false;
 
   private hide(): void {
     this.isShow = false;
-    this.sizeChange();
+    this.showFooter();
   }
 
   private fullscreen(): void {
     this.isDraggable = false;
     this.isFullscreen = true;
-    this.sizeChange();
+    this.hideFooter();
   }
 
   private resetScreen(): void {
     this.isDraggable = true;
     this.isFullscreen = false;
-    this.sizeChange();
+    this.showFooter();
   }
 
   private close(): void {
     this.isShow = false;
-    this.sizeChange();
+    this.showFooter();
+    if (this.onClose) {
+      this.onClose.call(this, this);
+    }
     this.$destroy();
   }
 
-  @Emit("size-change")
-  private sizeChange() {}
+  @Emit("show-footer")
+  private showFooter(): void {}
+
+  @Emit("hide-footer")
+  private hideFooter(): void {}
 }
 </script>

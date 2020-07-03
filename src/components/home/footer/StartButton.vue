@@ -5,6 +5,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * 开始按钮组件
+ * @author 彭嘉辉
+ */
 import { Vue, Component, Emit } from "vue-property-decorator";
 
 @Component({

@@ -42,7 +42,7 @@ export default class MenuContainer extends Vue {
    */
   @Emit("menu-click")
   onMenuClick(menuInfo: string) {
-    // menuUrl-menuName
+    // menuUrl-menuName-menuIcon
     return menuInfo;
   }
 }
