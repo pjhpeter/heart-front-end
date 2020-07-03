@@ -2,10 +2,12 @@
   <div class="home">
     <Layout>
       <Content class="content"></Content>
-      <Footer class="footer">
-        <start-button @start-click="showOrHideMenu" />
-      </Footer>
-      <Footer class="footer-background"></Footer>
+      <div v-show="isShowFooter">
+        <Footer class="footer">
+          <start-button @start-click="showOrHideMenu" />
+        </Footer>
+        <Footer class="footer-background"></Footer>
+      </div>
     </Layout>
     <menu-container @menu-click="showModule" v-show="isShowedMenu" />
   </div>
@@ -26,12 +28,14 @@ import BaseModal from "@/components/commons/BaseModal.vue";
 })
 export default class Home extends Vue {
   isShowedMenu = false;
+  isShowFooter = true;
 
   /**
    * 获取menu-container传回来的menuInfo，内容是menuUrl-menuName
    */
   showModule(menuInfo: string): void {
-    this.showOrHideMenu();
+    const $vm = this as any;
+    $vm.showOrHideMenu();
 
     // menuUrl-menuName
     const menuInfoArr: Array<string> = menuInfo.split("-");
@@ -42,6 +46,9 @@ export default class Home extends Vue {
           props: {
             menuUrl: menuInfoArr[0],
             title: menuInfoArr[1]
+          },
+          on: {
+            "size-change": $vm.showOrHideFooter
           }
         });
       }
@@ -53,6 +60,13 @@ export default class Home extends Vue {
    */
   showOrHideMenu() {
     this.isShowedMenu = !this.isShowedMenu;
+  }
+
+  /**
+   * 隐藏或显示底部栏
+   */
+  showOrHideFooter() {
+    this.isShowFooter = !this.isShowFooter;
   }
 }
 </script>
