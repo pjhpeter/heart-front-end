@@ -7,7 +7,7 @@
         :name="`${menu.menuUrl}-${menu.menuName}-${getMenuIconColor(menu)}`"
       >
         <span
-          :style="{ backgroundColor: menu.menuIcon }"
+          :style="{ backgroundColor: menu.menuColor }"
           v-text="menu.menuName.substring(0, 1)"
         ></span>
         {{ menu.menuName }}
@@ -64,7 +64,7 @@ export default class MenuTree extends Vue {
     }
 
     // 保存当前模块图标的背景颜色
-    menu.menuIcon = color;
+    menu.menuColor = color;
     return color;
   }
 }

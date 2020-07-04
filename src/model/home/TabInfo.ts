@@ -9,4 +9,6 @@ export default interface TabInfo {
   backgroundColor: string;
   // 点击菜单时打开的模态框对象
   modal: any;
+  // 图标选中样式
+  active?: string;
 }

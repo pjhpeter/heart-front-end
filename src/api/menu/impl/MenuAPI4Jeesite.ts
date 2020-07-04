@@ -59,6 +59,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
         menuCode: menu.menuCode,
         menuIcon: menu.menuIcon,
         menuName: menu.menuName,
+        menuColor: menu.menuColor,
         menuUrl: isLeaf ? menuUrl : Math.random() + "",
         // 动态加载组件，这里可以看出每个模块的入口组件必须放在views目录下，并且目录结构与menuUrl的值保持一致
         component: isLeaf ? () => import(`@/views${menuUrl}`) : undefined,

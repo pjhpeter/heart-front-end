@@ -5,6 +5,7 @@
 export default interface Menu {
   menuCode?: string;
   menuIcon?: string;
+  menuColor?: string;
   menuUrl?: string;
   menuName?: string;
   component?: any;

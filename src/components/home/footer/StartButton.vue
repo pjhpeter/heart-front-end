@@ -25,7 +25,7 @@ export default class FooterContainer extends Vue {
 
 <style lang="scss" scoped>
 .start-button {
-  background-color: rgba($color: $background, $alpha: 0.7);
+  background-color: rgba($color: $background, $alpha: 0.8);
   height: $footerHeight;
   width: $footerHeight;
   padding: 0;

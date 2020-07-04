@@ -12,3 +12,5 @@ export const MENU_ICON_COLORS: Array<string> = [
   "#19BE6B",
   "#FF9900"
 ];
+
+export const TAB_ACTIVE_CLASS = "tab-icon-active";
