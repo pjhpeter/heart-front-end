@@ -58,8 +58,7 @@ export default class MenuContainer extends Vue {
   bottom: $footerHeight;
   z-index: 99997;
 }
-.slide-fade-enter-active,
-.slide-fade-leave-active {
+.slide-fade-enter-active {
   transition: all 0.3s ease;
 }
 .slide-fade-leave-active {
