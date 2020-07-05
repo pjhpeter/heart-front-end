@@ -31,8 +31,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import Menu from "../../../model/menu/Menu";
 import { MENU_ICON_COLORS } from "../../../constants/values/Global";
-
-let currentMenuColorIndex = 0;
+import Commons from "../../../utils/Commons";
 
 @Component({
   name: "menu-tree"
@@ -51,21 +50,9 @@ export default class MenuTree extends Vue {
    * @returns 菜单项背景颜色
    */
   private getMenuIconColor(menu: Menu): string {
-    const colors = MENU_ICON_COLORS;
-    // 当前应用的颜色
-    const color = colors[currentMenuColorIndex];
-
-    if (currentMenuColorIndex === MENU_ICON_COLORS.length - 1) {
-      // 下标已经到最后则重置
-      currentMenuColorIndex = 0;
-    } else {
-      // 将下标后移
-      currentMenuColorIndex++;
-    }
-
     // 保存当前模块图标的背景颜色
-    menu.menuColor = color;
-    return color;
+    menu.menuColor = Commons.getIconColor();
+    return menu.menuColor;
   }
 }
 </script>

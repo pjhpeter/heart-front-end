@@ -11,12 +11,12 @@ import { CreateElement, RenderContext, VNode } from "vue";
   created() {
     // 动态注册组件
     const $vm = this as any;
-    const menuUrl = $vm.menuUrl;
+    const url = $vm.url;
     // 获取模块名称
     // 如menuUrl为"/mb/secfileSign/list"，只要模块名"secfileSign"
-    const componentName = ($vm.componentName = $vm.getComponentName(menuUrl));
+    const componentName = ($vm.componentName = $vm.getComponentName(url));
     $vm.$options.components[componentName] = () =>
-      import(`@/views${menuUrl}/index.vue`);
+      import(`@/views${url}/index.vue`);
   },
   render(createElement: CreateElement): VNode {
     // 动态渲染组件
@@ -30,17 +30,19 @@ export default class ComponentLoader extends Vue {
     required: true,
     default: "/error/404/page"
   })
-  menuUrl!: string;
+  url!: string;
   componentName!: string;
 
   /**
    * 获得组件名称，以后端的模块名称作为组件名称
+   * @param 后端返回的模块路径
+   * @returns 模块名称
    */
-  private getComponentName(menuUrl: string): string {
+  private getComponentName(url: string): string {
     // 获取模块名称
-    // 如menuUrl为"/mb/secfileSign/list"，只要模块名"secfileSign"
-    menuUrl = menuUrl.substring(0, menuUrl.lastIndexOf("/"));
-    return menuUrl.substring(menuUrl.lastIndexOf("/") + 1);
+    // 如url为"/mb/secfileSign/list"，只要模块名"secfileSign"
+    url = url.substring(0, url.lastIndexOf("/"));
+    return url.substring(url.lastIndexOf("/") + 1);
   }
 }
 </script>

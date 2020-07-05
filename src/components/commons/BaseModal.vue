@@ -39,7 +39,7 @@
           </div>
         </div>
       </template>
-      <component-loader :menuUrl="menuUrl" />
+      <component-loader :url="url" />
     </Modal>
   </div>
 </template>
@@ -79,11 +79,11 @@ export default class BaseModal extends Vue {
     type: String,
     default: ""
   })
-  menuUrl!: string;
+  url!: string;
   // 模态框关闭时的回调函数
   @Prop()
   onClose?: Function;
-  // 不显示底部
+  // 不显示模态框底部按钮
   @Prop({
     type: Boolean,
     default: true
@@ -92,7 +92,7 @@ export default class BaseModal extends Vue {
   // 模态框宽度
   @Prop({
     type: Number,
-    default: 1000
+    default: 1200
   })
   width?: number;
 

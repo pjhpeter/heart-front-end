@@ -53,6 +53,6 @@ export default class MenuContainer extends Vue {
   position: fixed;
   left: 0;
   bottom: $footerHeight;
-  z-index: 1001;
+  z-index: 99999;
 }
 </style>

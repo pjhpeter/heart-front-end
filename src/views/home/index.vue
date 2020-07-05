@@ -32,9 +32,10 @@ import { Vue, Component } from "vue-property-decorator";
 import { VueConstructor, VNode } from "vue";
 import { Md5 } from "md5-typescript";
 import ComponentInfo from "../../model/menu/ComponentInfo";
-import BaseModal from "@/components/commons/BaseModal.vue";
 import { CombinedVueInstance, CreateElement } from "vue/types/vue";
 import OpenedInfo from "../../model/global/OpenedInfo";
+import Commons from "../../utils/Commons";
+import ModalInfo from "../../model/global/ModalInfo";
 
 @Component({
   components: {
@@ -57,36 +58,13 @@ export default class Home extends Vue {
     // menuUrl-menuName-menuIcon
     const menuInfoArr: Array<string> = menuInfo.split("-");
     // 手动实例化模态框实例
-    const modal: any = new Vue({
+    const modalInfo: ModalInfo = {
       store: $vm.$store,
-      render(createElement: CreateElement): VNode {
-        return createElement(BaseModal, {
-          props: {
-            menuUrl: menuInfoArr[0],
-            title: menuInfoArr[1]
-          }
-        });
-      }
-    }).$mount().$children[0];
-
-    // 清空当前打开模块信息的激活状态
-    const openedList: Array<OpenedInfo> = this.$store.getters[
-      "globals/getOpenedList"
-    ];
-    openedList.some((opened: OpenedInfo) => {
-      if (opened.active) {
-        Vue.set(opened, "active", false);
-      }
-    });
-
-    // 缓存已打开的模块信息，并激活
-    const openedInfo: OpenedInfo = {
-      backgroundColor: menuInfoArr[2],
-      modal,
-      active: true
+      url: menuInfoArr[0],
+      title: menuInfoArr[1],
+      backgroundColor: menuInfoArr[2]
     };
-
-    this.$store.commit("globals/addOpenedInfo", openedInfo);
+    Commons.showModule(modalInfo);
   }
 
   /**
