@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1593601315348" clover="3.2.0">
-  <project timestamp="1593601315348" name="All files">
-    <metrics statements="203" coveredstatements="164" conditionals="80" coveredconditionals="53" methods="42" coveredmethods="34" elements="325" coveredelements="251" complexity="0" loc="203" ncloc="203" packages="11" files="18" classes="18"/>
+<coverage generated="1593936175601" clover="3.2.0">
+  <project timestamp="1593936175601" name="All files">
+    <metrics statements="220" coveredstatements="180" conditionals="88" coveredconditionals="60" methods="48" coveredmethods="40" elements="356" coveredelements="280" complexity="0" loc="220" ncloc="220" packages="12" files="21" classes="21"/>
     <package name="src">
       <metrics statements="15" coveredstatements="13" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="1"/>
       <file name="promission.ts" path="D:\work\workspace-ts-study\heart-front-end\src\promission.ts">
@@ -47,13 +47,13 @@
         <line num="54" count="7" type="stmt"/>
         <line num="56" count="7" type="cond" truecount="2" falsecount="0"/>
         <line num="58" count="7" type="stmt"/>
-        <line num="64" count="0" type="cond" truecount="1" falsecount="1"/>
-        <line num="69" count="7" type="cond" truecount="1" falsecount="1"/>
-        <line num="70" count="0" type="stmt"/>
+        <line num="65" count="0" type="cond" truecount="1" falsecount="1"/>
+        <line num="70" count="7" type="cond" truecount="1" falsecount="1"/>
         <line num="71" count="0" type="stmt"/>
-        <line num="72" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="73" count="0" type="stmt"/>
-        <line num="78" count="7" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="73" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="79" count="7" type="stmt"/>
       </file>
     </package>
     <package name="src.api.user.impl">
@@ -123,9 +123,9 @@
         <line num="82" count="0" type="stmt"/>
       </file>
     </package>
-    <package name="src.model.common">
+    <package name="src.model.global">
       <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-      <file name="GlobalConfig.ts" path="D:\work\workspace-ts-study\heart-front-end\src\model\common\GlobalConfig.ts">
+      <file name="GlobalConfig.ts" path="D:\work\workspace-ts-study\heart-front-end\src\model\global\GlobalConfig.ts">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="9" count="11" type="stmt"/>
         <line num="10" count="11" type="stmt"/>
@@ -144,16 +144,45 @@
       </file>
     </package>
     <package name="src.store">
-      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\index.ts">
-        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="5" type="stmt"/>
         <line num="2" count="5" type="stmt"/>
         <line num="4" count="5" type="stmt"/>
         <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.store.modules.globals">
+      <metrics statements="16" coveredstatements="15" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6"/>
+      <file name="getters.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\modules\globals\getters.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+      <file name="index.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\modules\globals\index.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
         <line num="7" count="5" type="stmt"/>
         <line num="9" count="5" type="stmt"/>
-        <line num="17" count="5" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+      </file>
+      <file name="mutations.ts" path="D:\work\workspace-ts-study\heart-front-end\src\store\modules\globals\mutations.ts">
+        <metrics statements="8" coveredstatements="7" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.store.modules.menu">

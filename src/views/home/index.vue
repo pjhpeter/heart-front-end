@@ -4,7 +4,7 @@
       <!-- 桌面 -->
       <Content class="content"></Content>
       <!-- 底部栏 -->
-      <div v-show="isShowFooter">
+      <div v-show="$store.getters['globals/isShowedFooter']">
         <Footer class="footer">
           <Layout>
             <!-- 开始按钮 -->
@@ -13,7 +13,7 @@
             </Sider>
             <!-- 已打开的模块图标容器 -->
             <Content>
-              <tab-container :tabs="tabs" />
+              <tab-container />
             </Content>
             <!-- 右下角图标容器 -->
             <Sider class="icon-container" hide-trigger :width="200"></Sider>
@@ -23,7 +23,7 @@
         <Footer class="footer-background"></Footer>
       </div>
     </Layout>
-    <menu-container @menu-click="showModule" v-show="isShowedMenu" />
+    <menu-container @menu-click="showModule" v-show="showedMenu" />
   </div>
 </template>
 
@@ -34,8 +34,7 @@ import { Md5 } from "md5-typescript";
 import ComponentInfo from "../../model/menu/ComponentInfo";
 import BaseModal from "@/components/commons/BaseModal.vue";
 import { CombinedVueInstance, CreateElement } from "vue/types/vue";
-import TabInfo from "../../model/home/TabInfo";
-import { TAB_ACTIVE_CLASS } from "../../constants/values/Global";
+import OpenedInfo from "../../model/global/OpenedInfo";
 
 @Component({
   components: {
@@ -46,14 +45,7 @@ import { TAB_ACTIVE_CLASS } from "../../constants/values/Global";
 })
 export default class Home extends Vue {
   // 开始菜单是否显示
-  isShowedMenu = false;
-  // 底部栏是否显示
-  isShowFooter = true;
-  // 已经打开的模块
-  tabs: Array<TabInfo> = [];
-
-  // 已打开的模态框
-  modals: Array<any> = [];
+  showedMenu = false;
 
   /**
    * 获取menu-container传回来的menuInfo，内容是menuUrl-menuName
@@ -66,90 +58,42 @@ export default class Home extends Vue {
     const menuInfoArr: Array<string> = menuInfo.split("-");
     // 手动实例化模态框实例
     const modal: any = new Vue({
+      store: $vm.$store,
       render(createElement: CreateElement): VNode {
         return createElement(BaseModal, {
           props: {
             menuUrl: menuInfoArr[0],
-            title: menuInfoArr[1],
-            tabs: $vm.tabs
-          },
-          on: {
-            "show-footer": $vm.showFooter,
-            "hide-footer": $vm.hideFooter,
-            "remove-modal": $vm.removeModel,
-            "remove-tab": $vm.removeTab
+            title: menuInfoArr[1]
           }
         });
       }
     }).$mount().$children[0];
-    // 缓存已打开的模块信息
-    this.pushTab({
-      backgroundColor: menuInfoArr[2],
-      modal
+
+    // 清空当前打开模块信息的激活状态
+    const openedList: Array<OpenedInfo> = this.$store.getters[
+      "globals/getOpenedList"
+    ];
+    openedList.some((opened: OpenedInfo) => {
+      if (opened.active) {
+        Vue.set(opened, "active", false);
+      }
     });
-    // 缓存已打开的模态框对象
-    this.modals.push(modal);
+
+    // 缓存已打开的模块信息，并激活
+    const openedInfo: OpenedInfo = {
+      backgroundColor: menuInfoArr[2],
+      modal,
+      active: true
+    };
+
+    this.$store.commit("globals/addOpenedInfo", openedInfo);
   }
 
   /**
    * 隐藏或显示开始菜单
    */
   showOrHideMenu(): void {
-    this.isShowedMenu = !this.isShowedMenu;
-  }
-
-  /**
-   * 显示底部栏
-   */
-  showFooter(): void {
-    this.isShowFooter = true;
-  }
-
-  /**
-   * 隐藏底部栏
-   */
-  hideFooter(): void {
-    this.isShowFooter = false;
-  }
-
-  /**
-   * 删除指定的底部栏模块图标
-   */
-  removeTab(modal: any) {
-    this.tabs.some((tabInfo: TabInfo, index: number) => {
-      if (tabInfo.modal._uid === modal._uid) {
-        this.tabs.splice(index, 1);
-        return true;
-      }
-      return false;
-    });
-  }
-
-  /**
-   * 删除关闭的模态框缓存
-   */
-  removeModel(modal: any) {
-    this.modals.some((item: any, index: number) => {
-      if (item._uid === modal._uid) {
-        this.modals.splice(index, 1);
-        return true;
-      }
-      return false;
-    });
-  }
-
-  /**
-   * 底部栏模块图标点击事件
-   */
-  pushTab(tabInfo: TabInfo): void {
-    // 设为选中
-    tabInfo.active = TAB_ACTIVE_CLASS;
-    this.tabs.forEach((tab: TabInfo) => {
-      // 清楚原有选中项
-      // 必须这样赋值才能触发UI响应
-      Vue.set(tab, "active", "");
-    });
-    this.tabs.push(tabInfo);
+    this.showedMenu = !this.showedMenu;
   }
 }
 </script>

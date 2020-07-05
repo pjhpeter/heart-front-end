@@ -51,8 +51,7 @@
  */
 import { Vue, Component, Prop, Emit } from "vue-property-decorator";
 import ComponentLoader from "./ComponentLoader.vue";
-import TabInfo from "../../model/home/TabInfo";
-import { TAB_ACTIVE_CLASS } from "../../constants/values/Global";
+import OpenedInfo from "../../model/global/OpenedInfo";
 
 @Component({
   components: {
@@ -81,12 +80,6 @@ export default class BaseModal extends Vue {
     default: ""
   })
   menuUrl!: string;
-  // 底部栏模块图标集合
-  @Prop({
-    type: Array,
-    default: []
-  })
-  tabs?: Array<TabInfo>;
   // 模态框关闭时的回调函数
   @Prop()
   onClose?: Function;
@@ -124,6 +117,8 @@ export default class BaseModal extends Vue {
   private fullscreen(): void {
     this.isDraggable = false;
     this.isFullscreen = true;
+    // 模拟点击模态框操作，使其至于最顶层，查看源代码发现的
+    (this.$children[0] as any).handleClickModal();
     this.hideFooter();
   }
 
@@ -142,8 +137,7 @@ export default class BaseModal extends Vue {
   close(): void {
     this.isShow = false;
     this.showFooter();
-    this.removeTab();
-    this.removeModal();
+    this.removeOpened();
     if (this.onClose) {
       // 触发自定义关闭处理方法
       this.onClose.call(this, this);
@@ -174,13 +168,16 @@ export default class BaseModal extends Vue {
     const $vm = this as any;
     const currentUid = $vm._uid;
     // 选中当前点击项，清楚其他选中项
-    $vm.tabs.forEach((tab: TabInfo) => {
-      if (tab.modal._uid === currentUid && $vm.isShow) {
+    const openedList: Array<OpenedInfo> = this.$store.getters[
+      "globals/getOpenedList"
+    ];
+    openedList.forEach((opened: OpenedInfo) => {
+      if (opened.modal._uid === currentUid && $vm.isShow) {
         // 必须这样赋值才能触发UI响应
-        Vue.set(tab, "active", TAB_ACTIVE_CLASS);
+        Vue.set(opened, "active", true);
       } else {
         // 必须这样赋值才能触发UI响应
-        Vue.set(tab, "active", "");
+        Vue.set(opened, "active", false);
       }
     });
   }
@@ -195,29 +192,29 @@ export default class BaseModal extends Vue {
   /**
    * 触发桌面底部栏显示
    */
-  @Emit("show-footer")
-  private showFooter(): void {}
+  private showFooter(): void {
+    this.$store.commit("globals/setShowedFooter", true);
+    console.log(this.$store.getters["globals/isShowedFooter"]);
+  }
 
   /**
    * 触发桌面底部栏隐藏
    */
-  @Emit("hide-footer")
-  private hideFooter(): void {}
-
-  /**
-   * 触发首页删除本模态框缓存
-   */
-  @Emit("remove-modal")
-  private removeModal(): any {
-    return this;
+  private hideFooter(): void {
+    this.$store.commit("globals/setShowedFooter", false);
+    console.log(this.$store.getters["globals/isShowedFooter"]);
   }
 
   /**
-   * 触发首页删除本模块信息缓存
+   * 删除本模块信息缓存
    */
-  @Emit("remove-tab")
-  private removeTab(): any {
-    return this;
+  private removeOpened(): void {
+    const openedInfo: OpenedInfo = {
+      backgroundColor: "",
+      modal: this,
+      active: false
+    };
+    this.$store.commit("globals/ramoveOpenedInfo", openedInfo);
   }
 }
 </script>

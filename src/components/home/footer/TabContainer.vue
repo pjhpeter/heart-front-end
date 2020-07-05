@@ -1,16 +1,16 @@
 <template>
   <div class="tab-container">
     <div
-      :class="`tab-icon ${tabInfo.active}`"
-      v-for="(tabInfo, index) in tabs"
+      :class="`tab-icon ${openedInfo.active ? 'tab-icon-active' : ''}`"
+      v-for="(openedInfo, index) in openedList"
       :key="index"
-      @click="onTabClick(tabInfo)"
+      @click="onTabClick(openedInfo)"
     >
       <Row class="tab-row" type="flex" justify="center" align="middle">
         <Col span="8">
           <div
-            v-text="tabInfo.modal.title.substring(0, 1)"
-            :style="{ backgroundColor: tabInfo.backgroundColor }"
+            v-text="openedInfo.modal.title.substring(0, 1)"
+            :style="{ backgroundColor: openedInfo.backgroundColor }"
           ></div>
         </Col>
       </Row>
@@ -24,42 +24,37 @@
  * @author 彭嘉辉
  */
 import { Vue, Component, Prop } from "vue-property-decorator";
-import TabInfo from "../../../model/home/TabInfo";
-import { TAB_ACTIVE_CLASS } from "../../../constants/values/Global";
+import OpenedInfo from "../../../model/global/OpenedInfo";
 
 @Component({
   name: "tab-container"
 })
 export default class TabContainer extends Vue {
-  @Prop({
-    type: Array,
-    default: []
-  })
-  tabs!: Array<TabInfo>;
-
+  // 已打开的模块信息
+  openedList: Array<OpenedInfo> = this.$store.getters["globals/getOpenedList"];
   /**
    * 底部栏模块图标点击事件
    */
-  onTabClick(tabInfo: TabInfo): void {
+  onTabClick(openedInfo: OpenedInfo): void {
     // 选中当前点击项，清楚其他选中项
-    this.tabs.forEach((tab: TabInfo) => {
-      if (tab.modal._uid === tabInfo.modal._uid) {
+    this.openedList.forEach((opened: OpenedInfo) => {
+      if (opened.modal._uid === opened.modal._uid) {
         // 必须这样赋值才能触发UI响应
-        Vue.set(tab, "active", TAB_ACTIVE_CLASS);
+        Vue.set(opened, "active", true);
       } else {
         // 必须这样赋值才能触发UI响应
-        Vue.set(tab, "active", "");
+        Vue.set(opened, "active", false);
       }
     });
 
     // 判断标签对应的模态框是否隐藏
-    if (!tabInfo.modal.isShow) {
+    if (!openedInfo.modal.isShow) {
       // 隐藏则显示
-      Vue.set(tabInfo.modal, "isShow", true);
+      Vue.set(openedInfo.modal, "isShow", true);
     }
 
     // 模拟点击模态框操作，使其至于最顶层，查看源代码发现的
-    tabInfo.modal.$children[0].handleClickModal();
+    openedInfo.modal.$children[0].handleClickModal();
   }
 }
 </script>

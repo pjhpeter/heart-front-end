@@ -1,6 +1,6 @@
 import { plainToClassFromExist } from "class-transformer";
 import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
-import GlobalConfig from "@/model/common/GlobalConfig";
+import GlobalConfig from "@/model/global/GlobalConfig";
 
 /**
  * 全局配置项读取器

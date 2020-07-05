@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/store/modules/menu/getters.ts</title>
+    <title>Code coverage report for src/store/modules/globals/getters.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\..\..\base.css" />
@@ -18,7 +18,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="..\..\..\..\index.html">All files</a> / <a href="index.html">src/store/modules/menu</a> getters.ts</h1>
+        <h1><a href="..\..\..\..\index.html">All files</a> / <a href="index.html">src/store/modules/globals</a> getters.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -77,10 +77,7 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -91,7 +88,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -101,31 +98,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { GetterTree } from "vuex";
-import { MenuState } from "./types";
-import { RootState } from "@/store/types";
-import VueRouter from "vue-router";
-import Menu from "@/model/menu/Menu";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { GetterTree } from 'vuex';
+import { GlobalState } from './types';
+import { RootState } from '@/store/types';
+import OpenedInfo from '@/model/global/OpenedInfo';
 &nbsp;
-export const getters: GetterTree&lt;MenuState, RootState&gt; = {
-  /**
-   * 获取菜单树
-   * @param state 菜单状态信息
-   */
-  getMenuTree(state: MenuState): Array&lt;Menu&gt; | null {
-    return state.menuTree;
-  },
+export const getters: GetterTree&lt;GlobalState, RootState&gt; = {
+    /**
+     * 获取已打开的模块信息列表
+     * @param state 全局状态数据
+     */
+    getOpenedList(state: GlobalState): Array&lt;OpenedInfo&gt;{
+        return state.openedList;
+    },
 &nbsp;
-  /**
-   * 获取路由器对象
-   * @param state 菜单状态信息
-   */
-  getRouter(state: MenuState): VueRouter | null {
-    return state.router;
-  }
-};
-&nbsp;</pre></td></tr></table></pre>
+    /**
+     * 获取底部栏显示状态
+     * @param state 全局状态数据
+     */
+    isShowedFooter(state: GlobalState): boolean {
+        return state.showedFooter;
+    }
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

@@ -3,7 +3,7 @@ import store from "@/store";
 import Axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 // import { Message } from "view-design";
 import { GlobalConfigReader } from "./GlobalConfigReader";
-import GlobalConfig from "@/model/common/GlobalConfig";
+import GlobalConfig from "@/model/global/GlobalConfig";
 
 /**
  * Ajax请求工具工厂类，通过getRequestInstance方法获取request实例，request对象封装了向后端服务发送请求的方法
