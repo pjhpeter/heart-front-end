@@ -163,6 +163,13 @@ export default class BaseModal extends Vue {
   }
 
   /**
+   * 鼠标松开事件
+   */
+  mouseup(event: any): void {
+    document.onmousemove = null;
+  }
+
+  /**
    * 监听模态框层级变化
    */
   activeTab(newValue: number, oldValue: number): void {
@@ -184,18 +191,10 @@ export default class BaseModal extends Vue {
   }
 
   /**
-   * 鼠标松开事件
-   */
-  mouseup(event: any): void {
-    document.onmousemove = null;
-  }
-
-  /**
    * 触发桌面底部栏显示
    */
   private showFooter(): void {
     this.$store.commit("globals/setShowedFooter", true);
-    console.log(this.$store.getters["globals/isShowedFooter"]);
   }
 
   /**
@@ -203,7 +202,6 @@ export default class BaseModal extends Vue {
    */
   private hideFooter(): void {
     this.$store.commit("globals/setShowedFooter", false);
-    console.log(this.$store.getters["globals/isShowedFooter"]);
   }
 
   /**
