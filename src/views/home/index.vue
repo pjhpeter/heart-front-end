@@ -2,7 +2,7 @@
   <div class="home">
     <Layout>
       <!-- 桌面 -->
-      <Content class="content"></Content>
+      <Content class="content" :style="backgroundStyles"></Content>
       <!-- 底部栏 -->
       <div v-show="$store.getters['globals/isShowedFooter']">
         <Footer class="footer">
@@ -16,11 +16,16 @@
               <tab-container />
             </Content>
             <!-- 右下角图标容器 -->
-            <Sider class="icon-container" hide-trigger :width="200"></Sider>
+            <Sider class="icon-container" hide-trigger :width="250">
+              <icon-group />
+            </Sider>
           </Layout>
         </Footer>
         <!-- 毛玻璃底层 -->
-        <Footer class="footer-background"></Footer>
+        <Footer
+          class="footer-background"
+          :style="footerBackgroundStyles"
+        ></Footer>
       </div>
     </Layout>
     <menu-container @menu-click="showModule" v-show="showedMenu" />
@@ -37,16 +42,34 @@ import OpenedInfo from "../../model/global/OpenedInfo";
 import Commons from "../../utils/Commons";
 import ModalInfo from "../../model/global/ModalInfo";
 
+// ts不识别require函数，必须要这样声明一下
+declare function require(img: string): string;
+
 @Component({
   components: {
     MenuContainer: () => import("@/components/home/menu/MenuContainer.vue"),
     StartButton: () => import("@/components/home/footer/StartButton.vue"),
-    TabContainer: () => import("../../components/home/footer/TabContainer.vue")
+    TabContainer: () => import("../../components/home/footer/TabContainer.vue"),
+    IconGroup: () => import("../../components/home/footer/IconGroup.vue")
   }
 })
 export default class Home extends Vue {
   // 开始菜单是否显示
   showedMenu = false;
+  // 壁纸url
+  // 不在style标签中设置路径的话，必须用require函数来加载图片，否则会找不到
+  // TODO:这里以后可以读后端返回的路径
+  wallpaperUrl: string = require("../../assets/home/images/background.jpg");
+  // 壁纸样式
+  backgroundStyles: object = {
+    background: `url(${this.wallpaperUrl}) center / cover no-repeat`,
+    backgroundSize: "100% 100%"
+  };
+  // 底部栏背景样式，毛玻璃效果需要
+  footerBackgroundStyles: object = {
+    background: `url(${this.wallpaperUrl}) center / cover no-repeat fixed`,
+    backgroundSize: "100% 100%"
+  };
 
   /**
    * 获取menu-container传回来的menuInfo，内容是menuUrl-menuName
@@ -86,9 +109,6 @@ $blur: 35px;
     height: 100%;
     .content {
       height: 100%;
-      background-image: url("../../assets/home/images/background.jpg");
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
     }
     .footer,
     .footer-background {
@@ -98,20 +118,19 @@ $blur: 35px;
       bottom: 0;
       height: $footerHeight;
       padding: 0 !important;
-      background-color: rgba($color: #ffffff, $alpha: 0.1);
+      background-color: rgba($color: #ffffff, $alpha: 0.6);
       box-sizing: content-box;
-      z-index: 10010;
+      z-index: 99999;
       border-top: 1px solid rgba($color: $background, $alpha: 0.2);
       .ivu-layout {
         background-color: rgba($color: white, $alpha: 0);
+        .icon-container {
+          background-color: rgba($color: white, $alpha: 0);
+        }
       }
     }
     .footer-background {
-      z-index: 10000;
-      background: url("../../assets/home/images/background.jpg") center / cover
-        fixed;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
+      z-index: 99998;
       -webkit-filter: blur(10px);
       filter: blur(10px);
     }

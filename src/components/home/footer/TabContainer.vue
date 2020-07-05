@@ -1,20 +1,24 @@
 <template>
   <div class="tab-container">
-    <div
-      :class="`tab-icon ${openedInfo.active ? 'tab-icon-active' : ''}`"
+    <transition
       v-for="(openedInfo, index) in openedList"
       :key="index"
-      @click="onTabClick(openedInfo)"
+      name="fade"
     >
-      <Row class="tab-row" type="flex" justify="center" align="middle">
-        <Col span="8">
-          <div
-            v-text="openedInfo.modal.title.substring(0, 1)"
-            :style="{ backgroundColor: openedInfo.backgroundColor }"
-          ></div>
-        </Col>
-      </Row>
-    </div>
+      <div
+        :class="`tab-icon ${openedInfo.active ? 'tab-icon-active' : ''}`"
+        @click="onTabClick(openedInfo)"
+      >
+        <Row class="tab-row" type="flex" justify="center" align="middle">
+          <Col span="8">
+            <div
+              v-text="openedInfo.modal.title.substring(0, 1)"
+              :style="{ backgroundColor: openedInfo.backgroundColor }"
+            ></div>
+          </Col>
+        </Row>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -69,19 +73,27 @@ export default class TabContainer extends Vue {
     color: white;
     font-size: 16px;
     font-weight: 700;
+    // 底下的小红线
+    &::after {
+      content: "";
+      transition: width 0.5s;
+      opacity: 0;
+      width: 0;
+      height: 3px;
+      background-color: $darkPrimary;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
     &:hover {
       background-color: rgba($color: white, $alpha: 0.2);
       &::after {
-        content: "";
         width: 80%;
-        height: 3px;
-        background-color: $darkPrimary;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
+        opacity: 1;
       }
     }
+
     .tab-row {
       height: 100%;
       div {
@@ -93,32 +105,29 @@ export default class TabContainer extends Vue {
       }
     }
   }
+  // 选中样式
   .tab-icon-active {
     background-color: rgba($color: white, $alpha: 0.4);
     position: relative;
     &:hover {
       background-color: rgba($color: white, $alpha: 0.6) !important;
       &::after {
-        content: "";
-        width: 90%;
-        height: 3px;
-        background-color: $darkPrimary;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
+        width: 98%;
       }
     }
     &::after {
-      content: "";
-      width: 90%;
-      height: 3px;
-      background-color: $darkPrimary;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      opacity: 1;
+      width: 98%;
     }
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -1,9 +1,11 @@
 <template>
-  <div class="menu-container">
-    <Menu @on-select="onMenuClick">
-      <menu-tree :menuTree="menuTree" />
-    </Menu>
-  </div>
+  <transition name="slide-fade">
+    <div class="menu-container">
+      <Menu @on-select="onMenuClick">
+        <menu-tree :menuTree="menuTree" />
+      </Menu>
+    </div>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -20,7 +22,11 @@ import Menu from "../../../model/menu/Menu";
   name: "menu-container",
   components: {
     MenuTree: () => import("./MenuTree.vue")
-  },
+  }
+})
+export default class MenuContainer extends Vue {
+  menuTree: Array<Menu> | null = [];
+
   async mounted() {
     // 这样写方便后面的代码读取this的属性，避免类型检查报错
     const $vm = this as any;
@@ -33,9 +39,6 @@ import Menu from "../../../model/menu/Menu";
     }
     $vm.menuTree = menuTree;
   }
-})
-export default class MenuContainer extends Vue {
-  menuTree: Array<Menu> | null = [];
 
   /**
    * 触发父组件的menuClick事件，将menuInfo传给父组件
@@ -53,6 +56,18 @@ export default class MenuContainer extends Vue {
   position: fixed;
   left: 0;
   bottom: $footerHeight;
-  z-index: 99999;
+  z-index: 99997;
+}
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.2s;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
 }
 </style>

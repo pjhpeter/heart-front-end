@@ -7,22 +7,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { CreateElement, RenderContext, VNode } from "vue";
 
 @Component({
-  name: "component-loader",
-  created() {
-    // 动态注册组件
-    const $vm = this as any;
-    const url = $vm.url;
-    // 获取模块名称
-    // 如menuUrl为"/mb/secfileSign/list"，只要模块名"secfileSign"
-    const componentName = ($vm.componentName = $vm.getComponentName(url));
-    $vm.$options.components[componentName] = () =>
-      import(`@/views${url}/index.vue`);
-  },
-  render(createElement: CreateElement): VNode {
-    // 动态渲染组件
-    const $vm = this as any;
-    return createElement($vm.componentName);
-  }
+  name: "component-loader"
 })
 export default class ComponentLoader extends Vue {
   @Prop({
@@ -32,6 +17,23 @@ export default class ComponentLoader extends Vue {
   })
   url!: string;
   componentName!: string;
+
+  created(): void {
+    // 动态注册组件
+    const $vm = this as any;
+    const url = $vm.url;
+    // 获取模块名称
+    // 如menuUrl为"/mb/secfileSign/list"，只要模块名"secfileSign"
+    const componentName = ($vm.componentName = $vm.getComponentName(url));
+    $vm.$options.components[componentName] = () =>
+      import(`@/views${url}/index.vue`);
+  }
+
+  render(createElement: CreateElement): VNode {
+    // 动态渲染组件
+    const $vm = this as any;
+    return createElement($vm.componentName);
+  }
 
   /**
    * 获得组件名称，以后端的模块名称作为组件名称

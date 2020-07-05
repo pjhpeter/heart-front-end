@@ -56,14 +56,6 @@ import OpenedInfo from "../../model/global/OpenedInfo";
 @Component({
   components: {
     ComponentLoader
-  },
-  mounted() {
-    // 普通的监听器写法无法监听复杂路径的变量
-    // 如果要监听复杂路径的变量，用函数的方式返回变量
-    this.$watch(
-      () => (this.$children[0] as any).modalIndex,
-      (this as any).activeTab
-    );
   }
 })
 export default class BaseModal extends Vue {
@@ -102,6 +94,15 @@ export default class BaseModal extends Vue {
   isDraggable = true;
   // 是否最大化
   isFullscreen = false;
+
+  mounted(): void {
+    // 普通的监听器写法无法监听复杂路径的变量
+    // 如果要监听复杂路径的变量，用函数的方式返回变量
+    this.$watch(
+      () => (this.$children[0] as any).modalIndex,
+      (this as any).activeTab
+    );
+  }
 
   /**
    * 最小化
