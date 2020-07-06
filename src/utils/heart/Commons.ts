@@ -3,7 +3,7 @@ import { MENU_ICON_COLORS } from "@/constants/heart/values/Global";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import OpenedInfo from "@/model/heart/global/OpenedInfo";
 import { Vue } from "vue-property-decorator";
-import { CreateElement, VNode } from "vue/types/umd";
+import store from "../../store";
 
 /**
  * 公共工具类
@@ -17,19 +17,6 @@ export default class Commons {
    * @param modalInfo 模态框信息
    */
   static showModule(modalInfo: ModalInfo): void {
-    const store = modalInfo.store;
-    const modal: any = new Vue({
-      store,
-      render(createElement: CreateElement): VNode {
-        return createElement(BaseModal, {
-          props: {
-            url: modalInfo.url,
-            title: modalInfo.title
-          }
-        });
-      }
-    }).$mount().$children[0]; // $mount方法不传参数会自动生成一个root节点，模态框是root的第一个子节点
-
     // 清空当前打开模块信息的激活状态
     const openedList: Array<OpenedInfo> =
       store.getters["globals/getOpenedList"];
@@ -41,8 +28,10 @@ export default class Commons {
 
     // 缓存已打开的模块信息，并激活
     const openedInfo: OpenedInfo = {
+      id: Commons.createId(),
       backgroundColor: modalInfo.backgroundColor,
-      modal,
+      title: modalInfo.title,
+      url: modalInfo.url,
       active: true
     };
     store.commit("globals/addOpenedInfo", openedInfo);
@@ -65,5 +54,17 @@ export default class Commons {
       Commons.currentIconColorIndex++;
     }
     return color;
+  }
+
+  /**
+   * 生成一个id
+   * @returns id
+   */
+  static createId(): number {
+    return Number(
+      Math.random()
+        .toString()
+        .substr(3, length) + Date.now()
+    );
   }
 }

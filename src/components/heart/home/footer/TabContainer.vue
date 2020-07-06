@@ -12,7 +12,7 @@
         <Row class="tab-row" type="flex" justify="center" align="middle">
           <Col span="8">
             <div
-              v-text="openedInfo.modal.title.substring(0, 1)"
+              v-text="openedInfo.title.substring(0, 1)"
               :style="{ backgroundColor: openedInfo.backgroundColor }"
             ></div>
           </Col>
@@ -42,7 +42,7 @@ export default class TabContainer extends Vue {
   onTabClick(openedInfo: OpenedInfo): void {
     // 选中当前点击项，清楚其他选中项
     this.openedList.forEach((opened: OpenedInfo) => {
-      if (opened.modal._uid === opened.modal._uid) {
+      if (openedInfo.id === opened.id) {
         // 必须这样赋值才能触发UI响应
         Vue.set(opened, "active", true);
       } else {
@@ -50,7 +50,6 @@ export default class TabContainer extends Vue {
         Vue.set(opened, "active", false);
       }
     });
-
     // 判断标签对应的模态框是否隐藏
     if (!openedInfo.modal.isShow) {
       // 隐藏则显示

@@ -1,6 +1,7 @@
 import { MutationTree } from "vuex";
 import { GlobalState } from "./types";
 import OpenedInfo from "@/model/heart/global/OpenedInfo";
+import { Vue } from "vue-property-decorator";
 
 export const mutations: MutationTree<GlobalState> = {
   /**
@@ -9,7 +10,24 @@ export const mutations: MutationTree<GlobalState> = {
    * @param openedInfo 打开的模块信息
    */
   addOpenedInfo(state: GlobalState, openedInfo: OpenedInfo): void {
-    state.openedList?.push(openedInfo);
+    state.openedList.push(openedInfo);
+  },
+
+  /**
+   * 保存已打开的模态框对象
+   * @param state 全局状态数据
+   * @param modal 当前打开的模态框对象
+   */
+  setOpenedModal(state: GlobalState, modal: any): void {
+    state.openedList.some((openedInfo: OpenedInfo) => {
+      console.log(modal._id);
+      console.log(openedInfo.id);
+      if (modal._id === openedInfo.id) {
+        console.log("哈哈");
+        Vue.set(openedInfo, "modal", modal);
+      }
+    });
+    console.log(state.openedList);
   },
 
   /**
@@ -18,8 +36,8 @@ export const mutations: MutationTree<GlobalState> = {
    * @param openedInfo 打开的模块信息
    */
   ramoveOpenedInfo(state: GlobalState, openedInfo: OpenedInfo): void {
-    state.openedList?.some((opened: OpenedInfo, index: number) => {
-      if (openedInfo.modal._uid === opened.modal._uid) {
+    state.openedList.some((opened: OpenedInfo, index: number) => {
+      if (openedInfo.id === opened.id) {
         state.openedList?.splice(index, 1);
         return true;
       }

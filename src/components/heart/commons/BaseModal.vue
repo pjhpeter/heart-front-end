@@ -59,6 +59,11 @@ import OpenedInfo from "../../../model/heart/global/OpenedInfo";
   }
 })
 export default class BaseModal extends Vue {
+  @Prop({
+    type: Number,
+    required: true
+  })
+  _id!: number;
   // 模态框标题
   @Prop({
     type: String,
@@ -98,10 +103,7 @@ export default class BaseModal extends Vue {
   mounted(): void {
     // 普通的监听器写法无法监听复杂路径的变量
     // 如果要监听复杂路径的变量，用函数的方式返回变量
-    this.$watch(
-      () => (this.$children[0] as any).modalIndex,
-      (this as any).activeTab
-    );
+    this.$watch(() => (this.$children[0] as any).modalIndex, this.activeTab);
   }
 
   /**
@@ -143,7 +145,6 @@ export default class BaseModal extends Vue {
       // 触发自定义关闭处理方法
       this.onClose.call(this, this);
     }
-    this.$parent.$destroy();
   }
 
   /**
@@ -173,14 +174,12 @@ export default class BaseModal extends Vue {
    * 监听模态框层级变化
    */
   activeTab(newValue: number, oldValue: number): void {
-    const $vm = this as any;
-    const currentUid = $vm._uid;
     // 选中当前点击项，清楚其他选中项
     const openedList: Array<OpenedInfo> = this.$store.getters[
       "globals/getOpenedList"
     ];
     openedList.forEach((opened: OpenedInfo) => {
-      if (opened.modal._uid === currentUid && $vm.isShow) {
+      if (opened.id === this._id && this.isShow) {
         // 必须这样赋值才能触发UI响应
         Vue.set(opened, "active", true);
       } else {
@@ -209,8 +208,10 @@ export default class BaseModal extends Vue {
    */
   private removeOpened(): void {
     const openedInfo: OpenedInfo = {
+      id: this._id,
       backgroundColor: "",
-      modal: this,
+      title: this.title,
+      url: this.url,
       active: false
     };
     this.$store.commit("globals/ramoveOpenedInfo", openedInfo);

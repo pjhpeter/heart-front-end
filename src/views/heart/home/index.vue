@@ -29,6 +29,15 @@
       </div>
     </Layout>
     <menu-container @menu-click="showModule" v-show="showedMenu" />
+    <component
+      :is="BaseModal"
+      v-for="openedInfo in $store.getters['globals/getOpenedList']"
+      :key="openedInfo.id"
+      :title="openedInfo.title"
+      :url="openedInfo.url"
+      :ref="openedInfo.id"
+      :_id="openedInfo.id"
+    ></component>
   </div>
 </template>
 
@@ -39,6 +48,8 @@ import { Md5 } from "md5-typescript";
 import { CombinedVueInstance, CreateElement } from "vue/types/vue";
 import ModalInfo from "../../../model/heart/global/ModalInfo";
 import Commons from "../../../utils/heart/Commons";
+import BaseModal from "../../../components/heart/commons/BaseModal.vue";
+import OpenedInfo from "../../../model/heart/global/OpenedInfo";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
@@ -56,6 +67,7 @@ declare function require(img: string): string;
   }
 })
 export default class Home extends Vue {
+  BaseModal: any = BaseModal;
   // 开始菜单是否显示
   showedMenu = false;
   // 壁纸url
@@ -73,6 +85,14 @@ export default class Home extends Vue {
     backgroundSize: "100% 100%"
   };
 
+  mounted(): void {
+    // document.addEventListener("click", this.showOrHideMenu);
+    this.$watch(
+      () => this.$store.getters["globals/getOpenedList"].length,
+      this.setOpenedModals
+    );
+  }
+
   /**
    * 获取menu-container传回来的menuInfo，内容是menuUrl-menuName
    */
@@ -82,7 +102,7 @@ export default class Home extends Vue {
     $vm.showOrHideMenu();
     // menuUrl-menuName-menuIcon
     const menuInfoArr: Array<string> = menuInfo.split("-");
-    // 手动实例化模态框实例
+    // 打开一个模态框
     const modalInfo: ModalInfo = {
       store: $vm.$store,
       url: menuInfoArr[0],
@@ -95,8 +115,33 @@ export default class Home extends Vue {
   /**
    * 隐藏或显示开始菜单
    */
-  showOrHideMenu(): void {
+  showOrHideMenu(event: any): void {
     this.showedMenu = !this.showedMenu;
+  }
+
+  /**
+   * 监听store中openedList的变化，缓存打开的模态框对象
+   */
+  setOpenedModals(newLength: number, oldLength: number): void {
+    // 只有openedList长度增加时才需要缓存新打开的模态框对象，如果长度减少说明是关闭模态框，不需要缓存
+    if (newLength > oldLength) {
+      // 安全起见，等待模态框组件渲染完成
+      this.$nextTick(() => {
+        this.$store.getters["globals/getOpenedList"].some(
+          (openedInfo: OpenedInfo) => {
+            if (!openedInfo.modal) {
+              // 缓存打开的模态框对象
+              this.$store.commit(
+                "globals/setOpenedModal",
+                (this.$refs[openedInfo.id] as any)[0]
+              );
+              return true;
+            }
+            return false;
+          }
+        );
+      });
+    }
   }
 }
 </script>

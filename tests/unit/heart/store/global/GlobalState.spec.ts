@@ -12,8 +12,10 @@ describe("测试mutations", () => {
       showedFooter: true
     };
     openedInfo = {
+      id: 1,
       backgroundColor: "#FFFFFF",
-      modal: { _uid: 1 },
+      url: "aa",
+      title: "呵呵",
       active: true
     };
   });
@@ -47,13 +49,17 @@ describe("测试getters", () => {
     globalState = {
       openedList: [
         {
+          id: 1,
           backgroundColor: "#FFFFFF",
-          modal: { _uid: 1 },
+          url: "aa",
+          title: "呵呵",
           active: true
         },
         {
+          id: 2,
           backgroundColor: "#FFFFFF",
-          modal: { _uid: 2 },
+          url: "aa",
+          title: "嘻嘻",
           active: false
         }
       ],
