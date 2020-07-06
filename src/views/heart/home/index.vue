@@ -4,31 +4,34 @@
       <!-- 桌面 -->
       <Content class="content" :style="backgroundStyles"></Content>
       <!-- 底部栏 -->
-      <div v-show="$store.getters['globals/isShowedFooter']">
-        <Footer class="footer">
-          <Layout>
-            <!-- 开始按钮 -->
-            <Sider class="start-button-container" hide-trigger :width="45">
-              <start-button @start-click="showOrHideMenu" />
-            </Sider>
-            <!-- 已打开的模块图标容器 -->
-            <Content>
-              <tab-container />
-            </Content>
-            <!-- 右下角图标容器 -->
-            <Sider class="icon-container" hide-trigger :width="250">
-              <icon-group />
-            </Sider>
-          </Layout>
-        </Footer>
-        <!-- 毛玻璃底层 -->
-        <Footer
-          class="footer-background"
-          :style="footerBackgroundStyles"
-        ></Footer>
-      </div>
+      <transition name="slide-fade">
+        <div v-show="$store.getters['globals/isShowedFooter']">
+          <Footer class="footer">
+            <Layout>
+              <!-- 开始按钮 -->
+              <Sider class="start-button-container" hide-trigger :width="45">
+                <start-button @start-click.stop="showOrHideMenu" />
+              </Sider>
+              <!-- 已打开的模块图标容器 -->
+              <Content>
+                <tab-container />
+              </Content>
+              <!-- 右下角图标容器 -->
+              <Sider class="icon-container" hide-trigger :width="250">
+                <icon-group />
+              </Sider>
+            </Layout>
+          </Footer>
+          <!-- 毛玻璃底层 -->
+          <Footer
+            class="footer-background"
+            :style="footerBackgroundStyles"
+          ></Footer>
+        </div>
+      </transition>
     </Layout>
     <menu-container @menu-click="showModule" v-show="showedMenu" />
+    <!-- 模态框组件占位标签 -->
     <component
       :is="BaseModal"
       v-for="openedInfo in $store.getters['globals/getOpenedList']"
@@ -86,7 +89,7 @@ export default class Home extends Vue {
   };
 
   mounted(): void {
-    // document.addEventListener("click", this.showOrHideMenu);
+    document.addEventListener("click", this.hideMenu);
     this.$watch(
       () => this.$store.getters["globals/getOpenedList"].length,
       this.setOpenedModals
@@ -97,14 +100,12 @@ export default class Home extends Vue {
    * 获取menu-container传回来的menuInfo，内容是menuUrl-menuName
    */
   showModule(menuInfo: string): void {
-    const $vm = this as any;
     // 隐藏开始菜单
-    $vm.showOrHideMenu();
+    this.showOrHideMenu();
     // menuUrl-menuName-menuIcon
     const menuInfoArr: Array<string> = menuInfo.split("-");
     // 打开一个模态框
     const modalInfo: ModalInfo = {
-      store: $vm.$store,
       url: menuInfoArr[0],
       title: menuInfoArr[1],
       backgroundColor: menuInfoArr[2]
@@ -113,10 +114,17 @@ export default class Home extends Vue {
   }
 
   /**
-   * 隐藏或显示开始菜单
+   * 隐藏或显示开始菜单，给开始按钮用
    */
-  showOrHideMenu(event: any): void {
+  showOrHideMenu(): void {
     this.showedMenu = !this.showedMenu;
+  }
+
+  /**
+   * 隐藏开始菜单
+   */
+  hideMenu(): void {
+    this.showedMenu = false;
   }
 
   /**
@@ -182,5 +190,16 @@ $blur: 35px;
       filter: blur(10px);
     }
   }
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
 }
 </style>

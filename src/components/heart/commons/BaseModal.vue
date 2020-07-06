@@ -59,6 +59,7 @@ import OpenedInfo from "../../../model/heart/global/OpenedInfo";
   }
 })
 export default class BaseModal extends Vue {
+  // 模态框id
   @Prop({
     type: Number,
     required: true
