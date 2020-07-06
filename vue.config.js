@@ -30,7 +30,7 @@ module.exports = {
     "style-resources-loader": {
       preProcessor: "scss",
       patterns: [
-        path.resolve(__dirname, "./src/assets/global/scss/variables.scss")
+        path.resolve(__dirname, "./src/assets/heart/global/scss/variables.scss")
       ]
     }
   }

@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
 import { RootState } from "./types";
-import { user } from "./modules/user";
-import { menu } from "./modules/menu";
-import { globals } from "./modules/globals";
+import { user } from "./modules/heart/user";
+import { menu } from "./modules/heart/menu";
+import { globals } from "./modules/heart/globals";
 
 Vue.use(Vuex);
 

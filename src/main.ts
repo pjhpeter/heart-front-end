@@ -5,7 +5,7 @@ import store from "./store";
 import ViewUI from "view-design";
 
 import "view-design/dist/styles/iview.css";
-import "./assets/global/scss/index.scss";
+import "./assets/heart/global/scss/index.scss";
 
 import "./promission";
 

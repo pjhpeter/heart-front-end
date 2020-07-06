@@ -1,6 +1,6 @@
-import { GlobalConfigReader } from "@/utils/GlobalConfigReader";
-import { LocalStorageKeys } from "@/constants/enum/LocalStorageKeys";
-import GlobalConfig from "@/model/global/GlobalConfig";
+import { GlobalConfigReader } from "@/utils/heart/GlobalConfigReader";
+import { LocalStorageKeys } from "@/constants/heart/enum/LocalStorageKeys";
+import GlobalConfig from "@/model/heart/global/GlobalConfig";
 
 /**
  * GlobalConfigReader单元测试

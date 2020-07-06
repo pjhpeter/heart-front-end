@@ -1,7 +1,7 @@
-import { GlobalState } from "@/store/modules/globals/types";
-import { mutations } from "@/store/modules/globals/mutations";
-import { getters } from "@/store/modules/globals/getters";
-import OpenedInfo from "@/model/global/OpenedInfo";
+import { GlobalState } from "@/store/modules/heart/globals/types";
+import { mutations } from "@/store/modules/heart/globals/mutations";
+import { getters } from "@/store/modules/heart/globals/getters";
+import OpenedInfo from "@/model/heart/global/OpenedInfo";
 
 describe("测试mutations", () => {
   let globalState: GlobalState;
