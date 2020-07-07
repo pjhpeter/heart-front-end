@@ -1,5 +1,7 @@
+import ModalInfo from "./ModalInfo";
+
 /**
- * 底部栏已打开模块的信息接口
+ * 已打开模块的信息接口
  * @author 彭嘉辉
  */
 export default interface OpenedInfo {
@@ -15,4 +17,6 @@ export default interface OpenedInfo {
   active?: boolean;
   // 打开的模态框对象
   modal?: any;
+  // 模态框信息
+  modalInfo?: ModalInfo;
 }

@@ -59,7 +59,7 @@ export const mutations: MutationTree<UserState> = {
           // 判断模态框信息是否已存在
           if (!isModalExist) {
             // 不存在才添加
-            destopShotcutInfo.modalInfoList.push();
+            destopShotcutInfo.modalInfoList.push(modalInfo);
           }
           return true;
         }

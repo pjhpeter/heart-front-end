@@ -3,12 +3,26 @@
     <Modal
       v-model="isShow"
       :title="title"
-      :draggable="isDraggable"
-      :width="width"
-      :footer-hide="footerHide"
-      :fullscreen="isFullscreen"
+      :mask-closable="modalInfo.maskClosable"
+      :loading="modalInfo.loading"
+      :scrollable="modalInfo.scrollable"
+      :fullscreen="modalInfo.fullscreen"
+      :draggable="modalInfo.draggable"
+      :mask="modalInfo.mask"
+      :ok-text="modalInfo.okText"
+      :cancel-text="modalInfo.cancelText"
+      :width="modalInfo.width ? modalInfo.width : 1000"
+      :footer-hide="
+        modalInfo.footerHide !== undefined ? modalInfo.footerHide : true
+      "
       :closable="false"
-      class-name="base-modal"
+      :class-name="`heart-base-modal ${modalInfo.className}`"
+      :z-index="modalInfo.zIndex"
+      :transition-names="modalInfo.transitionNames"
+      :transfer="modalInfo.transfer"
+      @on-ok="onOk"
+      @on-cancel="onCancel"
+      @on-visible-change="onVisibleChange"
     >
       <template slot="header">
         <div @mousedown="mousedown" @mouseup="mouseup">
@@ -19,17 +33,19 @@
             </Button>
             <Button
               type="text"
-              v-show="isFullscreen"
+              v-show="modalInfo.fullscreen"
               class="reset-screen-button"
               @click="resetScreen"
+              v-if="modalInfo.enabledFuscreen"
             >
               <i class="iconfont icon-reset-screen"></i>
             </Button>
             <Button
               type="text"
-              v-show="!isFullscreen"
+              v-show="!modalInfo.fullscreen"
               class="fullscreen-button"
-              @click="fullscreen"
+              @click="doFullscreen"
+              v-if="modalInfo.enabledFuscreen"
             >
               <i class="iconfont icon-fullscreen"></i>
             </Button>
@@ -39,7 +55,7 @@
           </div>
         </div>
       </template>
-      <component-loader :url="url" />
+      <component-loader :url="url" ref="componentLoader" />
     </Modal>
   </div>
 </template>
@@ -52,6 +68,7 @@
 import { Vue, Component, Prop, Emit } from "vue-property-decorator";
 import ComponentLoader from "./ComponentLoader.vue";
 import OpenedInfo from "../../../model/heart/global/OpenedInfo";
+import ModalInfo from "../../../model/heart/global/ModalInfo";
 
 @Component({
   components: {
@@ -65,6 +82,12 @@ export default class BaseModal extends Vue {
     required: true
   })
   _id!: number;
+  // 模态框内加载的组件路径
+  @Prop({
+    type: String,
+    default: ""
+  })
+  url!: string;
   // 模态框标题
   @Prop({
     type: String,
@@ -72,39 +95,45 @@ export default class BaseModal extends Vue {
     default: ""
   })
   title!: string;
-  // 模态框内加载的组件路径
-  @Prop({
-    type: String,
-    default: ""
-  })
-  url!: string;
   // 模态框关闭时的回调函数
   @Prop()
   onClose?: Function;
-  // 不显示模态框底部按钮
+  // 模态框配置信息
   @Prop({
-    type: Boolean,
-    default: true
+    type: Object,
+    default: {}
   })
-  footerHide?: boolean;
-  // 模态框宽度
-  @Prop({
-    type: Number,
-    default: 1000
-  })
-  width?: number;
+  modalInfo!: ModalInfo;
 
-  // 是否显示模态框
+  // 显示状态
   isShow = true;
-  // 是否可拖拽
-  isDraggable = true;
-  // 是否最大化
-  isFullscreen = false;
+
+  created() {
+    // 初始化必要的参数
+    if (!this.modalInfo.draggable) {
+      this.modalInfo.draggable = true;
+    }
+    if (this.modalInfo.enabledFuscreen === undefined) {
+      this.modalInfo.enabledFuscreen = true;
+    }
+  }
 
   mounted(): void {
     // 普通的监听器写法无法监听复杂路径的变量
     // 如果要监听复杂路径的变量，用函数的方式返回变量
-    this.$watch(() => (this.$children[0] as any).modalIndex, this.activeTab);
+    // 监听ViewUI的Modal组件中modalIndex变量，模态框每次层级变化，这个变量都会变化，由此判断模态框是否置为顶层
+    this.$watch(() => (this.$children[0] as any).modalIndex, this.active);
+    // 将当前模态框对象缓存的打开的模块信息中
+    this.$store.getters["globals/getOpenedList"].some(
+      (openedInfo: OpenedInfo) => {
+        if (!openedInfo.modal) {
+          // 缓存打开的模态框对象
+          this.$store.commit("globals/setOpenedModal", this);
+          return true;
+        }
+        return false;
+      }
+    );
   }
 
   /**
@@ -118,9 +147,9 @@ export default class BaseModal extends Vue {
   /**
    * 最大化
    */
-  private fullscreen(): void {
-    this.isDraggable = false;
-    this.isFullscreen = true;
+  private doFullscreen(): void {
+    Vue.set(this.modalInfo, "draggable", false);
+    Vue.set(this.modalInfo, "fullscreen", true);
     // 模拟点击模态框操作，使其至于最顶层，查看源代码发现的
     (this.$children[0] as any).handleClickModal();
     this.hideFooter();
@@ -130,8 +159,8 @@ export default class BaseModal extends Vue {
    * 取消最大化
    */
   private resetScreen(): void {
-    this.isDraggable = true;
-    this.isFullscreen = false;
+    Vue.set(this.modalInfo, "draggable", true);
+    Vue.set(this.modalInfo, "fullscreen", false);
     this.showFooter();
   }
 
@@ -151,7 +180,7 @@ export default class BaseModal extends Vue {
   /**
    * 鼠标按下事件
    */
-  mousedown(event: any): void {
+  private mousedown(event: any): void {
     // 页面高度
     const windowHeight = window.innerHeight;
 
@@ -174,7 +203,7 @@ export default class BaseModal extends Vue {
   /**
    * 监听模态框层级变化
    */
-  activeTab(newValue: number, oldValue: number): void {
+  active(newValue: number, oldValue: number): void {
     // 选中当前点击项，清楚其他选中项
     const openedList: Array<OpenedInfo> = this.$store.getters[
       "globals/getOpenedList"
@@ -216,6 +245,47 @@ export default class BaseModal extends Vue {
       active: false
     };
     this.$store.commit("globals/ramoveOpenedInfo", openedInfo);
+  }
+
+  /**
+   * 点击确定按钮触发事件
+   */
+  private onOk() {
+    this.close();
+    if (this.modalInfo.onOk) {
+      this.modalInfo.onOk.call(
+        this,
+        (this.$refs["componentLoader"] as any).$children[0]
+      );
+    }
+  }
+
+  /**
+   * 点击取消按钮触发事件
+   */
+  private onCancel() {
+    this.close();
+    if (this.modalInfo.onCancel) {
+      // 将组件对象返回给调用者
+      this.modalInfo.onCancel.call(
+        this,
+        (this.$refs["componentLoader"] as any).$children[0]
+      );
+    }
+  }
+
+  /**
+   * 显示状态变化触发事件
+   */
+  private onVisibleChange(isShow: boolean) {
+    if (this.modalInfo.onVisibleChange) {
+      // 将组件对象返回给调用者
+      this.modalInfo.onVisibleChange.call(
+        this,
+        isShow,
+        this.$refs["componentLoader"]
+      );
+    }
   }
 }
 </script>

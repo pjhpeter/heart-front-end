@@ -4,6 +4,10 @@ import ModalInfo from "@/model/heart/global/ModalInfo";
 import OpenedInfo from "@/model/heart/global/OpenedInfo";
 import { Vue } from "vue-property-decorator";
 import store from "../../store";
+import Menu from "@/model/heart/menu/Menu";
+import { menu } from "@/store/modules/heart/menu";
+import MenuAPI from "@/api/heart/menu/MenuAPI";
+import MenuAPI4Jeesite from "@/api/heart/menu/impl/MenuAPI4Jeesite";
 
 /**
  * 公共工具类
@@ -15,8 +19,9 @@ export default class Commons {
   /**
    * 打开一个模态框
    * @param modalInfo 模态框信息
+   * @returns 模态框id
    */
-  static showModule(modalInfo: ModalInfo): void {
+  static showModule(modalInfo: ModalInfo): number {
     // 清空当前打开模块信息的激活状态
     const openedList: Array<OpenedInfo> =
       store.getters["globals/getOpenedList"];
@@ -27,14 +32,34 @@ export default class Commons {
     });
 
     // 缓存已打开的模块信息，并激活
+    const id: number = Commons.createId();
     const openedInfo: OpenedInfo = {
-      id: Commons.createId(),
+      id: id,
       backgroundColor: modalInfo.backgroundColor,
       title: modalInfo.title,
       url: modalInfo.url,
-      active: true
+      active: true,
+      modalInfo
     };
     store.commit("globals/addOpenedInfo", openedInfo);
+    return id;
+  }
+
+  /**
+   * 通过id找到模态框
+   * @param id 模态框id
+   * @returns 模态框对象
+   */
+  static findModalById(id: number): any {
+    const openedList: Array<OpenedInfo> =
+      store.getters["globals/getOpenedList"];
+    let modal: any = null;
+    openedList.some((openedInfo: OpenedInfo) => {
+      if (id === openedInfo.id) {
+        modal = openedInfo.modal;
+      }
+    });
+    return modal;
   }
 
   /**
@@ -66,5 +91,15 @@ export default class Commons {
         .toString()
         .substr(3, length) + Date.now()
     );
+  }
+
+  static async loadMenuTreeData(): Promise<Array<Menu> | null> {
+    let menuTree: Array<Menu> | null = store.getters["menu/getMenuTree"];
+    if (!menuTree) {
+      // 如果状态数据中没有则向后端发请求获取
+      const menuAPI: MenuAPI<Menu> = new MenuAPI4Jeesite();
+      menuTree = await menuAPI.fetchMenuTree();
+    }
+    return menuTree;
   }
 }

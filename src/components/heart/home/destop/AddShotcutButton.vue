@@ -24,15 +24,27 @@ export default class AddShotcutButton extends Vue {
     const modalInfo: ModalInfo = {
       url: "/heart/home/destop/AddShotcutModal.vue",
       title: "选择模块",
-      backgroundColor: Commons.getIconColor()
+      backgroundColor: Commons.getIconColor(),
+      footerHide: false,
+      width: 400,
+      className: "select-menu-modal",
+      enabledFuscreen: false,
+      onOk(addShotcutModal: any) {
+        if (addShotcutModal.selectedModalInfo) {
+          // 添加快捷方式
+          (this as any).$store.commit(
+            "user/addDestopShotcut",
+            addShotcutModal.selectedModalInfo
+          );
+        }
+      }
     };
-    // Commons.showModule(modalInfo);
-    this.$store.commit("user/addDestopShotcut", modalInfo);
+    Commons.showModule(modalInfo);
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .add-shotcut-button {
   border-radius: 5px;
   height: 60px;
@@ -44,6 +56,12 @@ export default class AddShotcutButton extends Vue {
   .icon-add-shotcut {
     color: rgba($color: white, $alpha: 0.9);
     font-size: 60px;
+  }
+}
+
+.select-menu-modal {
+  .ivu-modal-body {
+    height: 350px !important;
   }
 }
 </style>

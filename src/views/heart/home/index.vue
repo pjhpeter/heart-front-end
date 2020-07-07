@@ -42,6 +42,7 @@
       :url="openedInfo.url"
       :ref="openedInfo.id"
       :_id="openedInfo.id"
+      :modalInfo="openedInfo.modalInfo"
     ></component>
   </div>
 </template>
@@ -103,10 +104,6 @@ export default class Home extends Vue {
     // this.$store.commit("user/setUser", userInfo);
     //////
     document.addEventListener("click", this.hideMenu);
-    this.$watch(
-      () => this.$store.getters["globals/getOpenedList"].length,
-      this.setOpenedModals
-    );
   }
 
   /**
@@ -138,31 +135,6 @@ export default class Home extends Vue {
    */
   hideMenu(): void {
     this.showedMenu = false;
-  }
-
-  /**
-   * 监听store中openedList的变化，缓存打开的模态框对象
-   */
-  setOpenedModals(newLength: number, oldLength: number): void {
-    // 只有openedList长度增加时才需要缓存新打开的模态框对象，如果长度减少说明是关闭模态框，不需要缓存
-    if (newLength > oldLength) {
-      // 安全起见，等待模态框组件渲染完成
-      this.$nextTick(() => {
-        this.$store.getters["globals/getOpenedList"].some(
-          (openedInfo: OpenedInfo) => {
-            if (!openedInfo.modal) {
-              // 缓存打开的模态框对象
-              this.$store.commit(
-                "globals/setOpenedModal",
-                (this.$refs[openedInfo.id] as any)[0]
-              );
-              return true;
-            }
-            return false;
-          }
-        );
-      });
-    }
   }
 }
 </script>

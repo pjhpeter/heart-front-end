@@ -20,14 +20,10 @@ export const mutations: MutationTree<GlobalState> = {
    */
   setOpenedModal(state: GlobalState, modal: any): void {
     state.openedList.some((openedInfo: OpenedInfo) => {
-      console.log(modal._id);
-      console.log(openedInfo.id);
       if (modal._id === openedInfo.id) {
-        console.log("哈哈");
         Vue.set(openedInfo, "modal", modal);
       }
     });
-    console.log(state.openedList);
   },
 
   /**

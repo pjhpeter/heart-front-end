@@ -1,19 +1,32 @@
 <template>
-  <div class="destop-icon">
-    <div class="icon-content">
-      <div
-        class="icon"
-        v-text="modalInfo.title.substring(0, 1)"
-        :style="{ backgroundColor: modalInfo.backgroundColor }"
-      ></div>
-      <p class="title" v-text="modalInfo.title"></p>
-    </div>
-  </div>
+  <transition name="fade">
+    <Dropdown trigger="contextMenu" transfer @on-click="handleItemClick">
+      <div class="destop-icon" @dblclick="showModal">
+        <div class="icon-content">
+          <div
+            class="icon"
+            v-text="modalInfo.title.substring(0, 1)"
+            :style="{ backgroundColor: modalInfo.backgroundColor }"
+          ></div>
+          <p
+            class="title"
+            v-text="modalInfo.title"
+            :title="modalInfo.title"
+          ></p>
+        </div>
+      </div>
+      <DropdownMenu slot="list">
+        <DropdownItem name="open">打开</DropdownItem>
+        <DropdownItem name="remove" class="delete-icon">删除</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  </transition>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
+import Commons from "../../../../utils/heart/Commons";
 
 @Component({
   name: "destop-icon"
@@ -24,6 +37,27 @@ export default class DestopIcon extends Vue {
     required: true
   })
   modalInfo!: ModalInfo;
+
+  // 右键菜单显示状态
+  dropdownMenuVisiabled = false;
+
+  /**
+   * 移出快捷方式
+   */
+  private handleItemClick(name: string): void {
+    if (name === "open") {
+      this.showModal();
+    } else if (name === "remove") {
+      this.$store.commit("user/removeDestopShotcut", this.modalInfo);
+    }
+  }
+
+  /**
+   * 打开对应的模态框
+   */
+  private showModal() {
+    Commons.showModule(this.modalInfo);
+  }
 }
 </script>
 
@@ -43,6 +77,7 @@ export default class DestopIcon extends Vue {
   }
   .icon-content {
     margin: auto;
+    width: 100%;
     .icon {
       display: inline-block;
       width: 40px;
@@ -54,12 +89,23 @@ export default class DestopIcon extends Vue {
       margin-bottom: 5px;
     }
     .title {
-      text-shadow: black 2px 3px 6px;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
       overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
+}
+
+.delete-icon {
+  color: $error;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

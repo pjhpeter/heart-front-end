@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-tree">
+  <div :class="className">
     <label v-for="menu in menuTree" :key="menu.menuCode">
       <!-- 菜单点击事件只能返回MenuItem的name属性，为了后续操作方便，把name属性赋值成menuRrl+menuName -->
       <MenuItem
@@ -42,6 +42,12 @@ export default class MenuTree extends Vue {
     default: []
   })
   menuTree!: Array<Menu>;
+
+  @Prop({
+    type: String,
+    default: "menu-tree"
+  })
+  className!: string;
 
   /**
    * 计算菜单icon背景色，只不过是在MENU_ICON_COLORS数组中按顺序读取每一个元素

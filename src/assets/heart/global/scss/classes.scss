@@ -1,7 +1,7 @@
 @import "./variables.scss";
 
 // 基础模态框样式
-.base-modal {
+.heart-base-modal {
     overflow: hidden;
     .ivu-modal{
         top: 20px;
@@ -39,6 +39,8 @@
         }
         // 模态框内容部分
         .ivu-modal-body {
+            // 这里设定模态框高度
+            // 想要修改就写个样式覆盖这个值
             height: $baseModalHeight;
             overflow-y: auto;
         }

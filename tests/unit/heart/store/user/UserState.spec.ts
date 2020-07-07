@@ -35,10 +35,10 @@ describe("测试mutations", () => {
         userName: "测试"
       };
       mutations.setUser(state, userInfo);
-      const localUserInfo: UserInfo = JSON.parse(
-        localStorage.getItem(LocalStorageKeys.USER_INFO)!
+      const localUserInfo: UserInfo | null = JSON.parse(
+        localStorage!.getItem(LocalStorageKeys.USER_INFO)!
       ) as UserInfo;
-      const stateUserInfo: UserInfo = state.user!;
+      const stateUserInfo: UserInfo | null = state.user;
       expect(localUserInfo).toMatchObject({
         loginCode: "test",
         userName: "测试"
