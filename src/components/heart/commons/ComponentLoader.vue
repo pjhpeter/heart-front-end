@@ -20,13 +20,20 @@ export default class ComponentLoader extends Vue {
 
   created(): void {
     // 动态注册组件
-    const $vm = this as any;
-    const url = $vm.url;
     // 获取模块名称
     // 如menuUrl为"/mb/secfileSign/list"，只要模块名"secfileSign"
-    const componentName = ($vm.componentName = $vm.getComponentName(url));
-    $vm.$options.components[componentName] = () =>
-      import(`@/views${url}/index.vue`);
+    const componentName = (this.componentName = this.getComponentName(
+      this.url
+    ));
+    if (this.url.indexOf(".vue") === -1) {
+      // 不以.vue结尾，说明是模块入口组件，url是后端返回的访问地址，从views中读取组件
+      (this as any).$options.components[componentName] = () =>
+        import(`@/views${this.url}/index.vue`);
+    } else {
+      // 以.vue结尾，为模块中的子组件，从components中读取组件。
+      (this as any).$options.components[componentName] = () =>
+        import(`@/components${this.url}`);
+    }
   }
 
   render(createElement: CreateElement): VNode {

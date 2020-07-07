@@ -90,7 +90,7 @@ export default class BaseModal extends Vue {
   // 模态框宽度
   @Prop({
     type: Number,
-    default: 1200
+    default: 1000
   })
   width?: number;
 

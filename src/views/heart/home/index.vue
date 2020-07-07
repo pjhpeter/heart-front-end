@@ -2,7 +2,9 @@
   <div class="home">
     <Layout>
       <!-- 桌面 -->
-      <Content class="content" :style="backgroundStyles"></Content>
+      <Content class="content" :style="backgroundStyles">
+        <destop-icon-container />
+      </Content>
       <!-- 底部栏 -->
       <transition name="slide-fade">
         <div v-show="$store.getters['globals/isShowedFooter']">
@@ -53,6 +55,7 @@ import ModalInfo from "../../../model/heart/global/ModalInfo";
 import Commons from "../../../utils/heart/Commons";
 import BaseModal from "../../../components/heart/commons/BaseModal.vue";
 import OpenedInfo from "../../../model/heart/global/OpenedInfo";
+import UserInfo from "../../../model/heart/user/UserInfo";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
@@ -66,7 +69,9 @@ declare function require(img: string): string;
     TabContainer: () =>
       import("../../../components/heart/home/footer/TabContainer.vue"),
     IconGroup: () =>
-      import("../../../components/heart/home/footer/IconGroup.vue")
+      import("../../../components/heart/home/footer/IconGroup.vue"),
+    DestopIconContainer: () =>
+      import("../../../components/heart/home/destop/DestopIconContainer.vue")
   }
 })
 export default class Home extends Vue {
@@ -89,6 +94,14 @@ export default class Home extends Vue {
   };
 
   mounted(): void {
+    ///// TODO:临时用的
+    // const userInfo: UserInfo = {
+    //   userCode: "123",
+    //   loginCode: "test",
+    //   userName: "测试"
+    // };
+    // this.$store.commit("user/setUser", userInfo);
+    //////
     document.addEventListener("click", this.hideMenu);
     this.$watch(
       () => this.$store.getters["globals/getOpenedList"].length,

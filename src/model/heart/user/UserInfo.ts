@@ -6,11 +6,11 @@ import Extend from "../global/Extend";
  */
 export default interface UserInfo {
   // 用户唯一标识
-  userCode?: string;
+  userCode: string;
   // 登录账号
-  loginCode?: string;
+  loginCode: string;
   // 用户名
-  userName?: string;
+  userName: string;
   // 用户类型
   userType?: string;
   // 头像地址

@@ -1,5 +1,6 @@
 import { LocalStorageKeys } from "@/constants/heart/enum/LocalStorageKeys";
 import UserInfo from "@/model/heart/user/UserInfo";
+import DestopShotcutInfo from "@/model/heart/user/DestopShotcutInfo";
 
 /**
  * 用户信息对localStorage的读写操作接口
@@ -56,5 +57,30 @@ export default class Auth {
   static clearAuth(): void {
     localStorage.removeItem(LocalStorageKeys.USER_TOKEN);
     localStorage.removeItem(LocalStorageKeys.USER_INFO);
+  }
+
+  /**
+   * 将快捷方式数据写入localStorage
+   * @param destopShotcutList 快捷方式数据
+   */
+  static setDestopShotcut(destopShotcutList: Array<DestopShotcutInfo>) {
+    localStorage.setItem(
+      LocalStorageKeys.DESTOP_SHOTCUT,
+      JSON.stringify(destopShotcutList)
+    );
+  }
+
+  /**
+   * 从localStorage读取快捷方式数据
+   * @returns 快捷方式数据
+   */
+  static getDestopShotcut(): Array<DestopShotcutInfo> {
+    const destopShotcutListStr: string | null = localStorage.getItem(
+      LocalStorageKeys.DESTOP_SHOTCUT
+    );
+    if (destopShotcutListStr) {
+      return JSON.parse(destopShotcutListStr) as Array<DestopShotcutInfo>;
+    }
+    return [];
   }
 }

@@ -30,6 +30,7 @@ describe("测试setUserInfo方法", () => {
     // 必须断言一次，保证测试用例准确性
     expect.assertions(1);
     Auth.setUserInfo({
+      userCode: "123",
       loginCode: "test",
       userName: "测试"
     });
@@ -49,6 +50,7 @@ describe("测试setUserInfo方法", () => {
 describe("测试getUserInfo方法", () => {
   it("读取保存好的用户信息", () => {
     const userInfo: UserInfo = {
+      userCode: "123",
       loginCode: "test",
       userName: "测试"
     };
@@ -70,6 +72,7 @@ describe("测试clearAuth方法", () => {
   it("清空令牌和用户信息", () => {
     localStorage.setItem(LocalStorageKeys.USER_TOKEN, "test");
     const userInfo: UserInfo = {
+      userCode: "123",
       loginCode: "test",
       userName: "测试"
     };

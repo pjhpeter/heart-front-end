@@ -10,7 +10,8 @@ describe("测试mutations", () => {
   beforeEach(() => {
     state = {
       token: "",
-      user: null
+      user: null,
+      destopShotcutList: []
     };
   });
 
@@ -29,6 +30,7 @@ describe("测试mutations", () => {
   describe("测试setUser方法", () => {
     it("保存user", () => {
       const userInfo: UserInfo = {
+        userCode: "123",
         loginCode: "test",
         userName: "测试"
       };
@@ -52,12 +54,14 @@ describe("测试mutations", () => {
     it("清空UserState和localStorage对应的属性值", () => {
       const token = "test";
       const userInfo: UserInfo = {
+        userCode: "123",
         loginCode: "test",
         userName: "测试"
       };
       state = {
         token: token,
-        user: userInfo
+        user: userInfo,
+        destopShotcutList: []
       };
       localStorage.setItem(LocalStorageKeys.USER_TOKEN, token);
       localStorage.setItem(
@@ -93,9 +97,11 @@ describe("测试getters", () => {
     state = {
       token: "test",
       user: {
+        userCode: "123",
         loginCode: "test",
         userName: "测试"
-      }
+      },
+      destopShotcutList: []
     };
   });
   describe("测试getToken", () => {

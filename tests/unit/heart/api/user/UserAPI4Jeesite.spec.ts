@@ -39,6 +39,7 @@ describe("测试logout方法", () => {
   it("登出", async () => {
     const localToken = "test";
     const localUser: UserInfo = {
+      userCode: "123",
       loginCode: "test",
       userName: "测试"
     };

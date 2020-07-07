@@ -15,6 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+// 添加桌面快捷方式
+.icon-add-shotcut:before {
+  content: "\e63f";
+}
+
 // 取消模态框最大化
 .icon-reset-screen:before {
   content: "\e604";
