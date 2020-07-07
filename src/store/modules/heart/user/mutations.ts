@@ -1,10 +1,10 @@
 import ModalInfo from "@/model/heart/global/ModalInfo";
+import DestopShotcutInfo from "@/model/heart/user/DestopShotcutInfo";
 import UserInfo from "@/model/heart/user/UserInfo";
 import Auth from "@/utils/heart/Auth";
 import { MutationTree } from "vuex";
 import { UserState } from "./types";
 import { Vue } from "vue-property-decorator";
-import DestopShotcutInfo from "@/model/heart/user/DestopShotcutInfo";
 
 export const mutations: MutationTree<UserState> = {
   /**
@@ -40,7 +40,7 @@ export const mutations: MutationTree<UserState> = {
    * @param state 用户模块状态对象
    * @param modalInfo 快捷方式对应的模态框信息
    */
-  addDestopShotcut(state: UserState, modalInfo: ModalInfo) {
+  addDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
     const userCode: string = (state.user as any).userCode;
     // 判断是否有当前用户用户快捷方式信息，有则把模态框信息添加到快捷方式信息中
     let isModalExist = true;
@@ -87,7 +87,7 @@ export const mutations: MutationTree<UserState> = {
    * @param state 用户模块状态对象
    * @param modalInfo 快捷方式对应的模态框信息
    */
-  removeDestopShotcut(state: UserState, modalInfo: ModalInfo) {
+  removeDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
     const userCode: string = (state.user as any).userCode;
     // 找出当前用户快捷方式信息，并删除对应模态框信息
     // 标记是否有数据被修改
@@ -99,6 +99,39 @@ export const mutations: MutationTree<UserState> = {
           (modal: ModalInfo, index: number) => {
             if (modal.url === modalInfo.url) {
               destopShotcutInfo.modalInfoList.splice(index, 1);
+              return true;
+            }
+            return false;
+          }
+        );
+        return true;
+      }
+      return false;
+    });
+
+    if (flag) {
+      // 如果有数据被修改，则将快捷方式数据写入localStoraage
+      Auth.setDestopShotcut(state.destopShotcutList);
+    }
+  },
+
+  /**
+   * 更新桌面快捷方式，主要是拿来改颜色
+   * @param state 用户模块状态对象
+   * @param modalInfo 新的快捷方式对应的模态框信息
+   */
+  updateDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
+    const userCode: string = (state.user as any).userCode;
+    // 找出当前用户快捷方式信息，并更新对应模态框信息
+    // 标记是否有数据被修改
+    let flag = false;
+    state.destopShotcutList.some((destopShotcutInfo: DestopShotcutInfo) => {
+      if (userCode === destopShotcutInfo.userCode) {
+        // 删除模态框信息
+        flag = destopShotcutInfo.modalInfoList.some(
+          (modal: ModalInfo, index: number) => {
+            if (modal.url === modalInfo.url) {
+              destopShotcutInfo.modalInfoList[0] = modalInfo;
               return true;
             }
             return false;

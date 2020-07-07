@@ -64,9 +64,11 @@ export default class TabContainer extends Vue {
 
 <style lang="scss" scoped>
 .tab-container {
+  height: 100%;
   .tab-icon {
     position: relative;
-    display: inline-block;
+    // 不浮动的话在火狐会出现滚动条
+    float: left;
     height: $footerHeight;
     width: $footerHeight;
     color: white;

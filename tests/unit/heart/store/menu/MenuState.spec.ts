@@ -20,7 +20,7 @@ describe("测试mutations", () => {
   beforeEach(() => {
     state = {
       menuTree: null,
-      router: null
+      menuItemList: []
     };
   });
 
@@ -41,14 +41,6 @@ describe("测试mutations", () => {
       expect(stateMenuTree?.length).toBe(2);
     });
   });
-
-  describe("测试setRouter方法", () => {
-    it("保存router", () => {
-      mutations.setRouter(state, router);
-      const stateRouter = state.router;
-      expect(stateRouter).not.toBeNull();
-    });
-  });
 });
 
 describe("测试getters", () => {
@@ -66,7 +58,7 @@ describe("测试getters", () => {
           menuName: "测试模块2"
         }
       ],
-      router
+      menuItemList: []
     };
   });
 

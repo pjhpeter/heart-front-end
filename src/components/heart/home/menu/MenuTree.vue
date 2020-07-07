@@ -31,6 +31,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import Menu from "../../../../model/heart/menu/Menu";
 import Commons from "../../../../utils/heart/Commons";
+import ModalInfo from "../../../../model/heart/global/ModalInfo";
 
 @Component({
   name: "menu-tree"
@@ -71,6 +72,10 @@ export default class MenuTree extends Vue {
     z-index: 1 !important;
     &::after {
       width: 0 !important;
+    }
+    &:hover {
+      background-color: rgba($color: $lightPrimary, $alpha: 0.3) !important;
+      color: $title !important;
     }
   }
   .ivu-menu-item,

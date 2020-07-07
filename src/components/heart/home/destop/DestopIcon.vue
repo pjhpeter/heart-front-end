@@ -27,6 +27,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
+import Menu from "../../../../model/heart/menu/Menu";
 
 @Component({
   name: "destop-icon"
@@ -38,8 +39,26 @@ export default class DestopIcon extends Vue {
   })
   modalInfo!: ModalInfo;
 
+  backgroundColor = "#515A6E";
+
   // 右键菜单显示状态
   dropdownMenuVisiabled = false;
+
+  // created(): void {
+  //   this.$nextTick(() => {
+  //     // TODO:读取背景颜色，缓存中的颜色可能会跟实际不一致，所以不用缓存的颜色
+  //     // 读取所有也去菜单
+  //     let menuItemList: Array<Menu> = this.$store.getters["menu/getMenuItemList"];
+  //     menuItemList.some((menuItem: Menu) => {
+  //       if(this.modalInfo.url === menuItem.menuUrl) {
+  //         console.log(menuItem);
+  //         this.backgroundColor = menuItem.menuColor!;
+  //         return true;
+  //       }
+  //       return false;
+  //     });
+  //   });
+  // }
 
   /**
    * 移出快捷方式
@@ -92,6 +111,7 @@ export default class DestopIcon extends Vue {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      text-shadow: 0.1em 0.1em 0.2em black;
     }
   }
 }

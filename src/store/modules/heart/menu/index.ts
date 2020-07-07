@@ -8,7 +8,7 @@ const namespaced = true;
 
 export const state: MenuState = {
   menuTree: null,
-  router: null
+  menuItemList: []
 };
 
 export const menu: Module<MenuState, RootState> = {

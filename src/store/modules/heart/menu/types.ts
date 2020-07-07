@@ -7,5 +7,5 @@ import Menu from "@/model/heart/menu/Menu";
  */
 export interface MenuState {
   menuTree: Array<Menu> | null;
-  router: VueRouter | null;
+  menuItemList: Array<Menu>;
 }

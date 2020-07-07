@@ -1,7 +1,7 @@
 <template>
   <div class="add-shotcut-modal">
     <Menu width="auto" @on-select="selecMenuItem">
-      <menu-tree :menuTree="menuTree" className="select-menu-tree" />
+      <menu-tree :menuTree="menuTree" class="select-menu-tree" />
     </Menu>
   </div>
 </template>
@@ -50,33 +50,43 @@ export default class AddShotcutModal extends Vue {
 </script>
 
 <style lang="scss">
-.select-menu-tree {
-  background-color: $background;
-  .ivu-menu-item-active:not(.ivu-menu-submenu) {
-    color: $primary !important;
-    background: rgba($color: $darkPrimary, $alpha: 0.1) !important;
+.add-shotcut-modal {
+  .ivu-menu-light {
     &::after {
-      background: $darkPrimary !important;
+      width: 0;
     }
-  }
-  .ivu-menu-item,
-  .ivu-menu-submenu-title {
-    color: $title;
-    &:hover {
-      background-color: rgba($color: $lightPrimary, $alpha: 0.3);
-      color: $title;
-    }
-    span {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      color: white;
-      font-weight: 700;
-      font-size: 18px;
-      border-radius: 5px;
-      margin-right: 10px;
+    .select-menu-tree {
+      background-color: white;
+      .ivu-menu-item-active:not(.ivu-menu-submenu) {
+        color: $primary !important;
+        background: rgba($color: $darkPrimary, $alpha: 0.1) !important;
+        &::after {
+          background: $darkPrimary !important;
+        }
+      }
+      .ivu-menu-item,
+      .ivu-menu-submenu-title {
+        color: $title;
+        &:hover {
+          background-color: rgba($color: $lightPrimary, $alpha: 0.3);
+          color: $title;
+        }
+        span {
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          color: white;
+          font-weight: 700;
+          font-size: 18px;
+          border-radius: 5px;
+          margin-right: 10px;
+        }
+      }
+      &::after {
+        width: 0;
+      }
     }
   }
 }

@@ -1,8 +1,7 @@
+import Menu from "@/model/heart/menu/Menu";
+import { RootState } from "@/store/types";
 import { GetterTree } from "vuex";
 import { MenuState } from "./types";
-import { RootState } from "@/store/types";
-import VueRouter from "vue-router";
-import Menu from "@/model/heart/menu/Menu";
 
 export const getters: GetterTree<MenuState, RootState> = {
   /**
@@ -14,10 +13,10 @@ export const getters: GetterTree<MenuState, RootState> = {
   },
 
   /**
-   * 获取路由器对象
+   * 获取所有叶子菜单信息
    * @param state 菜单状态信息
    */
-  getRouter(state: MenuState): VueRouter | null {
-    return state.router;
+  getMenuItemList(state: MenuState): Array<Menu> {
+    return state.menuItemList;
   }
 };
