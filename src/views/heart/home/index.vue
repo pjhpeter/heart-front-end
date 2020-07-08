@@ -48,6 +48,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * 桌面组件
+ * @author 彭嘉辉
+ */
 import { Vue, Component } from "vue-property-decorator";
 import { VueConstructor, VNode } from "vue";
 import { Md5 } from "md5-typescript";
@@ -79,23 +83,28 @@ export default class Home extends Vue {
   BaseModal: any = BaseModal;
   // 开始菜单是否显示
   showedMenu = false;
-  // 壁纸url
-  // 不在style标签中设置路径的话，必须用require函数来加载图片，否则会找不到
-  // TODO:这里以后可以读后端返回的路径
-  wallpaperUrl: string = require("../../../assets/heart/home/images/background.jpg");
   // 壁纸样式
-  backgroundStyles: object = {
-    background: `url(${this.wallpaperUrl}) center / cover no-repeat`,
+  backgroundStyles: any = {
+    background: `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat`,
     backgroundSize: "100% 100%"
   };
   // 底部栏背景样式，毛玻璃效果需要
-  footerBackgroundStyles: object = {
-    background: `url(${this.wallpaperUrl}) center / cover no-repeat fixed`,
-    backgroundSize: "100% 100%"
+  footerBackgroundStyles: any = {
+    background: `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat fixed`
   };
 
-  mounted(): void {
+  created(): void {
+    // 添加点击页面隐藏开始菜单事件
     document.addEventListener("click", this.hideMenu);
+    // 不加监听器不能切换壁纸
+    this.$watch(
+      () => this.$store.getters["user/getWallpaperUrl"],
+      () => {
+        Vue.set(this, "backgroundStyles", {});
+        this.backgroundStyles.background = `url(${this.$store.getters["user/getWallpaperUrl"]}) left top / 100% 100% no-repeat`;
+        this.footerBackgroundStyles.background = `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat fixed`;
+      }
+    );
   }
 
   /**

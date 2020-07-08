@@ -44,5 +44,14 @@ export const getters: GetterTree<UserState, RootState> = {
       return destopShotcutInfo.modalInfoList;
     }
     return [];
+  },
+
+  /**
+   * 获取当前壁纸
+   * @param state 用户模块状态对象
+   * @returns 当前壁纸路径
+   */
+  getWallpaperUrl(state: UserState): string {
+    return state.wallpaperUrl;
   }
 };

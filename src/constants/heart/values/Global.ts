@@ -17,3 +17,10 @@ export const MENU_ICON_COLORS: Array<string> = [
  * 桌面快捷方式找不到对应菜单时，说明模块已经不存在，快捷方式设置为这个颜色
  */
 export const LOSS_MENU_COLOR = "#808695";
+
+export const WALLPAPER_URLS: Array<string> = [
+  "/wallpapers/background0.jpg",
+  "/wallpapers/background1.jpg",
+  "/wallpapers/background2.jpg",
+  "/wallpapers/background3.jpg"
+];

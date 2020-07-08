@@ -1,9 +1,18 @@
 <template>
   <transition name="slide-fade">
-    <div class="menu-container">
-      <Menu @on-select="onMenuClick">
-        <menu-tree :menuTree="menuTree" />
-      </Menu>
+    <div class="start-box">
+      <div class="menu-container">
+        <Menu @on-select="onMenuClick" class="menu-box" width="auto">
+          <menu-tree :menuTree="menuTree" />
+        </Menu>
+        <div class="user-info">
+          <user-operation />
+        </div>
+      </div>
+      <div
+        class="menu-container-background"
+        :style="menuContainerBackgroundStyles"
+      ></div>
     </div>
   </transition>
 </template>
@@ -24,12 +33,18 @@ import { LOSS_MENU_COLOR } from "../../../../constants/heart/values/Global";
 @Component({
   name: "menu-container",
   components: {
-    MenuTree: () => import("./MenuTree.vue")
+    MenuTree: () => import("./MenuTree.vue"),
+    UserOperation: () => import("./UserOperation.vue")
   }
 })
 export default class MenuContainer extends Vue {
   menuTree: Array<Menu> | null = [];
 
+  // 开始菜单背景样式，毛玻璃效果需要
+  menuContainerBackgroundStyles: object = {
+    background: `url(${this.$store.getters["user/getWallpaperUrl"]}) center / cover no-repeat fixed`,
+    backgroundSize: "100% 100%"
+  };
   async mounted() {
     // 先从状态数据读取菜单树
     this.menuTree = await Commons.loadMenuTreeData();
@@ -65,13 +80,59 @@ export default class MenuContainer extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.menu-container {
+<style lang="scss">
+.start-box {
   position: fixed;
   left: 0;
   bottom: $footerHeight;
   z-index: 99997;
+  border-radius: 5px;
+  box-shadow: 0 0 5px black;
+  .menu-container {
+    padding-top: 5px;
+    border-radius: 5px;
+    display: flex;
+    height: 500px;
+    width: 550px;
+    z-index: 1;
+    background-color: rgba($color: white, $alpha: 0.8);
+    .menu-box {
+      flex: 60%;
+      overflow: auto;
+      background-color: rgba($color: white, $alpha: 0);
+      margin-right: 5px;
+      &::-webkit-scrollbar {
+        opacity: 0;
+      }
+      &:hover {
+        &::-webkit-scrollbar {
+          opacity: 1;
+        }
+      }
+      &::after {
+        width: 0;
+      }
+      .menu-tree {
+        background-color: rgba($color: white, $alpha: 0);
+      }
+    }
+    .user-info {
+      flex: 40%;
+      box-sizing: content-box;
+    }
+  }
+  .menu-container-background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
+  }
 }
+
 .slide-fade-enter-active {
   transition: all 0.3s ease;
 }

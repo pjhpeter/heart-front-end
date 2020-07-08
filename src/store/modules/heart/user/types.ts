@@ -9,4 +9,5 @@ export interface UserState {
   token: string;
   user: UserInfo | null;
   destopShotcutList: Array<DestopShotcutInfo>;
+  wallpaperUrl: string;
 }

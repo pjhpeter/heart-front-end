@@ -113,5 +113,15 @@ export const mutations: MutationTree<UserState> = {
       // 如果有数据被修改，则将快捷方式数据写入localStoraage
       Auth.setDestopShotcut(state.destopShotcutList);
     }
+  },
+
+  /**
+   * 更改壁纸路径
+   * @param state 用户模块状态对象
+   * @param url 壁纸路径
+   */
+  setWallpaperUrl(state: UserState, url: string) {
+    Vue.set(state, "wallpaperUrl", url);
+    // state.wallpaperUrl = url;
   }
 };
