@@ -28,7 +28,7 @@ html {
 }
 
 body {
-  font-family: $fontFamily !important;
+  font-family: $fontFamily;
   height: 100%;
   width: 100%;
   #app {

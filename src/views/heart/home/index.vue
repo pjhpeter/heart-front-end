@@ -95,14 +95,6 @@ export default class Home extends Vue {
   };
 
   mounted(): void {
-    ///// TODO:临时用的
-    // const userInfo: UserInfo = {
-    //   userCode: "123",
-    //   loginCode: "test",
-    //   userName: "测试"
-    // };
-    // this.$store.commit("user/setUser", userInfo);
-    //////
     document.addEventListener("click", this.hideMenu);
   }
 
@@ -164,6 +156,7 @@ $blur: 35px;
       border-top: 1px solid rgba($color: $background, $alpha: 0.2);
       .ivu-layout {
         background-color: rgba($color: white, $alpha: 0);
+        .start-button-container,
         .icon-container {
           background-color: rgba($color: white, $alpha: 0);
         }

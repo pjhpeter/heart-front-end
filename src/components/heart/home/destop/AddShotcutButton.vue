@@ -17,10 +17,22 @@ import ModalInfo from "../../../../model/heart/global/ModalInfo";
   name: "add-shotcut-button"
 })
 export default class AddShotcutButton extends Vue {
+  private addShotcutModalId?: number;
+
   /**
    * 打开添加快捷方式的模态框
    */
   private showAddShotcutModal(): void {
+    if (this.addShotcutModalId) {
+      // 如果原来已经打开了添加快捷方式的模态框，则不重复创建，直接显示
+      const modal: any = Commons.findModalById(this.addShotcutModalId);
+      if (modal) {
+        modal.isShow = true;
+        // 模拟点击模态框中ViewUI的Modal组件
+        modal.$children[0].handleClickModal();
+        return;
+      }
+    }
     const modalInfo: ModalInfo = {
       url: "/heart/home/destop/AddShotcutModal.vue",
       title: "选择模块",
@@ -39,7 +51,7 @@ export default class AddShotcutButton extends Vue {
         }
       }
     };
-    Commons.showModule(modalInfo);
+    this.addShotcutModalId = Commons.showModule(modalInfo);
   }
 }
 </script>

@@ -28,11 +28,15 @@ export default class ComponentLoader extends Vue {
     if (this.url.indexOf(".vue") === -1) {
       // 不以.vue结尾，说明是模块入口组件，url是后端返回的访问地址，从views中读取组件
       (this as any).$options.components[componentName] = () =>
-        import(`@/views${this.url}/index.vue`);
+        import(`@/views${this.url}/index.vue`).catch(() =>
+          import("@/views/heart/error/404/page/index.vue")
+        );
     } else {
       // 以.vue结尾，为模块中的子组件，从components中读取组件。
       (this as any).$options.components[componentName] = () =>
-        import(`@/components${this.url}`);
+        import(`@/components${this.url}`).catch(() =>
+          import("@/views/heart/error/404/page/index.vue")
+        );
     }
   }
 

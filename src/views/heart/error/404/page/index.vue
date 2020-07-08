@@ -1,5 +1,25 @@
 <template>
-  <div>
-    404
+  <div class="not-found">
+    <div class="code">
+      <i class="iconfont icon-404"></i>
+    </div>
+    <div class="description">对不起，没找到您想打开的页面</div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.not-found {
+  height: 100%;
+  color: $primary;
+  text-align: center;
+  .code {
+    .icon-404 {
+      font-size: 200px;
+    }
+  }
+  .description {
+    font-size: 30px;
+    font-weight: 700;
+  }
+}
+</style>

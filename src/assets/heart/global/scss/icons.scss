@@ -15,6 +15,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+// 找不到查找内容
+.icon-not-found:before {
+  content: "\e667";
+}
+
+// 404
+.icon-404:before {
+  content: "\e61d";
+}
+
 // 添加桌面快捷方式
 .icon-add-shotcut:before {
   content: "\e63f";

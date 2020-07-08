@@ -46,3 +46,55 @@
         }
     }
 }
+
+// 滚动条整体样式
+::-webkit-scrollbar {
+    width: 5px;
+}
+// 滚动条滑块
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: $primary;
+}
+// 滚动条轨道
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: white;
+}
+
+// 修改按钮默认样式
+.ivu-btn:focus {
+    box-shadow: 0 0 3px $primary;;
+}
+.ivu-btn-default, .ivu-btn-dashed {
+    border-color: $primary;
+    color: $primary;
+    &:hover {
+        border-color: $lightPrimary;
+        color: $lightPrimary;
+    }
+}
+.ivu-btn-default.active, .ivu-btn-default:active, .ivu-btn-dashed.active, .ivu-btn-dashed:active {
+    border-color: $primary;
+    color: $primary;
+    box-shadow: 0 0 2px $primary;
+}
+.ivu-btn-primary {
+    background-color: $primary;
+    border-color: $primary;
+    &:hover {
+        background-color: $lightPrimary;
+        border-color: $lightPrimary;
+    }
+}
+.ivu-btn-primary.active, .ivu-btn-primary:active {
+    background-color: $primary;
+    border-color: $primary;
+    box-shadow: 0 0 2px $primary;
+}
+.ivu-btn-text:hover {
+    color: $lightPrimary;
+}
+.ivu-btn-text.active, .ivu-btn-text:active {
+    color: $primary;
+}
