@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @contextmenu.prevent="disabledContextMenu">
     <home />
   </div>
 </template>
@@ -13,7 +13,12 @@ import Home from "./views/heart/home/index.vue";
     Home
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  // 禁用右键默认行为
+  disabledContextMenu(): void {
+    // 什么都不做
+  }
+}
 </script>
 
 <style lang="scss">
