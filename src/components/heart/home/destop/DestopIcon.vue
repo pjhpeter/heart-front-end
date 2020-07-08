@@ -1,12 +1,23 @@
 <template>
   <transition name="fade">
     <Dropdown trigger="contextMenu" transfer @on-click="handleItemClick">
-      <div class="destop-icon" @dblclick="showModal">
+      <div
+        class="destop-icon"
+        @dblclick="showModal"
+        :title="
+          modalInfo.backgroundColor === lossMenuColor
+            ? '快捷方式对应的菜单已经不存在，请删除'
+            : ''
+        "
+      >
         <div class="icon-content">
           <div
             class="icon"
             v-text="modalInfo.title.substring(0, 1)"
-            :style="{ backgroundColor: modalInfo.backgroundColor }"
+            :style="{
+              backgroundColor: modalInfo.backgroundColor,
+              opacity: modalInfo.backgroundColor === lossMenuColor ? 0.5 : 1
+            }"
           ></div>
           <p
             class="title"
@@ -28,6 +39,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
 import Menu from "../../../../model/heart/menu/Menu";
+import { LOSS_MENU_COLOR } from "../../../../constants/heart/values/Global";
 
 @Component({
   name: "destop-icon"
@@ -39,26 +51,10 @@ export default class DestopIcon extends Vue {
   })
   modalInfo!: ModalInfo;
 
-  backgroundColor = "#515A6E";
-
   // 右键菜单显示状态
   dropdownMenuVisiabled = false;
 
-  // created(): void {
-  //   this.$nextTick(() => {
-  //     // TODO:读取背景颜色，缓存中的颜色可能会跟实际不一致，所以不用缓存的颜色
-  //     // 读取所有也去菜单
-  //     let menuItemList: Array<Menu> = this.$store.getters["menu/getMenuItemList"];
-  //     menuItemList.some((menuItem: Menu) => {
-  //       if(this.modalInfo.url === menuItem.menuUrl) {
-  //         console.log(menuItem);
-  //         this.backgroundColor = menuItem.menuColor!;
-  //         return true;
-  //       }
-  //       return false;
-  //     });
-  //   });
-  // }
+  lossMenuColor: string = LOSS_MENU_COLOR;
 
   /**
    * 移出快捷方式

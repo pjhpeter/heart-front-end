@@ -6,6 +6,5 @@ import Menu from "@/model/heart/menu/Menu";
  * @author 彭嘉辉
  */
 export interface MenuState {
-  menuTree: Array<Menu> | null;
-  menuItemList: Array<Menu>;
+  menuTree: Array<Menu>;
 }

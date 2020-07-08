@@ -14,8 +14,8 @@ export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
    * @param data 响应的数据，调用方法时不必传入
    * @returns 菜单树对象
    */
-  @Request("/menuTree.json", RequestMethod.GET, (error: any) => null)
-  fetchMenuTree(data?: any): Array<Menu> | null {
+  @Request("/menuTree.json", RequestMethod.GET, (error: any) => [])
+  fetchMenuTree(data?: any): Array<Menu> {
     try {
       const menuTree: Array<Menu> = [];
       this.parseMenuData(data, menuTree);
@@ -23,7 +23,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
       return menuTree;
     } catch (error) {
       console.error(error.message);
-      return null;
+      return [];
     }
   }
 

@@ -7,8 +7,7 @@ import { getters } from "./getters";
 const namespaced = true;
 
 export const state: MenuState = {
-  menuTree: null,
-  menuItemList: []
+  menuTree: []
 };
 
 export const menu: Module<MenuState, RootState> = {

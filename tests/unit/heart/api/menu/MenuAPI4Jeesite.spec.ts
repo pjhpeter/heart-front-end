@@ -57,10 +57,10 @@ import Menu from "@/model/heart/menu/Menu";
 describe("测试fetchMenuTree方法", () => {
   it("生成菜单树", async () => {
     const menuAPI: MenuAPI<Menu> = new MenuAPI4Jeesite();
-    const menuTree: Array<Menu> | null = await menuAPI.fetchMenuTree();
-    expect(menuTree).not.toBeNull();
+    const menuTree: Array<Menu> = await menuAPI.fetchMenuTree();
+    expect(menuTree.length).not.toBe(0);
 
     const stateMenuTree: Array<Menu> = store.getters["menu/getMenuTree"];
-    expect(stateMenuTree).not.toBeNull();
+    expect(stateMenuTree.length).not.toBe(0);
   });
 });

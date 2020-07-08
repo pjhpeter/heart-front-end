@@ -8,5 +8,5 @@ export default interface MenuAPI<T> {
    * @param requestParams 请求参数，可以不传，JSON格式对象
    * @returns 菜单树数据
    */
-  fetchMenuTree(requestParams?: object): Array<T> | null;
+  fetchMenuTree(requestParams?: object): Array<T>;
 }

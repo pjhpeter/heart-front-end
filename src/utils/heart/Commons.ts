@@ -1,13 +1,11 @@
-import BaseModal from "@/components/heart/commons/BaseModal.vue";
+import MenuAPI4Jeesite from "@/api/heart/menu/impl/MenuAPI4Jeesite";
+import MenuAPI from "@/api/heart/menu/MenuAPI";
 import { MENU_ICON_COLORS } from "@/constants/heart/values/Global";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import OpenedInfo from "@/model/heart/global/OpenedInfo";
+import Menu from "@/model/heart/menu/Menu";
 import { Vue } from "vue-property-decorator";
 import store from "../../store";
-import Menu from "@/model/heart/menu/Menu";
-import { menu } from "@/store/modules/heart/menu";
-import MenuAPI from "@/api/heart/menu/MenuAPI";
-import MenuAPI4Jeesite from "@/api/heart/menu/impl/MenuAPI4Jeesite";
 
 /**
  * 公共工具类
@@ -70,7 +68,6 @@ export default class Commons {
     const colors = MENU_ICON_COLORS;
     // 当前应用的颜色
     const color: string = colors[Commons.currentIconColorIndex];
-
     if (Commons.currentIconColorIndex === MENU_ICON_COLORS.length - 1) {
       // 下标已经到最后则重置
       Commons.currentIconColorIndex = 0;
@@ -94,12 +91,42 @@ export default class Commons {
   }
 
   static async loadMenuTreeData(): Promise<Array<Menu> | null> {
-    let menuTree: Array<Menu> | null = store.getters["menu/getMenuTree"];
-    if (!menuTree) {
+    let menuTree: Array<Menu> = store.getters["menu/getMenuTree"];
+    if (menuTree.length === 0) {
       // 如果状态数据中没有则向后端发请求获取
       const menuAPI: MenuAPI<Menu> = new MenuAPI4Jeesite();
       menuTree = await menuAPI.fetchMenuTree();
     }
     return menuTree;
+  }
+
+  /**
+   * 根据url获取对应菜单节点对象
+   * @param 菜单url
+   * @returns 对应菜单节点对象
+   */
+  static findMenuByUrl(url: string): Menu | undefined {
+    const menuTree: Array<Menu> = store.getters["menu/getMenuTree"];
+    return Commons.doFindMenu(menuTree, url);
+  }
+
+  /**
+   * 根据url从菜单数组中寻找对应的菜单
+   * @param menuList 菜单对象数组
+   * @param url 菜单url
+   */
+  private static doFindMenu(
+    menuList: Array<Menu>,
+    url: string
+  ): Menu | undefined {
+    for (let index = 0; index < menuList.length; index++) {
+      const menu: Menu = menuList[index];
+      if (menu.children) {
+        return Commons.doFindMenu(menu.children, url);
+      }
+      if (url === menu.menuUrl) {
+        return menu;
+      }
+    }
   }
 }

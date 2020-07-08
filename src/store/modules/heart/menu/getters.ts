@@ -7,16 +7,12 @@ export const getters: GetterTree<MenuState, RootState> = {
   /**
    * 获取菜单树
    * @param state 菜单状态信息
+   * @returns 菜单树
    */
-  getMenuTree(state: MenuState): Array<Menu> | null {
-    return state.menuTree;
-  },
-
-  /**
-   * 获取所有叶子菜单信息
-   * @param state 菜单状态信息
-   */
-  getMenuItemList(state: MenuState): Array<Menu> {
-    return state.menuItemList;
+  getMenuTree(state: MenuState): Array<Menu> {
+    if (state.menuTree) {
+      return state.menuTree;
+    }
+    return [];
   }
 };

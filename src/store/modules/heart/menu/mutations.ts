@@ -10,14 +10,5 @@ export const mutations: MutationTree<MenuState> = {
    */
   setMenuTree(state: MenuState, menuTree: Array<Menu>): void {
     state.menuTree = menuTree;
-  },
-
-  /**
-   * 保存叶子菜单
-   * @param state 菜单模块状态对象
-   * @param menu 叶子菜单对象
-   */
-  addMenuItem(state: MenuState, menu: Menu): void {
-    state.menuItemList.push(menu);
   }
 };

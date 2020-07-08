@@ -1,26 +1,14 @@
-import { mutations } from "@/store/modules/heart/menu/mutations";
-import { getters } from "@/store/modules/heart/menu/getters";
-import { MenuState } from "@/store/modules/heart/menu/types";
 import Menu from "@/model/heart/menu/Menu";
-import VueRouter from "vue-router";
-import { createLocalVue } from "@vue/test-utils";
-import { VueConstructor } from "vue/types/umd";
-
-let localValue: VueConstructor<Vue>;
-let router: VueRouter;
-beforeAll(() => {
-  localValue = createLocalVue();
-  localValue.use(VueRouter);
-  router = new VueRouter();
-});
+import { getters } from "@/store/modules/heart/menu/getters";
+import { mutations } from "@/store/modules/heart/menu/mutations";
+import { MenuState } from "@/store/modules/heart/menu/types";
 
 describe("测试mutations", () => {
   let state: MenuState;
 
   beforeEach(() => {
     state = {
-      menuTree: null,
-      menuItemList: []
+      menuTree: []
     };
   });
 
@@ -57,8 +45,7 @@ describe("测试getters", () => {
           menuUrl: "/test2",
           menuName: "测试模块2"
         }
-      ],
-      menuItemList: []
+      ]
     };
   });
 
@@ -66,13 +53,6 @@ describe("测试getters", () => {
     it("获取菜单树", () => {
       const menuTree: Array<Menu> = getters.getMenuTree(state, null, {}, null);
       expect(menuTree.length).toBe(2);
-    });
-  });
-
-  describe("测试getRouter方法", () => {
-    it("获取router", () => {
-      const router: VueRouter = getters.getRouter(state, null, {}, null);
-      expect(router).not.toBeNull();
     });
   });
 });
