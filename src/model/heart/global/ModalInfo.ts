@@ -9,6 +9,8 @@ export default interface ModalInfo {
   backgroundColor: string;
   // 是否允许最大化
   enabledFuscreen?: boolean;
+  // 模态框关闭时的回调函数
+  onClose?: Function;
 
   /**
    * 根据ViewUI的API，暴露出配置参数

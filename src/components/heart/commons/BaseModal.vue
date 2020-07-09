@@ -98,9 +98,6 @@ export default class BaseModal extends Vue {
     default: ""
   })
   title!: string;
-  // 模态框关闭时的回调函数
-  @Prop()
-  onClose?: Function;
   // 模态框配置信息
   @Prop({
     type: Object,
@@ -174,9 +171,12 @@ export default class BaseModal extends Vue {
     this.isShow = false;
     this.showFooter();
     this.removeOpened();
-    if (this.onClose) {
-      // 触发自定义关闭处理方法
-      this.onClose.call(this, this);
+    if (this.modalInfo.onClose) {
+      // 触发自定义关闭处理方法，将模态框内渲染的组件对象传回
+      this.modalInfo.onClose.call(
+        this,
+        (this.$refs["componentLoader"] as any).$children[0]
+      );
     }
   }
 

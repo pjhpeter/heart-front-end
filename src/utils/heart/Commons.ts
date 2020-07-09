@@ -12,6 +12,7 @@ import store from "../../store";
  * @author 彭嘉辉
  */
 export default class Commons {
+  // 颜色计数器
   private static currentIconColorIndex = 0;
 
   /**
@@ -90,6 +91,10 @@ export default class Commons {
     );
   }
 
+  /**
+   * 获取菜单树
+   * @returns 菜单树
+   */
   static async loadMenuTreeData(): Promise<Array<MenuInfo> | null> {
     let menuTree: Array<MenuInfo> = store.getters["menu/getMenuTree"];
     if (menuTree.length === 0) {

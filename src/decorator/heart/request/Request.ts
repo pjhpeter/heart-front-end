@@ -11,7 +11,7 @@ import { AxiosInstance, AxiosResponse } from "axios";
  *
  * class Example {
  *  // 暂时不知道怎么转义@，@前面的\是为了保持格式，真正代码是没有的
- *  \@Request(this, "/test", RequestMethod.GET, (error: any) = {
+ *  \@Request("/test", RequestMethod.GET, (error: any) = {
  *      console.log("这是错误信息", error.message);
  *  })
  *  // 如果调用方法时不传参，则只需要接收data参数作为响应数据即可

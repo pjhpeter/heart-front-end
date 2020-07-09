@@ -35,7 +35,7 @@ export default class AddShotcutButton extends Vue {
     }
     const modalInfo: ModalInfo = {
       url: "/heart/home/destop/AddShotcutModal.vue",
-      title: "选择模块",
+      title: "添加快捷方式",
       backgroundColor: Commons.getIconColor(),
       footerHide: false,
       width: 400,
