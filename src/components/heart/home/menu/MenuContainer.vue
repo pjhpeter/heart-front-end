@@ -23,22 +23,24 @@
  * @author 彭嘉辉
  */
 import { Vue, Component, Emit } from "vue-property-decorator";
-import Menu from "../../../../model/heart/menu/Menu";
+import MenuInfo from "../../../../model/heart/menu/MenuInfo";
 import MenuAPI4Jeesite from "../../../../api/heart/menu/impl/MenuAPI4Jeesite";
 import MenuAPI from "../../../../api/heart/menu/MenuAPI";
 import Commons from "../../../../utils/heart/Commons";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import { LOSS_MENU_COLOR } from "../../../../constants/heart/values/Global";
+import { Menu } from "view-design";
 
 @Component({
   name: "menu-container",
   components: {
     MenuTree: () => import("./MenuTree.vue"),
-    UserOperation: () => import("./UserOperation.vue")
+    UserOperation: () => import("./UserOperation.vue"),
+    Menu
   }
 })
 export default class MenuContainer extends Vue {
-  menuTree: Array<Menu> | null = [];
+  menuTree: Array<MenuInfo> | null = [];
 
   // 开始菜单背景样式，毛玻璃效果需要
   menuContainerBackgroundStyles: object = {
@@ -55,7 +57,7 @@ export default class MenuContainer extends Vue {
       ];
       modalInfoList.forEach((modalInfo: ModalInfo) => {
         // 寻找对应的菜单对象
-        const menu: Menu | undefined = Commons.findMenuByUrl(modalInfo.url);
+        const menu: MenuInfo | undefined = Commons.findMenuByUrl(modalInfo.url);
         if (menu) {
           if (menu.menuColor !== modalInfo.backgroundColor) {
             // 快捷方式和菜单颜色不一致时，将实际的菜单颜色赋值给快捷方式
@@ -111,9 +113,6 @@ export default class MenuContainer extends Vue {
       }
       &::after {
         width: 0;
-      }
-      .menu-tree {
-        background-color: rgba($color: white, $alpha: 0);
       }
     }
     .user-info {

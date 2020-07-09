@@ -1,5 +1,5 @@
 import MenuAPI from "../MenuAPI";
-import Menu from "@/model/heart/menu/Menu";
+import MenuInfo from "@/model/heart/menu/MenuInfo";
 import Request from "@/decorator/heart/request/Request";
 import { RequestMethod } from "@/constants/heart/enum/RequestMethod";
 import store from "@/store";
@@ -8,16 +8,16 @@ import store from "@/store";
  * 针对Jeesite的菜单数据解析
  * @author 彭嘉辉
  */
-export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
+export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
   /**
    * 生成菜单树
    * @param data 响应的数据，调用方法时不必传入
    * @returns 菜单树对象
    */
   @Request("/menuTree.json", RequestMethod.GET, (error: any) => [])
-  fetchMenuTree(data?: any): Array<Menu> {
+  fetchMenuTree(data?: any): Array<MenuInfo> {
     try {
-      const menuTree: Array<Menu> = [];
+      const menuTree: Array<MenuInfo> = [];
       this.parseMenuData(data, menuTree);
       store.commit("menu/setMenuTree", menuTree);
       return menuTree;
@@ -33,7 +33,11 @@ export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
    * @param menuTree 前端需要的菜单对象数组
    * @param parent 上级菜单对象
    */
-  private parseMenuData(menuData: any, menuTree: Array<Menu>, parent?: Menu) {
+  private parseMenuData(
+    menuData: any,
+    menuTree: Array<MenuInfo>,
+    parent?: MenuInfo
+  ) {
     if (menuData._root_) {
       this.doParse(menuData._root_, menuTree, parent);
     } else {
@@ -47,7 +51,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
    * @param menuTree 前端需要的菜单对象数组
    * @param parent 上级菜单对象
    */
-  private doParse(menuData: any, menuTree: Array<Menu>, parent?: Menu) {
+  private doParse(menuData: any, menuTree: Array<MenuInfo>, parent?: MenuInfo) {
     menuData.forEach((menu: any) => {
       if (!menu.childList && !menu.menuUrl) return;
       // 把多余的url去掉部分
@@ -55,7 +59,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
       // 是否叶子节点，有menuUrl属性，及不存在子节点则认定为叶子节点
       const isLeaf: boolean = menuUrl && !menu.childList;
       // 生成菜单对象
-      const menuItem: Menu = {
+      const menuItem: MenuInfo = {
         menuCode: menu.menuCode,
         menuIcon: menu.menuIcon,
         menuName: menu.menuName,
@@ -68,7 +72,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<Menu> {
 
       // 如果有子菜单则继续递归解析
       if (menu.childList) {
-        const children: Array<Menu> = [];
+        const children: Array<MenuInfo> = [];
         this.doParse(menu.childList, children, menuItem);
         if (children.length > 0) {
           menuItem.children = children;

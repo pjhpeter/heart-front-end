@@ -69,10 +69,13 @@ import { Vue, Component, Prop, Emit } from "vue-property-decorator";
 import ComponentLoader from "./ComponentLoader.vue";
 import OpenedInfo from "../../../model/heart/global/OpenedInfo";
 import ModalInfo from "../../../model/heart/global/ModalInfo";
+import { Modal, Button } from "view-design";
 
 @Component({
   components: {
-    ComponentLoader
+    ComponentLoader,
+    Modal,
+    Button
   }
 })
 export default class BaseModal extends Vue {

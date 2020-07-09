@@ -61,6 +61,7 @@ import Commons from "../../../utils/heart/Commons";
 import BaseModal from "../../../components/heart/commons/BaseModal.vue";
 import OpenedInfo from "../../../model/heart/global/OpenedInfo";
 import UserInfo from "../../../model/heart/user/UserInfo";
+import { Layout, Content, Sider, Footer } from "view-design";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
@@ -76,7 +77,11 @@ declare function require(img: string): string;
     IconGroup: () =>
       import("../../../components/heart/home/footer/IconGroup.vue"),
     DestopIconContainer: () =>
-      import("../../../components/heart/home/destop/DestopIconContainer.vue")
+      import("../../../components/heart/home/destop/DestopIconContainer.vue"),
+    Layout,
+    Content,
+    Sider,
+    Footer
   }
 })
 export default class Home extends Vue {
@@ -141,7 +146,7 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss">
-$blur: 35px;
+$blur: 5px;
 
 .home {
   height: 100%;
@@ -162,7 +167,7 @@ $blur: 35px;
       background-color: rgba($color: #ffffff, $alpha: 0.6);
       box-sizing: content-box;
       z-index: 99999;
-      border-top: 1px solid rgba($color: $background, $alpha: 0.2);
+      // border-top: 1px solid rgba($color: $background, $alpha: 0.2);
       .ivu-layout {
         background-color: rgba($color: white, $alpha: 0);
         .start-button-container,
@@ -173,8 +178,8 @@ $blur: 35px;
     }
     .footer-background {
       z-index: 99998;
-      -webkit-filter: blur(10px);
-      filter: blur(10px);
+      -webkit-filter: blur($blur);
+      filter: blur($blur);
     }
   }
 }

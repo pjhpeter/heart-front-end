@@ -29,9 +29,14 @@
  */
 import { Vue, Component, Prop } from "vue-property-decorator";
 import OpenedInfo from "../../../../model/heart/global/OpenedInfo";
+import { Row, Col } from "view-design";
 
 @Component({
-  name: "tab-container"
+  name: "tab-container",
+  components: {
+    Row,
+    Col
+  }
 })
 export default class TabContainer extends Vue {
   // 已打开的模块信息

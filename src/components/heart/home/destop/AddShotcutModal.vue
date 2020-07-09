@@ -12,19 +12,21 @@
  * @author 彭嘉辉
  */
 import { Vue, Component } from "vue-property-decorator";
-import Menu from "../../../../model/heart/menu/Menu";
+import MenuInfo from "../../../../model/heart/menu/MenuInfo";
 import Commons from "../../../../utils/heart/Commons";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
+import { Menu } from "view-design";
 
 @Component({
   name: "add-shotcut-modal",
   components: {
-    MenuTree: () => import("../menu/MenuTree.vue")
+    MenuTree: () => import("../menu/MenuTree.vue"),
+    Menu
   }
 })
 export default class AddShotcutModal extends Vue {
   // 菜单树
-  menuTree: Array<Menu> | null = [];
+  menuTree: Array<MenuInfo> | null = [];
 
   // 选中的菜单项对应信息
   selectedModalInfo: ModalInfo | undefined;

@@ -3,7 +3,7 @@ import MenuAPI from "@/api/heart/menu/MenuAPI";
 import { MENU_ICON_COLORS } from "@/constants/heart/values/Global";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import OpenedInfo from "@/model/heart/global/OpenedInfo";
-import Menu from "@/model/heart/menu/Menu";
+import MenuInfo from "@/model/heart/menu/MenuInfo";
 import { Vue } from "vue-property-decorator";
 import store from "../../store";
 
@@ -90,11 +90,11 @@ export default class Commons {
     );
   }
 
-  static async loadMenuTreeData(): Promise<Array<Menu> | null> {
-    let menuTree: Array<Menu> = store.getters["menu/getMenuTree"];
+  static async loadMenuTreeData(): Promise<Array<MenuInfo> | null> {
+    let menuTree: Array<MenuInfo> = store.getters["menu/getMenuTree"];
     if (menuTree.length === 0) {
       // 如果状态数据中没有则向后端发请求获取
-      const menuAPI: MenuAPI<Menu> = new MenuAPI4Jeesite();
+      const menuAPI: MenuAPI<MenuInfo> = new MenuAPI4Jeesite();
       menuTree = await menuAPI.fetchMenuTree();
     }
     return menuTree;
@@ -105,8 +105,8 @@ export default class Commons {
    * @param 菜单url
    * @returns 对应菜单节点对象
    */
-  static findMenuByUrl(url: string): Menu | undefined {
-    const menuTree: Array<Menu> = store.getters["menu/getMenuTree"];
+  static findMenuByUrl(url: string): MenuInfo | undefined {
+    const menuTree: Array<MenuInfo> = store.getters["menu/getMenuTree"];
     return Commons.doFindMenu(menuTree, url);
   }
 
@@ -116,11 +116,11 @@ export default class Commons {
    * @param url 菜单url
    */
   private static doFindMenu(
-    menuList: Array<Menu>,
+    menuList: Array<MenuInfo>,
     url: string
-  ): Menu | undefined {
+  ): MenuInfo | undefined {
     for (let index = 0; index < menuList.length; index++) {
-      const menu: Menu = menuList[index];
+      const menu: MenuInfo = menuList[index];
       if (menu.children) {
         return Commons.doFindMenu(menu.children, url);
       }

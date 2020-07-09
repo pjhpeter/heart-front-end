@@ -11,8 +11,7 @@ describe("测试mutations", () => {
     state = {
       token: "",
       user: null,
-      destopShotcutList: [],
-      wallpaperUrl: ""
+      destopInfoList: []
     };
   });
 
@@ -62,8 +61,7 @@ describe("测试mutations", () => {
       state = {
         token: token,
         user: userInfo,
-        destopShotcutList: [],
-        wallpaperUrl: ""
+        destopInfoList: []
       };
       localStorage.setItem(LocalStorageKeys.USER_TOKEN, token);
       localStorage.setItem(
@@ -103,8 +101,7 @@ describe("测试getters", () => {
         loginCode: "test",
         userName: "测试"
       },
-      destopShotcutList: [],
-      wallpaperUrl: ""
+      destopInfoList: []
     };
   });
   describe("测试getToken", () => {

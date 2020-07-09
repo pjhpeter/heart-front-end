@@ -1,5 +1,5 @@
 import ModalInfo from "@/model/heart/global/ModalInfo";
-import DestopShotcutInfo from "@/model/heart/user/DestopShotcutInfo";
+import DestopInfo from "@/model/heart/user/DestopInfo";
 import UserInfo from "@/model/heart/user/UserInfo";
 import Auth from "@/utils/heart/Auth";
 import { MutationTree } from "vuex";
@@ -44,8 +44,8 @@ export const mutations: MutationTree<UserState> = {
     const userCode: string = (state.user as any).userCode;
     // 判断是否有当前用户用户快捷方式信息，有则把模态框信息添加到快捷方式信息中
     let isModalExist = true;
-    const flag: boolean = state.destopShotcutList.some(
-      (destopShotcutInfo: DestopShotcutInfo) => {
+    const flag: boolean = state.destopInfoList.some(
+      (destopShotcutInfo: DestopInfo) => {
         if (userCode === destopShotcutInfo.userCode) {
           isModalExist = destopShotcutInfo.modalInfoList.some(
             (modal: ModalInfo) => {
@@ -69,7 +69,7 @@ export const mutations: MutationTree<UserState> = {
 
     if (!flag) {
       // 没有当前用户用户快捷方式信息先添加一下
-      state.destopShotcutList.push({
+      state.destopInfoList.push({
         userCode,
         modalInfoList: [modalInfo]
       });
@@ -78,7 +78,7 @@ export const mutations: MutationTree<UserState> = {
     // 只有在当前用户本来没有快捷方式信息，或添加的模态框信息本来不存在时，数据才会变化
     if (!flag || !isModalExist) {
       // 数据产生变化，则将快捷方式数据写入localStoraage
-      Auth.setDestopShotcut(state.destopShotcutList);
+      Auth.setDestopInfoList(state.destopInfoList);
     }
   },
 
@@ -92,7 +92,7 @@ export const mutations: MutationTree<UserState> = {
     // 找出当前用户快捷方式信息，并删除对应模态框信息
     // 标记是否有数据被修改
     let flag = false;
-    state.destopShotcutList.some((destopShotcutInfo: DestopShotcutInfo) => {
+    state.destopInfoList.some((destopShotcutInfo: DestopInfo) => {
       if (userCode === destopShotcutInfo.userCode) {
         // 删除模态框信息
         flag = destopShotcutInfo.modalInfoList.some(
@@ -111,7 +111,7 @@ export const mutations: MutationTree<UserState> = {
 
     if (flag) {
       // 如果有数据被修改，则将快捷方式数据写入localStoraage
-      Auth.setDestopShotcut(state.destopShotcutList);
+      Auth.setDestopInfoList(state.destopInfoList);
     }
   },
 
@@ -121,7 +121,21 @@ export const mutations: MutationTree<UserState> = {
    * @param url 壁纸路径
    */
   setWallpaperUrl(state: UserState, url: string) {
-    Vue.set(state, "wallpaperUrl", url);
-    // state.wallpaperUrl = url;
+    const userCode: string = state.user?.userCode!;
+    // 找到当前用户的桌面信息并更新壁纸路径
+    const flag: boolean = state.destopInfoList.some(
+      (destopInfo: DestopInfo) => {
+        if (destopInfo.userCode === userCode) {
+          Vue.set(destopInfo, "wallpaperUrl", url);
+          return true;
+        }
+        return false;
+      }
+    );
+
+    // 壁纸被修改，则保存到localStorage中
+    if (flag) {
+      Auth.setDestopInfoList(state.destopInfoList);
+    }
   }
 };

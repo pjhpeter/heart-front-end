@@ -2,14 +2,11 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import ViewUI from "view-design";
-
+// 只引入ViewUI的css，组件库按需引入
 import "view-design/dist/styles/iview.css";
 import "./assets/heart/global/scss/index.scss";
 
 import "./promission";
-
-Vue.use(ViewUI);
 
 Vue.config.productionTip = process.env.NODE_ENV !== "production";
 

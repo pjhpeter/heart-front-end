@@ -2,13 +2,13 @@
  * 针对jeesite的功能菜单接口
  * @author 彭嘉辉
  */
-export default interface Menu {
+export default interface MenuInfo {
   menuCode?: string;
   menuIcon?: string;
   menuColor?: string;
   menuUrl?: string;
   menuName?: string;
   component?: any;
-  parent?: Menu;
-  children?: Array<Menu>;
+  parent?: MenuInfo;
+  children?: Array<MenuInfo>;
 }

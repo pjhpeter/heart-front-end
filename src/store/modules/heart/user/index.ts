@@ -6,17 +6,17 @@ import { getters } from "./getters";
 import Auth from "@/utils/heart/Auth";
 import UserInfo from "@/model/heart/user/UserInfo";
 import { WALLPAPER_URLS } from "@/constants/heart/values/Global";
+import DestopInfo from "@/model/heart/user/DestopInfo";
 
 const namespaced = true;
 
 const userInfo: UserInfo | null = Auth.getUserInfo();
+const destopInfoList: Array<DestopInfo> = Auth.getDestopInfoList();
 
 export const state: UserState = {
   token: Auth.getToken(),
   user: userInfo,
-  destopShotcutList: Auth.getDestopShotcut(),
-  // TODO:向后端请求壁纸
-  wallpaperUrl: WALLPAPER_URLS[0]
+  destopInfoList: destopInfoList
 };
 
 export const user: Module<UserState, RootState> = {

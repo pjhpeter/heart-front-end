@@ -38,11 +38,16 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
-import Menu from "../../../../model/heart/menu/Menu";
 import { LOSS_MENU_COLOR } from "../../../../constants/heart/values/Global";
+import { Dropdown, DropdownMenu, DropdownItem } from "view-design";
 
 @Component({
-  name: "destop-icon"
+  name: "destop-icon",
+  components: {
+    Dropdown,
+    DropdownMenu,
+    DropdownItem
+  }
 })
 export default class DestopIcon extends Vue {
   @Prop({

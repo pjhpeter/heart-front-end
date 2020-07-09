@@ -1,5 +1,5 @@
 import UserInfo from "@/model/heart/user/UserInfo";
-import DestopShotcutInfo from "@/model/heart/user/DestopShotcutInfo";
+import DestopInfo from "@/model/heart/user/DestopInfo";
 
 /**
  * 用户状态信息
@@ -8,6 +8,5 @@ import DestopShotcutInfo from "@/model/heart/user/DestopShotcutInfo";
 export interface UserState {
   token: string;
   user: UserInfo | null;
-  destopShotcutList: Array<DestopShotcutInfo>;
-  wallpaperUrl: string;
+  destopInfoList: Array<DestopInfo>;
 }

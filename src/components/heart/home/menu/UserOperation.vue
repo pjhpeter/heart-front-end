@@ -28,12 +28,17 @@
  */
 import { Vue, Component } from "vue-property-decorator";
 import { WALLPAPER_URLS } from "../../../../constants/heart/values/Global";
+import { Menu, MenuItem } from "view-design";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
 
 @Component({
-  name: "user-operation"
+  name: "user-operation",
+  components: {
+    Menu,
+    MenuItem
+  }
 })
 export default class UserOperation extends Vue {
   // 用户头像路径
@@ -107,12 +112,12 @@ export default class UserOperation extends Vue {
     }
     .logout-button {
       position: absolute;
-      bottom: 40px;
+      bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
       background-color: rgba($color: white, $alpha: 0);
-      width: 120px;
-      height: 40px;
+      width: 100px;
+      height: 30px;
       color: $primary;
       border-color: $primary;
       &:hover {

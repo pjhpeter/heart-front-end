@@ -21,13 +21,17 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import OpenedInfo from "../../../../model/heart/global/OpenedInfo";
+import { Badge } from "view-design";
 
 /**
  * 桌面右下角图标组
  * @author 彭嘉辉
  */
 @Component({
-  name: "icon-group"
+  name: "icon-group",
+  components: {
+    Badge
+  }
 })
 export default class IconGroup extends Vue {
   time = "";

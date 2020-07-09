@@ -10,9 +10,13 @@
  * @author 彭嘉辉
  */
 import { Vue, Component, Emit } from "vue-property-decorator";
+import { Button } from "view-design";
 
 @Component({
-  name: "start-button"
+  name: "start-button",
+  components: {
+    Button
+  }
 })
 export default class FooterContainer extends Vue {
   /**
