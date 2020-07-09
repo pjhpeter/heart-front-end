@@ -36,10 +36,10 @@ export default class FooterContainer extends Vue {
   color: $primary;
   border-radius: 0;
   box-shadow: none;
+  border: none;
   &:hover {
     background-color: $primary;
     color: white;
-    border-color: $lightPrimary;
   }
 }
 </style>

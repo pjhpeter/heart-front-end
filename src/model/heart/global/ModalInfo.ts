@@ -1,5 +1,3 @@
-import { Store } from "vuex";
-
 /**
  * 模态框信息
  * @author 彭嘉辉

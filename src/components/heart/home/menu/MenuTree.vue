@@ -62,7 +62,9 @@ export default class MenuTree extends Vue {
    */
   private getMenuIconColor(menu: MenuInfo): string {
     // 保存当前模块图标的背景颜色
-    menu.menuColor = Commons.getIconColor();
+    if (!menu.menuColor) {
+      menu.menuColor = Commons.getIconColor();
+    }
     return menu.menuColor;
   }
 }
