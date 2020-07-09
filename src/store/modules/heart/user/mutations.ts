@@ -36,12 +36,21 @@ export const mutations: MutationTree<UserState> = {
   },
 
   /**
+   * 一次性更新桌面信息到localStorage
+   * @param state 用户模块状态对象
+   */
+  setDestopInfoList(state: UserState): void {
+    // 将快捷方式数据写入localStoraage
+    Auth.setDestopInfoList(state.destopInfoList);
+  },
+
+  /**
    * 添加快捷方式
    * @param state 用户模块状态对象
    * @param modalInfo 快捷方式对应的模态框信息
    */
   addDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
-    const userCode: string = (state.user as any).userCode;
+    const userCode: string = state.user?.userCode!;
     // 判断是否有当前用户用户快捷方式信息，有则把模态框信息添加到快捷方式信息中
     let isModalExist = true;
     const flag: boolean = state.destopInfoList.some(
@@ -88,7 +97,7 @@ export const mutations: MutationTree<UserState> = {
    * @param modalInfo 快捷方式对应的模态框信息
    */
   removeDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
-    const userCode: string = (state.user as any).userCode;
+    const userCode: string = state.user?.userCode!;
     // 找出当前用户快捷方式信息，并删除对应模态框信息
     // 标记是否有数据被修改
     let flag = false;

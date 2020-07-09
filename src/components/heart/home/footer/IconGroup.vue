@@ -4,17 +4,17 @@
       <p>{{ time }}</p>
       <p>{{ day }}</p>
     </div>
-    <div class="icon">
+    <div class="icon" title="邮箱">
       <Badge :count="100" :overflow-count="99">
         <i class="iconfont icon-email"></i>
       </Badge>
     </div>
-    <div class="icon">
+    <div class="icon" title="即时消息">
       <Badge :count="0" :over-count="99">
         <i class="iconfont icon-message"></i>
       </Badge>
     </div>
-    <div class="show-destop" @click="showDestop"></div>
+    <div class="show-destop" @click="showDestop" title="显示桌面"></div>
   </div>
 </template>
 
@@ -118,9 +118,10 @@ export default class IconGroup extends Vue {
   }
   .show-destop {
     width: 5px;
-    border-left: 1px solid $border;
+    border-left: 1px solid $lightPrimary;
+    cursor: pointer;
     &:hover {
-      background-color: rgba($color: white, $alpha: 0.3);
+      background-color: rgba($color: white, $alpha: 0.5);
     }
   }
 }

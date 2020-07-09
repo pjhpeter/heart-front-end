@@ -63,6 +63,7 @@ export default class MenuContainer extends Vue {
     const modalInfoList: Array<ModalInfo> = this.$store.getters[
       "user/getDestopShotcutInfo"
     ];
+    let flag = false;
     modalInfoList.forEach((modalInfo: ModalInfo) => {
       // 寻找对应的菜单对象
       const menu: MenuInfo | undefined = Commons.findMenuByUrl(modalInfo.url);
@@ -70,12 +71,19 @@ export default class MenuContainer extends Vue {
         if (menu.menuColor !== modalInfo.backgroundColor) {
           // 快捷方式和菜单颜色不一致时，将实际的菜单颜色赋值给快捷方式
           Vue.set(modalInfo, "backgroundColor", menu.menuColor);
+          // 标记数据被更改过
+          flag = true;
         }
       } else {
         // 菜单中找不到该模块，说明已经不存在了，将颜色编程暗颜色
         Vue.set(modalInfo, "backgroundColor", LOSS_MENU_COLOR);
       }
     });
+
+    if (flag) {
+      // 如果数据被更改过，保存到localStorage，以免每次都要更新颜色
+      this.$store.commit("user/setDestopInfoList");
+    }
   }
 
   /**
