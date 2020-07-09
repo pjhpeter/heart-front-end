@@ -35,6 +35,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * 桌面快捷方式组件
+ * @author 彭嘉辉
+ */
 import { Vue, Component, Prop } from "vue-property-decorator";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
