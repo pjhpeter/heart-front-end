@@ -1,5 +1,5 @@
 <template>
   <div>
-    这是定密申请
+    这是发件箱
   </div>
 </template>

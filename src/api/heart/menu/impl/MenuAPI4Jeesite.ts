@@ -54,7 +54,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
   private doParse(menuData: any, menuTree: Array<MenuInfo>, parent?: MenuInfo) {
     menuData.forEach((menu: any) => {
       if (!menu.childList && !menu.menuUrl) return;
-      // 把多余的url去掉部分
+      // Jeesite响应的模块路径都会有/XX/a/前缀的，把多余的url去掉部分
       const menuUrl = menu.menuUrl.substr(menu.menuUrl.indexOf("/a/") + 2);
       // 是否叶子节点，有menuUrl属性，及不存在子节点则认定为叶子节点
       const isLeaf: boolean = menuUrl && !menu.childList;

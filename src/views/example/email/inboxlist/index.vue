@@ -1,5 +1,5 @@
 <template>
   <div>
-    这是定密依据管理
+    这是收件箱
   </div>
 </template>
