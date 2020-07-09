@@ -3,14 +3,14 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/store/index.ts</title>
+    <title>Code coverage report for src/store/modules/heart/user/index.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="..\..\prettify.css" />
-    <link rel="stylesheet" href="..\..\base.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(..\..\sort-arrow-sprite.png);
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -18,7 +18,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="..\..\index.html">All files</a> / <a href="index.html">src/store</a> index.ts</h1>
+        <h1><a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">src/store/modules/heart/user</a> index.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -75,44 +75,68 @@
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Vue from "vue";
-import Vuex, { StoreOptions } from "vuex";
-import { RootState } from "./types";
-import { user } from "./modules/heart/user";
-import { menu } from "./modules/heart/menu";
-import { globals } from "./modules/heart/globals";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Module } from "vuex";
+import { RootState } from "@/store/types";
+import { UserState } from "./types";
+import { mutations } from "./mutations";
+import { getters } from "./getters";
+import Auth from "@/utils/heart/Auth";
+import UserInfo from "@/model/heart/user/UserInfo";
+import { WALLPAPER_URLS } from "@/constants/heart/values/Global";
+import DestopInfo from "@/model/heart/user/DestopInfo";
 &nbsp;
-Vue.use(Vuex);
+const namespaced = true;
 &nbsp;
-const store: StoreOptions&lt;RootState&gt; = {
-  state: {},
-  modules: {
-    user,
-    menu,
-    globals
-  }
+const userInfo: UserInfo | null = Auth.getUserInfo();
+const destopInfoList: Array&lt;DestopInfo&gt; = Auth.getDestopInfoList();
+&nbsp;
+export const state: UserState = {
+  token: Auth.getToken(),
+  user: userInfo,
+  destopInfoList: destopInfoList
 };
 &nbsp;
-export default new Vuex.Store(store);
+export const user: Module&lt;UserState, RootState&gt; = {
+  namespaced,
+  state,
+  mutations,
+  getters
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -123,14 +147,14 @@ export default new Vuex.Store(store);
                 at Thu Jul 09 2020 19:44:59 GMT+0800 (GMT+08:00)
             </div>
         </div>
-        <script src="..\..\prettify.js"></script>
+        <script src="..\..\..\..\..\prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="..\..\sorter.js"></script>
-        <script src="..\..\block-navigation.js"></script>
+        <script src="..\..\..\..\..\sorter.js"></script>
+        <script src="..\..\..\..\..\block-navigation.js"></script>
     </body>
 </html>
     
