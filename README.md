@@ -41,7 +41,7 @@ yarn serve
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0709/154716_b9e8c946_5449551.png "屏幕截图.png")
 
-> 模块入口请务必组件放在**views**目录，而模块里面的子组件最好**components**目录，方便区分。
+> 模块入口组件请务必放在**views**目录，而模块里面的子组件最好**components**目录，方便区分。
 
 ### 组件存放
 
