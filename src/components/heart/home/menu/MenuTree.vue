@@ -28,7 +28,7 @@
  * 菜单节点树
  * @author 彭嘉辉
  */
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Emit } from "vue-property-decorator";
 import MenuInfo from "../../../../model/heart/menu/MenuInfo";
 import Commons from "../../../../utils/heart/Commons";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";

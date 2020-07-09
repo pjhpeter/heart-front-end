@@ -1,7 +1,7 @@
 /**
  * 全局配置类，建议统一通过GlobalConfigReader类来读取配置项
  */
-// 由于这里不会被webpack管理，所以不能用es6语法，防止浏览器不兼容
+// 由于这里不会被webpack管理，babel不会起作用，所以不能用es6语法，防止浏览器不兼容
 (function() {
   const config = {
     // --是否使用反向代理，默认为true

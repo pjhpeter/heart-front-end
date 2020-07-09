@@ -28,7 +28,7 @@
  */
 import { Vue, Component } from "vue-property-decorator";
 import { WALLPAPER_URLS } from "../../../../constants/heart/values/Global";
-import { Menu, MenuItem } from "view-design";
+import { Menu, MenuItem, Button } from "view-design";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
@@ -37,7 +37,8 @@ declare function require(img: string): string;
   name: "user-operation",
   components: {
     Menu,
-    MenuItem
+    MenuItem,
+    Button
   }
 })
 export default class UserOperation extends Vue {
