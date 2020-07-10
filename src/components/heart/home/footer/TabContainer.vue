@@ -5,19 +5,29 @@
       :key="index"
       name="fade"
     >
-      <div
-        :class="`tab-icon ${openedInfo.active ? 'tab-icon-active' : ''}`"
-        @click="onTabClick(openedInfo)"
-      >
-        <Row class="tab-row" type="flex" justify="center" align="middle">
-          <Col span="8">
-            <div
-              v-text="openedInfo.title.substring(0, 1)"
-              :style="{ backgroundColor: openedInfo.backgroundColor }"
-            ></div>
-          </Col>
-        </Row>
-      </div>
+      <Dropdown trigger="contextMenu" transfer @on-click="onMenuClick">
+        <div
+          :class="`tab-icon ${openedInfo.active ? 'tab-icon-active' : ''}`"
+          @click="onTabClick(openedInfo)"
+        >
+          <Row class="tab-row" type="flex" justify="center" align="middle">
+            <Col span="8">
+              <div
+                v-text="openedInfo.title.substring(0, 1)"
+                :style="{ backgroundColor: openedInfo.backgroundColor }"
+              ></div>
+            </Col>
+          </Row>
+        </div>
+        <DropdownMenu slot="list">
+          <DropdownItem :name="`closeCurrent-${openedInfo.id}`"
+            >关闭</DropdownItem
+          >
+          <DropdownItem :name="`closeOther-${openedInfo.id}`"
+            >关闭其他</DropdownItem
+          >
+        </DropdownMenu>
+      </Dropdown>
     </transition>
   </div>
 </template>
@@ -29,13 +39,16 @@
  */
 import { Vue, Component, Prop } from "vue-property-decorator";
 import OpenedInfo from "../../../../model/heart/global/OpenedInfo";
-import { Row, Col } from "view-design";
+import { Row, Col, Dropdown, DropdownMenu, DropdownItem } from "view-design";
 
 @Component({
   name: "tab-container",
   components: {
     Row,
-    Col
+    Col,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem
   }
 })
 export default class TabContainer extends Vue {
@@ -63,6 +76,40 @@ export default class TabContainer extends Vue {
 
     // 模拟点击模态框操作，使其至于最顶层，查看源代码发现的
     openedInfo.modal.$children[0].handleClickModal();
+  }
+
+  /**
+   * 点击右键菜单事件
+   * @param name 菜单项的name属性，内容是：操作项-openedInfo的id
+   */
+  onMenuClick(name: string): void {
+    // 读取当前点击的已打开模块信息的id
+    const currentOpenedInfoId: number = parseInt(
+      name.substring(name.lastIndexOf("-") + 1)
+    );
+    if (name.indexOf("Current") > -1) {
+      // 关闭当前项
+      this.openedList.some((openedInfo: OpenedInfo, index: number) => {
+        if (openedInfo.id === currentOpenedInfoId) {
+          this.$store.commit("globals/ramoveOpenedInfo", openedInfo);
+          return true;
+        }
+        return false;
+      });
+    } else if (name.indexOf("Other") > -1) {
+      // 关闭其他
+      const remainingOpenedInfoList: Array<OpenedInfo> = this.openedList.filter(
+        (openedInfo: OpenedInfo) => {
+          return openedInfo.id === currentOpenedInfoId;
+        }
+      );
+
+      // 由于for循环中删除元素，会因为下标问题造成操作不成功，所以采取下面的思路
+      // 先删除所有打开模块的信息
+      this.openedList.splice(0, this.openedList.length);
+      // 再插入当前的
+      this.openedList.push(...remainingOpenedInfoList);
+    }
   }
 }
 </script>

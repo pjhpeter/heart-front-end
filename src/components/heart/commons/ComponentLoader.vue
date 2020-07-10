@@ -25,7 +25,6 @@ export default class ComponentLoader extends Vue {
     const componentName = (this.componentName = this.getComponentName(
       this.url
     ));
-    console.log(this.url);
     if (this.url.indexOf(".vue") === -1) {
       // 不以.vue结尾，说明是模块入口组件，url是后端返回的访问地址，从views中读取组件
       (this as any).$options.components[componentName] = () =>
