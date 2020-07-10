@@ -83,4 +83,27 @@ export default class Auth {
     }
     return [];
   }
+
+  /**
+   * 保存锁定状态
+   * @param locked 是否锁定
+   */
+  static setLocked(locked: boolean): void {
+    localStorage.setItem(LocalStorageKeys.LOCKED, locked + "");
+  }
+
+  /**
+   * 获取锁定状态
+   * @returns 是否锁定
+   */
+  static getLocked(): boolean {
+    const lockedStr: string | null = localStorage.getItem(
+      LocalStorageKeys.LOCKED
+    );
+    if (lockedStr) {
+      return lockedStr === "true";
+    }
+    // 默认不锁定
+    return false;
+  }
 }

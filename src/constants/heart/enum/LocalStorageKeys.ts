@@ -6,5 +6,6 @@ export enum LocalStorageKeys {
   GLOBAL_CONFIG = "global-config",
   USER_TOKEN = "user.token",
   USER_INFO = "user.info",
-  DESTOP_SHOTCUT = "user.destop-shotcut"
+  DESTOP_SHOTCUT = "user.destop-shotcut",
+  LOCKED = "locked"
 }

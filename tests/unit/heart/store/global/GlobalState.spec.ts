@@ -9,7 +9,8 @@ describe("测试mutations", () => {
   beforeEach(() => {
     globalState = {
       openedList: [],
-      showedFooter: true
+      showedFooter: true,
+      locked: true
     };
     openedInfo = {
       id: 1,
@@ -63,7 +64,8 @@ describe("测试getters", () => {
           active: false
         }
       ],
-      showedFooter: true
+      showedFooter: true,
+      locked: true
     };
   });
 

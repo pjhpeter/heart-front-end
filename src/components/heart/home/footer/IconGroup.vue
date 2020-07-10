@@ -48,9 +48,9 @@ export default class IconGroup extends Vue {
    * 计算当前时间
    */
   private now(): void {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
+    const now: Date = new Date();
+    const hours: number = now.getHours();
+    const minutes: number = now.getMinutes();
     this.time = `${hours > 9 ? hours : "0" + hours}:${
       minutes > 9 ? minutes : "0" + minutes
     }`;

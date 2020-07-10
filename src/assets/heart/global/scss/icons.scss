@@ -15,6 +15,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+// 右箭头
+.icon-arrow-right:before {
+  content: "\e765";
+}
+
+// 锁定时登录的用户图标
+.icon-user-lock:before {
+  content: "\e605";
+}
+
 // 找不到查找内容
 .icon-not-found:before {
   content: "\e667";

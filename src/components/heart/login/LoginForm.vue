@@ -7,6 +7,7 @@
             type="text"
             v-model="loginParams.username"
             placeholder="用户名"
+            @keypress.enter.stop.native="login"
           >
             <i class="iconfont icon-user" slot="prefix"></i>
           </Input>
@@ -15,7 +16,9 @@
           <Input
             type="password"
             v-model="loginParams.password"
+            password
             placeholder="密码"
+            @keypress.enter.stop.native="login"
           >
             <i class="iconfont icon-password" slot="prefix"></i>
           </Input>
@@ -63,7 +66,7 @@ export default class LoginForm extends Vue {
     password: [{ required: true, message: "请输入密码", trigger: "blur" }]
   };
 
-  login(): void {
+  private login(): void {
     (this.$refs["loginForm"] as any).validate(async (valid: boolean) => {
       if (valid) {
         const userAPI: UserAPI<UserInfo> = new UserAPI4Jeesit();
@@ -108,6 +111,9 @@ export default class LoginForm extends Vue {
             line-height: 50px;
             font-size: 25px;
           }
+        }
+        .ivu-input-suffix {
+          line-height: 50px;
         }
       }
       .login-button {

@@ -1,13 +1,22 @@
 <template>
   <div id="app" @contextmenu.prevent="disabledContextMenu">
-    <router-view></router-view>
+    <transition v-if="!$store.getters['globals/isLocked']" name="fade">
+      <router-view></router-view>
+    </transition>
+    <transition v-if="$store.getters['globals/isLocked']" name="fade">
+      <lock />
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 
-@Component
+@Component({
+  components: {
+    Lock: () => import("./components/heart/login/Lock.vue")
+  }
+})
 export default class App extends Vue {
   // 禁用右键默认行为
   disabledContextMenu(): void {
@@ -30,5 +39,14 @@ body {
     height: 100%;
     overflow: hidden;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

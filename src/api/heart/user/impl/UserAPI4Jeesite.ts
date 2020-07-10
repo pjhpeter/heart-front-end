@@ -25,6 +25,8 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo> {
     if (data.result === "true") {
       store.commit("user/setToken", data.sessionid as string);
       store.commit("user/setUser", data.user as UserInfo);
+      // 解除锁屏
+      store.commit("globals/setLocked", false);
       return true;
     }
     return false;
@@ -38,7 +40,10 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo> {
   @Request("/logout?__ajax=json", RequestMethod.POST, (error: any) => false)
   logout(data?: any): boolean {
     if (data.result === "true") {
+      // 清空token
       store.commit("user/clearUserState");
+      // 清空打开模块信息
+      store.commit("globals/clearOpenedInfoList");
       return true;
     }
     return false;

@@ -9,6 +9,7 @@
         <div
           :class="`tab-icon ${openedInfo.active ? 'tab-icon-active' : ''}`"
           @click="onTabClick(openedInfo)"
+          :title="openedInfo.title"
         >
           <Row class="tab-row" type="flex" justify="center" align="middle">
             <Col span="8">
@@ -26,6 +27,7 @@
           <DropdownItem :name="`closeOther-${openedInfo.id}`"
             >关闭其他</DropdownItem
           >
+          <DropdownItem name="closeAll">关闭全部</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </transition>
@@ -83,33 +85,53 @@ export default class TabContainer extends Vue {
    * @param name 菜单项的name属性，内容是：操作项-openedInfo的id
    */
   onMenuClick(name: string): void {
+    // name=closeCurrent-1232454543534
     // 读取当前点击的已打开模块信息的id
     const currentOpenedInfoId: number = parseInt(
       name.substring(name.lastIndexOf("-") + 1)
     );
     if (name.indexOf("Current") > -1) {
       // 关闭当前项
-      this.openedList.some((openedInfo: OpenedInfo, index: number) => {
-        if (openedInfo.id === currentOpenedInfoId) {
-          this.$store.commit("globals/ramoveOpenedInfo", openedInfo);
-          return true;
-        }
-        return false;
-      });
+      this.closeCurrent(currentOpenedInfoId);
     } else if (name.indexOf("Other") > -1) {
       // 关闭其他
-      const remainingOpenedInfoList: Array<OpenedInfo> = this.openedList.filter(
-        (openedInfo: OpenedInfo) => {
-          return openedInfo.id === currentOpenedInfoId;
-        }
-      );
-
-      // 由于for循环中删除元素，会因为下标问题造成操作不成功，所以采取下面的思路
-      // 先删除所有打开模块的信息
-      this.openedList.splice(0, this.openedList.length);
-      // 再插入当前的
-      this.openedList.push(...remainingOpenedInfoList);
+      this.closeOther(currentOpenedInfoId);
+    } else if (name === "closeAll") {
+      // 关闭全部
+      this.$store.commit("globals/clearOpenedInfoList");
     }
+  }
+
+  /**
+   * 关闭当前
+   * @param 当前右击的标签
+   */
+  private closeCurrent(currentOpenedInfoId: number): void {
+    this.openedList.some((openedInfo: OpenedInfo, index: number) => {
+      if (openedInfo.id === currentOpenedInfoId) {
+        this.$store.commit("globals/ramoveOpenedInfo", openedInfo);
+        return true;
+      }
+      return false;
+    });
+  }
+
+  /**
+   * 关闭其他
+   * @param 当前右击的标签
+   */
+  private closeOther(currentOpenedInfoId: number): void {
+    const remainingOpenedInfoList: Array<OpenedInfo> = this.openedList.filter(
+      (openedInfo: OpenedInfo) => {
+        return openedInfo.id === currentOpenedInfoId;
+      }
+    );
+
+    // 由于for循环中删除元素，会因为下标问题造成操作不成功，所以采取下面的思路
+    // 先删除所有打开模块的信息
+    this.openedList.splice(0, this.openedList.length);
+    // 再插入当前的
+    this.openedList.push(...remainingOpenedInfoList);
   }
 }
 </script>

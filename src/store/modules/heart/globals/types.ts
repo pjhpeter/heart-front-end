@@ -9,4 +9,6 @@ export interface GlobalState {
   openedList: Array<OpenedInfo>;
   // 是否显示底部栏
   showedFooter: boolean;
+  // 是否锁定屏幕
+  locked: boolean;
 }

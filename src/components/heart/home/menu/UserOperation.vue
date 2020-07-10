@@ -54,20 +54,32 @@ export default class UserOperation extends Vue {
    */
   onMenuItemClick(name: string): void {
     if (name === "changeWallpaper") {
-      // 切换壁纸操作
-      const currentWallpaperUrl: string = this.$store.getters[
-        "user/getWallpaperUrl"
-      ];
-      // 从壁纸路径集合中读取下一张壁纸路径
-      let index = WALLPAPER_URLS.indexOf(currentWallpaperUrl);
-      if (index === WALLPAPER_URLS.length - 1) {
-        index = 0;
-      } else {
-        index++;
-      }
       // 切换壁纸
-      this.$store.commit("user/setWallpaperUrl", WALLPAPER_URLS[index]);
+      this.changeWallpaper();
+    } else if (name === "lock") {
+      // 锁定
+      this.$store.commit("globals/setLocked", true);
+      // 清除token，防止重新登录时随便输入密码都正确
+      this.$store.commit("user/setToken", "");
     }
+  }
+
+  /**
+   * 切换壁纸
+   */
+  private changeWallpaper(): void {
+    const currentWallpaperUrl: string = this.$store.getters[
+      "user/getWallpaperUrl"
+    ];
+    // 从壁纸路径集合中读取下一张壁纸路径
+    let index = WALLPAPER_URLS.indexOf(currentWallpaperUrl);
+    if (index === WALLPAPER_URLS.length - 1) {
+      index = 0;
+    } else {
+      index++;
+    }
+    // 切换壁纸
+    this.$store.commit("user/setWallpaperUrl", WALLPAPER_URLS[index]);
   }
 
   /**
