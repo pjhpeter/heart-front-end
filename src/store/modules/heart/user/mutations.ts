@@ -131,6 +131,7 @@ export const mutations: MutationTree<UserState> = {
    */
   setWallpaperUrl(state: UserState, url: string) {
     const userCode: string = state.user?.userCode!;
+    // 当没有任何桌面信息时，
     // 找到当前用户的桌面信息并更新壁纸路径
     const flag: boolean = state.destopInfoList.some(
       (destopInfo: DestopInfo) => {

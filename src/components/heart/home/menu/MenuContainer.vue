@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-fade">
-    <div class="start-box">
+    <div class="start-box" @click.stop="disabledClick">
       <div class="menu-container">
         <Menu @on-select="onMenuClick" class="menu-box" width="auto">
           <menu-tree :menuTree="menuTree" />
@@ -61,7 +61,7 @@ export default class MenuContainer extends Vue {
    */
   updateDestopShotcutIcon(): void {
     const modalInfoList: Array<ModalInfo> = this.$store.getters[
-      "user/getDestopShotcutInfo"
+      "user/getDestopShotcutList"
     ];
     let flag = false;
     modalInfoList.forEach((modalInfo: ModalInfo) => {
@@ -84,6 +84,11 @@ export default class MenuContainer extends Vue {
       // 如果数据被更改过，保存到localStorage，以免每次都要更新颜色
       this.$store.commit("user/setDestopInfoList");
     }
+  }
+
+  // 禁用document点击事件，以免点击这里也关闭开始菜单
+  disabledClick() {
+    // 什么都不做
   }
 
   /**

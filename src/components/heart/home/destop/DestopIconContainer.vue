@@ -1,7 +1,7 @@
 <template>
   <div class="destop-icon-container">
     <destop-icon
-      v-for="modalInfo in $store.getters['user/getDestopShotcutInfo']"
+      v-for="modalInfo in $store.getters['user/getDestopShotcutList']"
       :key="modalInfo.url"
       :modalInfo="modalInfo"
     />

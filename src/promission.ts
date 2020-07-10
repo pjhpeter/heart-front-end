@@ -6,7 +6,7 @@ import UserInfo from "./model/heart/user/UserInfo";
 import UserAPI4Jeesit from "./api/heart/user/impl/UserAPI4Jeesite";
 
 // 导出beforeEach方法，方便单元测试
-export async function beforeEach(
+export async function beforeEach4Jeesite(
   to: Route,
   from: Route,
   next: NavigationGuardNext<Vue>
@@ -38,5 +38,5 @@ export async function beforeEach(
 // 定义导航守卫
 router.beforeEach(
   async (to: Route, from: Route, next: NavigationGuardNext<Vue>) =>
-    await beforeEach(to, from, next)
+    await beforeEach4Jeesite(to, from, next)
 );

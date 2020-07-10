@@ -1,5 +1,5 @@
 <template>
-  <div class="user-operation-box" @click.stop="disabledClick">
+  <div class="user-operation-box">
     <div class="user-operation">
       <img class="avatar" :src="avatarUrl" />
       <Menu class="operations" width="auto" @on-select="onMenuItemClick">
@@ -16,7 +16,7 @@
           锁定
         </MenuItem>
       </Menu>
-      <Button class="logout-button">退出</Button>
+      <Button class="logout-button" @click="logout">退出</Button>
     </div>
   </div>
 </template>
@@ -28,7 +28,10 @@
  */
 import { Vue, Component } from "vue-property-decorator";
 import { WALLPAPER_URLS } from "../../../../constants/heart/values/Global";
-import { Menu, MenuItem, Button } from "view-design";
+import { Menu, MenuItem, Button, Modal } from "view-design";
+import UserAPI from "../../../../api/heart/user/UserAPI";
+import UserInfo from "../../../../model/heart/user/UserInfo";
+import UserAPI4Jeesit from "../../../../api/heart/user/impl/UserAPI4Jeesite";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
@@ -38,17 +41,13 @@ declare function require(img: string): string;
   components: {
     Menu,
     MenuItem,
-    Button
+    Button,
+    Modal
   }
 })
 export default class UserOperation extends Vue {
   // 用户头像路径
   avatarUrl: string = require("../../../../assets/heart/home/images/avatar.png");
-
-  // 禁用document点击事件，以免点击这里也关闭开始菜单
-  disabledClick() {
-    // 什么都不做
-  }
 
   /**
    * 点击操作项
@@ -69,6 +68,27 @@ export default class UserOperation extends Vue {
       // 切换壁纸
       this.$store.commit("user/setWallpaperUrl", WALLPAPER_URLS[index]);
     }
+  }
+
+  /**
+   * 登出
+   */
+  logout(event: any): void {
+    // 模拟点击最外层div，关闭开始菜单
+    document.getElementById("app")!.click();
+    // 确认是否要退出
+    (Modal as any).confirm({
+      title: "提醒",
+      content: "确认退出系统吗？",
+      onOk: async () => {
+        // 退出
+        const userAPI: UserAPI<UserInfo> = new UserAPI4Jeesit();
+        if (await userAPI.logout()) {
+          // 回到退出页面
+          this.$router.push("/login");
+        }
+      }
+    });
   }
 }
 </script>

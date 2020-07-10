@@ -1,4 +1,4 @@
-import { beforeEach } from "@/promission";
+import { beforeEach4Jeesite } from "@/promission";
 import store from "@/store";
 import { Route } from "vue-router";
 
@@ -26,7 +26,7 @@ describe("测试导航守卫", () => {
       params: {},
       query: {}
     };
-    beforeEach(to, from, next);
+    beforeEach4Jeesite(to, from, next);
     expect(next).toBeCalled();
     expect(path).toBeUndefined();
   });
@@ -49,7 +49,7 @@ describe("测试导航守卫", () => {
       params: {},
       query: {}
     };
-    beforeEach(to, from, next);
+    beforeEach4Jeesite(to, from, next);
     expect(next).toBeCalled();
     expect(path).toBe("/login");
   });
@@ -73,7 +73,7 @@ describe("测试导航守卫", () => {
       params: {},
       query: {}
     };
-    await beforeEach(to, from, next);
+    await beforeEach4Jeesite(to, from, next);
     expect(next).toBeCalled();
     expect(path).toBeUndefined();
   });

@@ -29,21 +29,28 @@ export const getters: GetterTree<UserState, RootState> = {
    * 读取当前用户桌面快捷方式列表
    * @param state 用户模块状态对象
    */
-  getDestopShotcutInfo(state: UserState): Array<ModalInfo> {
+  getDestopShotcutList(state: UserState): Array<ModalInfo> {
     const userCode: string = (state.user as any).userCode;
-    let destopShotcutInfo: DestopInfo | undefined;
+    let destopInfo: DestopInfo | undefined;
     // 找出当前用户快捷方式信息
-    state.destopInfoList.some((destopShotcut: DestopInfo) => {
-      if (userCode === destopShotcut.userCode) {
-        destopShotcutInfo = destopShotcut;
+    state.destopInfoList.some((destop: DestopInfo) => {
+      if (userCode === destop.userCode) {
+        destopInfo = destop;
         return true;
       }
       return false;
     });
 
-    if (destopShotcutInfo) {
-      return destopShotcutInfo.modalInfoList;
+    if (destopInfo) {
+      return destopInfo.modalInfoList;
     }
+    // 如果当前用户没有桌面信息则初始化
+    const initDestopInfo: DestopInfo = {
+      userCode,
+      modalInfoList: [],
+      wallpaperUrl: WALLPAPER_URLS[0]
+    };
+    state.destopInfoList.push(initDestopInfo);
     return [];
   },
 
