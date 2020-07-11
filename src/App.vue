@@ -18,9 +18,56 @@ import { Vue, Component } from "vue-property-decorator";
   }
 })
 export default class App extends Vue {
-  // 禁用右键默认行为
+  /**
+   * 禁用右键默认行为
+   */
   disabledContextMenu(): void {
     // 什么都不做
+  }
+
+  created(): void {
+    //禁止后退键 作用于Firefox、Opera
+    document.onkeypress = this.banBackSpace;
+    //禁止后退键  作用于IE、Chrome
+    document.onkeydown = this.banBackSpace;
+  }
+
+  /**
+   * 处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外
+   */
+  private banBackSpace(event: any): boolean {
+    //获取event对象
+    const ev = event || window.event;
+    //获取事件源
+    const obj = ev.target || ev.srcElement;
+    //获取事件源类型
+    const t = obj.type || obj.getAttribute("type");
+    //获取作为判断条件的事件类型
+    let vReadOnly = obj.getAttribute("readonly");
+    //处理null值情况
+    vReadOnly = vReadOnly == "" ? false : vReadOnly;
+    //当敲Backspace键时，事件源类型为密码或单行、多行文本的，
+    //并且readonly属性为true或enabled属性为false的，则退格键失效
+    const flag1 =
+      ev.keyCode == 8 &&
+      (t == "password" || t == "text" || t == "textarea") &&
+      vReadOnly == "readonly"
+        ? true
+        : false;
+    //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效
+    const flag2 =
+      ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea"
+        ? true
+        : false;
+
+    //判断
+    if (flag2) {
+      return false;
+    }
+    if (flag1) {
+      return false;
+    }
+    return true;
   }
 }
 </script>

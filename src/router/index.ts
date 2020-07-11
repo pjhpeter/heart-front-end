@@ -1,5 +1,11 @@
 import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
+import VueRouter, { RouteConfig, RawLocation } from "vue-router";
+
+// 处理路由跳转当前路径时报错的问题：Navigating to current location ("/") is not allowed
+const originalPush: Function = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location: RawLocation) {
+  return originalPush.call(this, location).catch((error: any) => error);
+};
 
 Vue.use(VueRouter);
 
@@ -17,6 +23,7 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
+  mode: "history",
   routes
 });
 
