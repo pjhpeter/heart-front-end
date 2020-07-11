@@ -50,7 +50,8 @@ export const mutations: MutationTree<UserState> = {
    * @param modalInfo 快捷方式对应的模态框信息
    */
   addDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
-    const userCode: string = state.user?.userCode!;
+    if (!state.user) return;
+    const userCode: string | undefined = state.user.userCode;
     // 判断是否有当前用户用户快捷方式信息，有则把模态框信息添加到快捷方式信息中
     let isModalExist = true;
     const flag: boolean = state.destopInfoList.some(
@@ -97,7 +98,8 @@ export const mutations: MutationTree<UserState> = {
    * @param modalInfo 快捷方式对应的模态框信息
    */
   removeDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
-    const userCode: string = state.user?.userCode!;
+    if (!state.user) return;
+    const userCode: string | undefined = state.user.userCode;
     // 找出当前用户快捷方式信息，并删除对应模态框信息
     // 标记是否有数据被修改
     let flag = false;
@@ -130,7 +132,8 @@ export const mutations: MutationTree<UserState> = {
    * @param url 壁纸路径
    */
   setWallpaperUrl(state: UserState, url: string) {
-    const userCode: string = state.user?.userCode!;
+    if (!state.user) return;
+    const userCode: string | undefined = state.user.userCode;
     // 当没有任何桌面信息时，
     // 找到当前用户的桌面信息并更新壁纸路径
     const flag: boolean = state.destopInfoList.some(

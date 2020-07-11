@@ -250,7 +250,8 @@ this.addShotcutModalId = Commons.showModule(modalInfo);
 | 参数名 | 说明                 | 数据类型 | 默认值 |
 | ------ | -------------------- | -------- | ------ |
 | url    | **必须项**，请求地址 | string   | 无  |
-| method    | 请求方式，建议使用RequestMethod枚举赋值 | string   | RequestMethod.GET  |
+| method | 请求方式，使用RequestMethod枚举赋值 | RequestMethod | RequestMethod.GET |
+| paramMode    | 请求参数传递模式,request payload或者form data，使用ParamMode枚举赋值 | ParamMode | ParamMode.REQUEST_PAYLOAD |
 | failure    | 请求失败时的回调函数 | Function   | 无  |
 
 使用例子：
@@ -259,7 +260,7 @@ import { RequestMethod } from "@/heart/constants/enum/RequestMethod";
  
 class Example {
  // 方法上添加Request装饰器，使其变成异步方法
- @Request("/test", RequestMethod.GET, (error: any) = {
+ @Request("/test", RequestMethod.GET, undefined, (error: any) = {
      console.log("这是错误信息", error.message);
  })
  // 如果调用方法时不传参，则只需要接收data参数作为响应数据即可
@@ -268,7 +269,7 @@ class Example {
    return data;
  }
  
- @Request("/login", RequestMethod.POST, (params: object, error: any) = {
+ @Request("/login", RequestMethod.POST, ParamMode.FORM_DATA, (params: object, error: any) = {
    console.log("这是错误信息", error.message);
  })
  // params是调用方法是传入的参数，必须是JSON格式的对象，建议使用属性接口，data是异步请求响应的数据

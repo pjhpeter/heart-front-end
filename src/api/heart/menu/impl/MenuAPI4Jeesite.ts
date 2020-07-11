@@ -1,7 +1,7 @@
 import MenuAPI from "../MenuAPI";
 import MenuInfo from "@/model/heart/menu/MenuInfo";
 import Request from "@/decorator/heart/request/Request";
-import { RequestMethod } from "@/constants/heart/enum/RequestMethod";
+import { RequestMethod } from "@/constants/heart/enum/RequestEnums";
 import store from "@/store";
 
 /**
@@ -14,7 +14,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
    * @param data 响应的数据，调用方法时不必传入
    * @returns 菜单树对象
    */
-  @Request("/menuTree.json", RequestMethod.GET, (error: any) => [])
+  @Request("/menuTree.json", RequestMethod.GET, undefined, (error: any) => [])
   fetchMenuTree(data?: any): Array<MenuInfo> {
     try {
       const menuTree: Array<MenuInfo> = [];

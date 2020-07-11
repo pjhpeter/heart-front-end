@@ -30,7 +30,8 @@ export const getters: GetterTree<UserState, RootState> = {
    * @param state 用户模块状态对象
    */
   getDestopShotcutList(state: UserState): Array<ModalInfo> {
-    const userCode: string = (state.user as any).userCode;
+    if (!state.user) return [];
+    const userCode: string = state.user.userCode;
     let destopInfo: DestopInfo | undefined;
     // 找出当前用户快捷方式信息
     state.destopInfoList.some((destop: DestopInfo) => {
@@ -60,7 +61,8 @@ export const getters: GetterTree<UserState, RootState> = {
    * @returns 当前壁纸路径
    */
   getWallpaperUrl(state: UserState): string {
-    const userCode: string = state.user?.userCode!;
+    if (!state.user) return WALLPAPER_URLS[0];
+    const userCode: string = state.user.userCode!;
     // 找到当前用户的桌面信息
     const currentUserDestopInfo:
       | DestopInfo

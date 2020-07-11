@@ -1,5 +1,5 @@
 import Request from "@/decorator/heart/request/Request";
-import { RequestMethod } from "@/constants/heart/enum/RequestMethod";
+import { RequestMethod } from "@/constants/heart/enum/RequestEnums";
 import LoginParams from "@/model/heart/user/LoginParams";
 
 // 伪造一个函数
@@ -10,7 +10,7 @@ class Test {
   token?: string;
 
   // 测试环境下不知道怎么使用vue.config.js配置的请求代理，只能自己拼接url
-  @Request("/authInfo", RequestMethod.GET, failure)
+  @Request("/authInfo", RequestMethod.GET, undefined, failure)
   getData(data?: any): string {
     this.result = data.result;
     return this.result;
