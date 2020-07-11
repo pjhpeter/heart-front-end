@@ -4,6 +4,7 @@ import store from "./store";
 import UserAPI from "./api/heart/user/UserAPI";
 import UserInfo from "./model/heart/user/UserInfo";
 import UserAPI4Jeesit from "./api/heart/user/impl/UserAPI4Jeesite";
+import NProgress from "./utils/heart/NProgress";
 
 // 导出beforeEach方法，方便单元测试
 export async function beforeEach4Jeesite(
@@ -11,6 +12,8 @@ export async function beforeEach4Jeesite(
   from: Route,
   next: NavigationGuardNext<Vue>
 ) {
+  // 路由跳转开始，显示进度条
+  NProgress.start();
   // 不拦截登录请求
   if (to.path === "/login") {
     next();
@@ -40,3 +43,8 @@ router.beforeEach(
   async (to: Route, from: Route, next: NavigationGuardNext<Vue>) =>
     await beforeEach4Jeesite(to, from, next)
 );
+
+router.afterEach(() => {
+  // 路由跳转完成，进度条结束
+  NProgress.done();
+});

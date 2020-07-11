@@ -5,6 +5,8 @@ import store from "./store";
 // 只引入ViewUI的css，组件库按需引入
 import "view-design/dist/styles/iview.css";
 import "./assets/heart/global/scss/index.scss";
+// 引入顶部进度条样式
+import "nprogress/nprogress.css";
 
 import "./promission";
 

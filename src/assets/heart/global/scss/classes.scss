@@ -98,3 +98,8 @@
 .ivu-btn-text.active, .ivu-btn-text:active {
     color: $primary;
 }
+
+// 顶部进度条颜色
+#nprogress .bar {
+    background: $primary !important;
+}
