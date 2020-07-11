@@ -1,6 +1,11 @@
 <template>
   <transition name="fade">
-    <Dropdown trigger="contextMenu" transfer @on-click="handleItemClick">
+    <Dropdown
+      class="destop-icon-dropdown-menu"
+      trigger="contextMenu"
+      transfer
+      @on-click="handleItemClick"
+    >
       <div
         class="destop-icon"
         @dblclick="showModal"
@@ -86,37 +91,43 @@ export default class DestopIcon extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.destop-icon {
-  display: flex;
+.destop-icon-dropdown-menu {
+  // 下拉菜单容器不给宽度的话，IE11中下拉菜单会出现在屏幕中间
   width: 80px;
-  height: 100px;
-  cursor: pointer;
-  color: white;
-  text-align: center;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  border-radius: 5px;
-  &:hover {
-    background-color: rgba($color: white, $alpha: 0.3);
-  }
-  .icon-content {
-    margin: auto;
-    width: 100%;
-    .icon {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      border-radius: 5px;
-      line-height: 40px;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 5px;
+  .destop-icon {
+    // display: flex;
+    width: 80px;
+    height: 100px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    // IE11不支持flex+margin:auto的垂直居中方式，所以选择了padding的方式比较保险，虽然low了些
+    padding: 20px 0;
+    &:hover {
+      background-color: rgba($color: white, $alpha: 0.3);
     }
-    .title {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      text-shadow: 0.1em 0.1em 0.2em black;
+    .icon-content {
+      // margin: auto;
+      width: 100%;
+      .icon {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      .title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-shadow: 0.1em 0.1em 0.2em black;
+      }
     }
   }
 }

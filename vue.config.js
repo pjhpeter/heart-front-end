@@ -12,7 +12,7 @@ module.exports = {
   devServer: {
     port: 1111,
     host: "0.0.0.0",
-    open: true,
+    open: false,
     proxy: {
       // 匹配/dev-api的请求
       // 用变量名来做key需要用中括号包裹
@@ -50,6 +50,9 @@ module.exports = {
 
   // 这个值是一个对象，则会通过 webpack-merge 合并到最终的配置中
   configureWebpack: config => {
+    // 支持IE
+    config.entry.app = ["babel-polyfill", "./src/main.ts"];
+
     // 生成环境
     if (process.env.NODE_ENV === "production") {
       //gzip压缩

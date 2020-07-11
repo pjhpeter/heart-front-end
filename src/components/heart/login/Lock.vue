@@ -15,7 +15,11 @@
             <div class="user-icon">
               <i class="iconfont icon-user-lock"></i>
             </div>
-            <p class="username" v-text="diplayUsername"></p>
+            <p
+              class="username"
+              v-text="diplayUsername"
+              v-if="!showUsername"
+            ></p>
             <Form
               class="form-lock"
               ref="loginFormLock"
@@ -27,6 +31,7 @@
                   v-model="loginParams.username"
                   type="text"
                   placeholder="用户名"
+                  @keypress.enter.prevent.stop.native="login"
                 ></Input>
               </FormItem>
               <FormItem prop="password">
@@ -34,6 +39,8 @@
                   v-model="loginParams.password"
                   type="password"
                   placeholder="密码"
+                  autofocus
+                  @keypress.enter.prevent.stop.native="login"
                 >
                   <Button type="primary" slot="suffix" @click="login">
                     <i class="iconfont icon-arrow-right"></i>

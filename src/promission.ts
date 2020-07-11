@@ -12,8 +12,6 @@ export async function beforeEach4Jeesite(
   from: Route,
   next: NavigationGuardNext<Vue>
 ) {
-  // 路由跳转开始，显示进度条
-  NProgress.start();
   // 不拦截登录请求
   if (to.path === "/login") {
     next();
@@ -40,8 +38,11 @@ export async function beforeEach4Jeesite(
 
 // 定义导航守卫
 router.beforeEach(
-  async (to: Route, from: Route, next: NavigationGuardNext<Vue>) =>
-    await beforeEach4Jeesite(to, from, next)
+  async (to: Route, from: Route, next: NavigationGuardNext<Vue>) => {
+    // 路由跳转开始，显示进度条
+    NProgress.start();
+    await beforeEach4Jeesite(to, from, next);
+  }
 );
 
 router.afterEach(() => {

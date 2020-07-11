@@ -139,60 +139,62 @@ export default class TabContainer extends Vue {
 <style lang="scss" scoped>
 .tab-container {
   height: 100%;
-  .tab-icon {
-    position: relative;
-    // 不浮动的话在火狐会出现滚动条
+  .ivu-dropdown {
+    // 不浮动的话在火狐和IE会出现滚动条
     float: left;
-    height: $footerHeight;
-    width: $footerHeight;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    // 底下的小红线
-    &::after {
-      content: "";
-      transition: width 0.5s;
-      opacity: 0;
-      width: 0;
-      height: 3px;
-      background-color: $darkPrimary;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &:hover {
-      background-color: rgba($color: white, $alpha: 0.2);
+    .tab-icon {
+      position: relative;
+      height: $footerHeight;
+      width: $footerHeight;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      // 底下的小红线
       &::after {
-        width: 80%;
-        opacity: 1;
+        content: "";
+        transition: width 0.5s;
+        opacity: 0;
+        width: 0;
+        height: 3px;
+        background-color: $darkPrimary;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
-    }
+      &:hover {
+        background-color: rgba($color: white, $alpha: 0.2);
+        &::after {
+          width: 80%;
+          opacity: 1;
+        }
+      }
 
-    .tab-row {
-      height: 100%;
-      div {
-        height: 30px;
-        width: 30px;
-        text-align: center;
-        line-height: 30px;
-        border-radius: 5px;
+      .tab-row {
+        height: 100%;
+        div {
+          height: 30px;
+          width: 30px;
+          text-align: center;
+          line-height: 30px;
+          border-radius: 5px;
+        }
       }
     }
-  }
-  // 选中样式
-  .tab-icon-active {
-    background-color: rgba($color: white, $alpha: 0.4);
-    position: relative;
-    &:hover {
-      background-color: rgba($color: white, $alpha: 0.6) !important;
+    // 选中样式
+    .tab-icon-active {
+      background-color: rgba($color: white, $alpha: 0.4);
+      position: relative;
+      &:hover {
+        background-color: rgba($color: white, $alpha: 0.6) !important;
+        &::after {
+          width: 98%;
+        }
+      }
       &::after {
+        opacity: 1;
         width: 98%;
       }
-    }
-    &::after {
-      opacity: 1;
-      width: 98%;
     }
   }
 }

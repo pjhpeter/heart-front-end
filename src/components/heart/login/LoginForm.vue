@@ -7,7 +7,8 @@
             type="text"
             v-model="loginParams.username"
             placeholder="用户名"
-            @keypress.enter.stop.native="login"
+            autofocus
+            @keypress.enter.prevent.stop.native="login"
           >
             <i class="iconfont icon-user" slot="prefix"></i>
           </Input>
@@ -18,7 +19,7 @@
             v-model="loginParams.password"
             password
             placeholder="密码"
-            @keypress.enter.stop.native="login"
+            @keypress.enter.prevent.stop.native="login"
           >
             <i class="iconfont icon-password" slot="prefix"></i>
           </Input>

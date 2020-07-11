@@ -32,15 +32,12 @@ export const getters: GetterTree<UserState, RootState> = {
   getDestopShotcutList(state: UserState): Array<ModalInfo> {
     if (!state.user) return [];
     const userCode: string = state.user.userCode;
-    let destopInfo: DestopInfo | undefined;
     // 找出当前用户快捷方式信息
-    state.destopInfoList.some((destop: DestopInfo) => {
-      if (userCode === destop.userCode) {
-        destopInfo = destop;
-        return true;
+    const destopInfo: DestopInfo | undefined = state.destopInfoList.find(
+      (destop: DestopInfo) => {
+        return destop.userCode === userCode;
       }
-      return false;
-    });
+    );
 
     if (destopInfo) {
       return destopInfo.modalInfoList;
@@ -52,7 +49,7 @@ export const getters: GetterTree<UserState, RootState> = {
       wallpaperUrl: WALLPAPER_URLS[0]
     };
     state.destopInfoList.push(initDestopInfo);
-    return [];
+    return initDestopInfo.modalInfoList;
   },
 
   /**
