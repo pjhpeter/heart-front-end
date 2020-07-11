@@ -225,6 +225,7 @@ export default class Lock extends Vue {
             button {
               width: 40px;
               padding: 0;
+              border-radius: 0 4px 4px 0;
               .icon-arrow-right {
                 color: white;
               }
