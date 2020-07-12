@@ -1,48 +1,61 @@
 @import "./variables.scss";
 
+// 基础模态框高度，不包括header和footer
+$baseModalHeight: 550;
+$baseModalHeaderHeight: 40;
+// 这是ViewUI设置好的值
+$baseModalFooterHeight: 57;
+$baseModalMinWidth: 400;
+$baseModalMinHeight: 300;
+
 // 基础模态框样式
 .heart-base-modal {
     overflow: hidden;
     .ivu-modal{
         top: 20px;
-        // 模态框头部
-        .ivu-modal-header {
-            height: 40px;
-            // 标题
-            .title {
-                color: $title;
-                font-size: 18px;
+        .ivu-modal-content {
+            min-width: #{$baseModalMinWidth}px;
+            min-height: #{$baseModalMinHeight}px;
+            // 模态框头部
+            .ivu-modal-header {
+                height: #{$baseModalHeaderHeight}px;
+                // 标题
+                .title {
+                    color: $title;
+                    font-size: 18px;
+                }
+                // 按钮组
+                .button-group {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    // 按钮默认样式
+                    .ivu-btn {
+                        box-shadow: none;
+                        color: $content;
+                        width: 40px;
+                        height: 40px;
+                        padding: 0;
+                    }
+                    // 最大化和最小化按钮
+                    .fullscreen-button:hover,.reset-screen-button:hover,.hide-button:hover {
+                        background-color: $background;
+                    }
+                    // 关闭按钮
+                    .close-button:hover {
+                        background-color: $error;
+                        color: #ffffff;
+                    }
+                }
             }
-            // 按钮组
-            .button-group {
-                position: absolute;
-                top: 0;
-                right: 0;
-                // 按钮默认样式
-                .ivu-btn {
-                    box-shadow: none;
-                    color: $content;
-                    width: 40px;
-                    height: 40px;
-                    padding: 0;
-                }
-                // 最大化和最小化按钮
-                .fullscreen-button:hover,.reset-screen-button:hover,.hide-button:hover {
-                    background-color: $background;
-                }
-                // 关闭按钮
-                .close-button:hover {
-                    background-color: $error;
-                    color: #ffffff;
-                }
+            // 模态框内容部分
+            .ivu-modal-body {
+                min-height: #{$baseModalMinHeight - $baseModalHeaderHeight - $baseModalFooterHeight}px;
+                // 这里设定模态框高度
+                // 想要修改就写个样式覆盖这个值
+                height: #{$baseModalHeight}px;
+                overflow-y: auto;
             }
-        }
-        // 模态框内容部分
-        .ivu-modal-body {
-            // 这里设定模态框高度
-            // 想要修改就写个样式覆盖这个值
-            height: $baseModalHeight;
-            overflow-y: auto;
         }
     }
 }

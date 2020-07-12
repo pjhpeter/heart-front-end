@@ -78,6 +78,7 @@ yarn serve
 | url | **必须项**，模态框中要渲染的组件路径，<br>格式为/{项目名}/{模块名}/{功能名}/{组件名}.vue，因为TypeScript不识别.vue组件，<br>所以路径一定要写上.vue后缀，比如/exaple/email/SendBoxHeader.vue | string | 无 |
 | backgroundColor | **必须项**，图标的背景颜色 | string | 无 |
 | enabledFuscreen | 允许最大化 | boolean | true |
+| resizable | 允许拉伸 | boolean | true |
 | onClose | 模态框关闭时触发的回调函数，隐藏的时候不会触发，函数接收一个参数 | Function | 无 |
 
 同时还支持ViewUI的Modal组件API中的一些属性，相关的属性都封装在ModalInfo.ts属性接口中。
@@ -94,6 +95,8 @@ export default interface ModalInfo {
   backgroundColor: string;
   // 是否允许最大化
   enabledFuscreen?: boolean;
+  // 是否可拉伸，默认可拉伸
+  resizable?: boolean;
   // 模态框关闭时的回调函数
   onClose?: Function;
 

@@ -12,9 +12,7 @@
       :ok-text="modalInfo.okText"
       :cancel-text="modalInfo.cancelText"
       :width="modalInfo.width ? modalInfo.width : 1000"
-      :footer-hide="
-        modalInfo.footerHide !== undefined ? modalInfo.footerHide : true
-      "
+      :footer-hide="modalInfo.footerHide"
       :closable="false"
       :class-name="`heart-base-modal ${modalInfo.className}`"
       :z-index="modalInfo.zIndex"
@@ -23,9 +21,10 @@
       @on-ok="onOk"
       @on-cancel="onCancel"
       @on-visible-change="onVisibleChange"
+      v-init
     >
       <template slot="header">
-        <div @mousedown="mousedown" @mouseup="mouseup">
+        <div @mousedown="mousedown" @mouseup="mouseup" @dblclick="doFullscreen">
           <span class="title" v-text="title"></span>
           <div class="button-group">
             <Button type="text" class="hide-button" @click="hide">
@@ -70,12 +69,39 @@ import ComponentLoader from "./ComponentLoader.vue";
 import OpenedInfo from "../../../model/heart/global/OpenedInfo";
 import ModalInfo from "../../../model/heart/global/ModalInfo";
 import { Modal, Button } from "view-design";
+import { VNode } from "vue";
 
 @Component({
   components: {
     ComponentLoader,
     Modal,
     Button
+  },
+  directives: {
+    // 拖动边框改变大小
+    // 只支持右边界、下边界和右下角三个地方
+    init: {
+      bind: (el: Element, binding: any, vnode: VNode, oldVNode: VNode) => {
+        // BaseModal
+        const baseModal: any = vnode.context;
+        // 获取模态框有效显示元素
+        const modalContent: any = el.querySelector(".ivu-modal-content");
+        // 模态框主体
+        const modalBody: any = el.querySelector(".ivu-modal-body");
+        // 保存模态框初始信息
+        baseModal.modalContent = modalContent;
+        baseModal.modalBody = modalBody;
+        if (baseModal.modalInfo.resizable) {
+          baseModal.$nextTick(() => {
+            // 保证模态框已经存在
+            baseModal.modalOriginHeight = modalContent.style.height;
+            baseModal.modalBodyOriginHeight = modalBody.style.height;
+            modalContent.onmousemove = baseModal.setCursor(modalContent);
+            modalContent.onmousedown = baseModal.resize(modalContent);
+          });
+        }
+      }
+    }
   }
 })
 export default class BaseModal extends Vue {
@@ -108,6 +134,23 @@ export default class BaseModal extends Vue {
   // 显示状态
   isShow = true;
 
+  // 模态框头部高度
+  private headerHeight = 40;
+  // 模态框底栏高度
+  private footerHeight = 0;
+  // 鼠标进入拉伸范围，拉伸功能生效
+  private activeResize = false;
+  // 正在拉伸
+  private resizing = false;
+  // 模态框有效显示元素
+  private modalContent: any = null;
+  // 模态框主体元素，不包括header和footer
+  private modalBody: any = null;
+  // 模态框最大化前的高宽，由于ViewUI的Modal组件并不管理高度，所以要自己管理
+  private modalOriginHeight = "";
+  // 模态框body最大化前的高宽，由于ViewUI的Modal组件并不管理高度，所以要自己管理
+  private modalBodyOriginHeight = "";
+
   created() {
     // 初始化必要的参数
     if (!this.modalInfo.draggable) {
@@ -115,6 +158,15 @@ export default class BaseModal extends Vue {
     }
     if (this.modalInfo.enabledFuscreen === undefined) {
       this.modalInfo.enabledFuscreen = true;
+    }
+    if (this.modalInfo.resizable === undefined) {
+      this.modalInfo.resizable = true;
+    }
+    if (this.modalInfo.footerHide === undefined) {
+      this.modalInfo.footerHide = true;
+    }
+    if (!this.modalInfo.footerHide) {
+      this.footerHeight = 57;
     }
   }
 
@@ -150,6 +202,13 @@ export default class BaseModal extends Vue {
   private doFullscreen(): void {
     Vue.set(this.modalInfo, "draggable", false);
     Vue.set(this.modalInfo, "fullscreen", true);
+    // 如果拉伸过，高度无法达到最高，必须重新设置
+    this.modalContent.style.height = `${document.body.clientHeight}px`;
+    this.modalBody.style.setProperty(
+      "height",
+      `${document.body.clientHeight - this.headerHeight - this.footerHeight}px`,
+      "important"
+    );
     // 模拟点击模态框操作，使其至于最顶层，查看源代码发现的
     (this.$children[0] as any).handleClickModal();
     this.hideFooter();
@@ -161,6 +220,13 @@ export default class BaseModal extends Vue {
   private resetScreen(): void {
     Vue.set(this.modalInfo, "draggable", true);
     Vue.set(this.modalInfo, "fullscreen", false);
+    // 将模态框的高度设置会最大化之前的值
+    this.modalContent.style.height = this.modalOriginHeight;
+    this.modalBody.style.setProperty(
+      "height",
+      this.modalBodyOriginHeight,
+      "important"
+    );
     this.showFooter();
   }
 
@@ -181,7 +247,7 @@ export default class BaseModal extends Vue {
   }
 
   /**
-   * 鼠标按下事件
+   * 鼠标按下header事件
    */
   private mousedown(event: any): void {
     // 页面高度
@@ -197,9 +263,9 @@ export default class BaseModal extends Vue {
   }
 
   /**
-   * 鼠标松开事件
+   * 鼠标松开header事件
    */
-  mouseup(event: any): void {
+  private mouseup(event: any): void {
     document.onmousemove = null;
   }
 
@@ -289,6 +355,122 @@ export default class BaseModal extends Vue {
         this.$refs["componentLoader"]
       );
     }
+  }
+
+  // 设置鼠标形状
+  private setCursor(): Function {
+    // 拖动效果范围
+    const range = 8;
+    return (event: MouseEvent) => {
+      // 正在拉伸直接返回，不能影响方向
+      if (this.resizing) return;
+      // 获取模态框的位置
+      const box: any = this.modalContent.getBoundingClientRect();
+      const left: number = box.left;
+      const top: number = box.top;
+      // 鼠标位置
+      const xPosition: number = event.clientX;
+      const yPosition: number = event.clientY;
+      // 模态框的高宽
+      const offsetWidth: number = this.modalContent.offsetWidth;
+      const offsetHeight: number = this.modalContent.offsetHeight;
+      // 鼠标样式
+      let cursorStr = "";
+
+      // 要减去header的40px高度
+      if (yPosition > top + offsetHeight - range) {
+        // 从南边来
+        cursorStr += "s";
+      }
+      if (xPosition > left + offsetWidth - range) {
+        // 从东边来
+        cursorStr += "e";
+      }
+
+      if (cursorStr) {
+        // 拉伸功能生效
+        this.modalContent.style.cursor = cursorStr + "-resize";
+        this.activeResize = true;
+      } else {
+        // 离开拉伸生效范围
+        this.modalContent.style.cursor = "default";
+        this.activeResize = false;
+      }
+    };
+  }
+
+  /**
+   * 拉伸模态框
+   * @param modalContent 模态框有效显示元素
+   */
+  private resize(): Function {
+    return (event: MouseEvent) => {
+      if (this.activeResize) {
+        // 模态框外框的高宽
+        const offsetWidth: number = this.modalContent.offsetWidth;
+        const offsetHeight: number = this.modalContent.offsetHeight;
+        // 模态框body高宽
+        const bodyOffsetWidth: number = this.modalBody.offsetWith;
+        const bodyOffsetHeight: number = this.modalBody.offsetHeight;
+        // 模态框当前位置
+        const modalX: number = event.clientX - offsetWidth;
+        const modalY: number = event.clientY - offsetHeight;
+        document.onmousemove = (event: MouseEvent) => {
+          // 禁用默认行为，防止选中浏览器文字效果触发
+          if (event.preventDefault) {
+            event.preventDefault();
+          }
+          // 开始拉伸
+          this.resizing = true;
+          // 鼠标样式
+          const cursorStr: string = this.modalContent.style.cursor;
+          // 拉伸方向
+          const direction: string = cursorStr.substring(
+            0,
+            cursorStr.indexOf("-")
+          );
+
+          if ("e" === direction) {
+            // 横向拉伸，只改变宽度
+            this.modalContent.style.width = `${event.clientX - modalX}px`;
+          } else if ("s" === direction) {
+            // 纵向拉伸，只改变高度
+            this.modalContent.style.height = `${event.clientY - modalY}px`;
+            this.modalOriginHeight = this.modalContent.style.height;
+            // 纵向拉伸要同时处理模态框body的高度
+            this.modalBody.style.setProperty(
+              "height",
+              `${event.clientY -
+                modalY -
+                this.headerHeight -
+                this.footerHeight}px`,
+              "important"
+            );
+            this.modalBodyOriginHeight = this.modalBody.style.height;
+          } else if ("se" === direction) {
+            // 右下角拉伸，同时改变宽高
+            this.modalContent.style.width = `${event.clientX - modalX}px`;
+            this.modalContent.style.height = `${event.clientY - modalY}px`;
+            this.modalOriginHeight = this.modalContent.style.height;
+            // 纵向拉伸要同时处理模态框body的高度
+            this.modalBody.style.setProperty(
+              "height",
+              `${event.clientY -
+                modalY -
+                this.headerHeight -
+                this.footerHeight}px`,
+              "important"
+            );
+            this.modalBodyOriginHeight = this.modalBody.style.height;
+          }
+        };
+        document.onmouseup = (event: MouseEvent) => {
+          this.resizing = false;
+          document.onmousemove = null;
+          document.onmouseup = null;
+        };
+      }
+    };
   }
 }
 </script>

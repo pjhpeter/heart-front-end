@@ -9,6 +9,8 @@ export default interface ModalInfo {
   backgroundColor: string;
   // 是否允许最大化
   enabledFuscreen?: boolean;
+  // 是否可拉伸，默认可拉伸
+  resizable?: boolean;
   // 模态框关闭时的回调函数
   onClose?: Function;
 

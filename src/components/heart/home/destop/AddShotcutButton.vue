@@ -38,9 +38,10 @@ export default class AddShotcutButton extends Vue {
       title: "添加快捷方式",
       backgroundColor: Commons.getIconColor(),
       footerHide: false,
+      // resizable: false,
       width: 400,
       className: "select-menu-modal",
-      enabledFuscreen: false,
+      // enabledFuscreen: false,
       onOk(addShotcutModal: any) {
         if (addShotcutModal.selectedModalInfo) {
           // 添加快捷方式
