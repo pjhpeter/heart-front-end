@@ -26,6 +26,7 @@ export default class App extends Vue {
   }
 
   created(): void {
+    document.body.classList.add("red");
     //禁止后退键 作用于Firefox、Opera
     document.onkeypress = this.banBackSpace;
     //禁止后退键  作用于IE、Chrome
