@@ -116,6 +116,8 @@ export default class UserOperation extends Vue {
       width: 60px;
       height: 60px;
       margin: -30px auto 10px auto;
+      box-shadow: 0 0 5px black;
+      border-radius: 30px;
     }
     .operations {
       text-align: left;

@@ -7,7 +7,7 @@ heart-front-end是一个类Windows界面的前端项目，基于Vue 2.x + TypeSc
 
 [代码传送门](https://gitee.com/pjhpeter/heart-front-end)
 
-
+[码云上的能看到图片](https://gitee.com/pjhpeter/heart-front-end)
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0709/150047_aa18119b_5449551.png "屏幕截图.png")
 
@@ -22,9 +22,14 @@ yarn install
 ```
 
 ## 启动服务
+
 ```cmd
 yarn serve
 ```
+
+## 登录
+
+用户名密码随便填
 
 > 如果没有接触过yarn的小伙伴请移步到[这里](https://gitee.com/pjhpeter/training/blob/master/Vue%E5%85%A8%E5%AE%B6%E6%A1%B6%E5%9F%B9%E8%AE%AD/%E5%89%8D%E7%AB%AF%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
 
