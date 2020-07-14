@@ -18,7 +18,11 @@
       </Menu>
     </div>
     <div class="component-box-individuation">
-      <component v-bind:is="activeComponent"></component>
+      <transition name="fast-slide-fade">
+        <keep-alive>
+          <component v-bind:is="activeComponent"></component>
+        </keep-alive>
+      </transition>
     </div>
   </div>
 </template>

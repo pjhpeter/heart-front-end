@@ -588,6 +588,18 @@ $baseModalMinHeight: 300;
     opacity: 0;
 }
 
+// 向上消失，向下出现，快速过渡动画
+.fast-slide-fade-enter-acitve,
+.fast-slide-fade-leave-active {
+    transition: all 0.2s;
+}
+
+.fast-slide-fade-enter,
+.fast-slide-fade-leave-to {
+    transform: translateY(-30px);
+    opacity: 0;
+}
+
 // 滚动条整体样式
 ::-webkit-scrollbar {
     width: 2px;

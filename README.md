@@ -310,6 +310,24 @@ async () => {
 </Menu>
 ```
 
+### 过渡动画
+
+定义了3个全局过渡动画，用的话直接在**transition**标签中添加name属性就可以了。
+
+| name | 说明 |
+| --- | --- |
+| fade | 淡入淡出 |
+| slide-fade | 向上出现，向下效时过渡动画 |
+| fast-slide-fade | 向上消失，向下出现，快速过渡动画 |
+
+使用实例：
+
+```html
+<transition name="fast-slide-fade">
+    <!-- 要添加过渡效果的元素 -->
+</transition>
+```
+
 ## 全局配置文件
 
 在项目的pulbic目录存放着一个**global-config.js**文件
