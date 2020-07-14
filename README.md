@@ -133,6 +133,19 @@ export default interface ModalInfo {
 BaseModal的使用示例：
 
 ```ts
+//////////// 如果不想模态框重复被打开，可以在打开模态框前添加类似这样的代码///////////////
+if (this.addShotcutModalId) {
+  // 如果原来已经打开了添加快捷方式的模态框，则不重复创建，直接显示
+  const modal: any = Commons.findModalById(this.addShotcutModalId);
+  if (modal) {
+    modal.isShow = true;
+    // 模拟点击模态框中ViewUI的Modal组件
+    modal.$children[0].handleClickModal();
+    return;
+  }
+}
+////////////////////////////////////////////////////////////////////////////////
+
 const modalInfo: ModalInfo = {
   url: "/heart/home/destop/AddShotcutModal.vue",
   title: "添加快捷方式",

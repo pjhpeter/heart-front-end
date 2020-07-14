@@ -50,6 +50,8 @@ declare function require(img: string): string;
 export default class UserOperation extends Vue {
   // 用户头像路径
   avatarUrl: string = require("../../../../assets/heart/home/images/avatar.png");
+  // 已打开的个性化模态框id
+  individuationModalId?: number;
 
   /**
    * 点击操作项
@@ -67,11 +69,20 @@ export default class UserOperation extends Vue {
   }
 
   /**
-   * 切换壁纸
+   * 打开个性化模态框
    */
   private showIndividuationModal(): void {
     // 模拟点击最外层div，关闭开始菜单
     document.getElementById("app")!.click();
+    // 判断个性化模态框是否已经打开
+    if (this.individuationModalId) {
+      const modal: any = Commons.findModalById(this.individuationModalId);
+      // 如果已经被打开，则不再次打开，只是让其显示
+      modal.isShow = true;
+      // 模拟点击模态框中ViewUI的Modal组件
+      modal.$children[0].handleClickModal();
+      return;
+    }
     const modalInfo: ModalInfo = {
       url: "/heart/home/menu/IndividuationModal.vue",
       backgroundColor: Commons.getIconColor(),
@@ -81,19 +92,7 @@ export default class UserOperation extends Vue {
       resizable: false,
       enabledFuscreen: false
     };
-    Commons.showModule(modalInfo);
-    // const currentWallpaperUrl: string = this.$store.getters[
-    //   "user/getWallpaperUrl"
-    // ];
-    // // 从壁纸路径集合中读取下一张壁纸路径
-    // let index = WALLPAPER_URLS.indexOf(currentWallpaperUrl);
-    // if (index === WALLPAPER_URLS.length - 1) {
-    //   index = 0;
-    // } else {
-    //   index++;
-    // }
-    // // 切换壁纸
-    // this.$store.commit("user/setWallpaperUrl", WALLPAPER_URLS[index]);
+    this.individuationModalId = Commons.showModule(modalInfo);
   }
 
   /**
