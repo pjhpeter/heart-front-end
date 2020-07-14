@@ -5,7 +5,6 @@ import Auth from "@/utils/heart/Auth";
 import { MutationTree } from "vuex";
 import { UserState } from "./types";
 import { Vue } from "vue-property-decorator";
-import { Themes } from "@/constants/heart/enum/Themes";
 
 export const mutations: MutationTree<UserState> = {
   /**
@@ -155,9 +154,9 @@ export const mutations: MutationTree<UserState> = {
   /**
    * 更新主题
    * @param state 用户模块状态对象
-   * @param theme 主题枚举
+   * @param theme 主题类名，Themes枚举的key
    */
-  setTheme(state: UserState, theme: Themes): void {
+  setTheme(state: UserState, theme: string): void {
     if (!state.user) return;
     const userCode: string | undefined = state.user.userCode;
     // 找到当前用户的桌面信息并更新

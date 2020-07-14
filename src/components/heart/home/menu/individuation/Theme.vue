@@ -11,7 +11,7 @@
         v-for="(themeColor, index) in themeColors"
         :key="index"
         :style="{ backgroundColor: themeColor }"
-        @click.native="selectTheme(themeColor, $event)"
+        @click.native="selectTheme(themeColor)"
       ></Card>
     </div>
   </div>
@@ -20,10 +20,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { Card, Divider } from "view-design";
-import {
-  ThemeColorMap,
-  Themes
-} from "../../../../../constants/heart/enum/Themes";
+import { THEMES } from "../../../../../constants/heart/values/Themes";
 
 @Component({
   name: "theme",
@@ -34,41 +31,45 @@ import {
 })
 export default class Theme extends Vue {
   // 主题颜色数组
-  private themeColors: Array<ThemeColorMap> = [];
+  private themeColors: Array<string> = [];
   // 当前主题颜色
-  private currentThemeColor: ThemeColorMap = ThemeColorMap.RED;
+  private currentThemeColor: string = THEMES.red;
   // 改变之前的主题
-  private originTheme: Themes = Themes.RED;
+  private originTheme = "";
 
   created(): void {
     // 遍历主题和主色映射，初始化主题颜色数组
-    for (const key in ThemeColorMap) {
-      this.themeColors.push(ThemeColorMap[key]);
+    for (const key in THEMES) {
+      this.themeColors.push(THEMES[key]);
     }
 
     // 初始化主题选项
-    const currentTheme: Themes = this.$store.getters["user/getTheme"];
-    for (const key in Themes) {
-      if (currentTheme === Themes[key]) {
-        this.currentThemeColor = ThemeColorMap[key];
+    const currentTheme: string = this.$store.getters["user/getTheme"];
+    for (const key in THEMES) {
+      if (currentTheme === key) {
+        this.currentThemeColor = THEMES[key];
         this.originTheme = currentTheme;
       }
     }
   }
 
-  selectTheme(themeColor: ThemeColorMap, event): void {
+  /**
+   * 选择主题
+   * @param themeColor 主题颜色
+   */
+  selectTheme(themeColor: string): void {
     // 通过颜色映射主题
-    for (const key in ThemeColorMap) {
-      if (themeColor === ThemeColorMap[key]) {
+    for (const key in THEMES) {
+      if (themeColor === THEMES[key]) {
         this.currentThemeColor = themeColor;
         // 删除原来的主题配置
         document.body.classList.remove(this.originTheme);
         // 添加新的主题配置
-        document.body.classList.add(Themes[key]);
+        document.body.classList.add(key);
         // 将当前主题设为原主题
-        this.originTheme = Themes[key];
+        this.originTheme = key;
         // 保存主题设置到localStorage
-        this.$store.commit("user/setTheme", Themes[key]);
+        this.$store.commit("user/setTheme", key);
       }
     }
   }

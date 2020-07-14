@@ -5,7 +5,7 @@ import UserInfo from "@/model/heart/user/UserInfo";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import DestopInfo from "@/model/heart/user/DestopInfo";
 import { WALLPAPER_URLS } from "@/constants/heart/values/Global";
-import { Themes } from "@/constants/heart/enum/Themes";
+import { THEMES } from "@/constants/heart/values/Themes";
 
 export const getters: GetterTree<UserState, RootState> = {
   /**
@@ -48,7 +48,7 @@ export const getters: GetterTree<UserState, RootState> = {
       userCode,
       modalInfoList: [],
       wallpaperUrl: WALLPAPER_URLS[0],
-      theme: Themes.RED
+      theme: THEMES.red
     };
     state.destopInfoList.push(initDestopInfo);
     return initDestopInfo.modalInfoList;
@@ -81,8 +81,8 @@ export const getters: GetterTree<UserState, RootState> = {
    * @param state 用户模块状态对象
    * @returns 主题
    */
-  getTheme(state: UserState): Themes {
-    if (!state.user) return Themes.RED;
+  getTheme(state: UserState): string {
+    if (!state.user) return THEMES.red;
     const userCode: string = state.user.userCode!;
     // 找到当前用户的桌面信息
     const currentUserDestopInfo:
@@ -95,6 +95,6 @@ export const getters: GetterTree<UserState, RootState> = {
       return currentUserDestopInfo.theme;
     }
     // 返回默认
-    return Themes.RED;
+    return THEMES.red;
   }
 };
