@@ -77,11 +77,13 @@ export default class UserOperation extends Vue {
     // 判断个性化模态框是否已经打开
     if (this.individuationModalId) {
       const modal: any = Commons.findModalById(this.individuationModalId);
-      // 如果已经被打开，则不再次打开，只是让其显示
-      modal.isShow = true;
-      // 模拟点击模态框中ViewUI的Modal组件
-      modal.$children[0].handleClickModal();
-      return;
+      if (modal) {
+        // 如果已经被打开，则不再次打开，只是让其显示
+        modal.isShow = true;
+        // 模拟点击模态框中ViewUI的Modal组件
+        modal.$children[0].handleClickModal();
+        return;
+      }
     }
     const modalInfo: ModalInfo = {
       url: "/heart/home/menu/IndividuationModal.vue",
