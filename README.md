@@ -299,3 +299,428 @@ async () => {
  await example.login({username: "test", password: "abcd1234"});
 } 
 ```
+
+### 可选中菜单样式
+
+在使用Menu组件实现可选择菜单功能时，请添加class属性为"select-menu-tree"，即可设置比较美观的可选择菜单，并且能于主题颜色相匹配。
+
+```html
+<Menu class="select-menu-tree">
+    <!-- 菜单项 -->
+</Menu>
+```
+
+## 全局配置文件
+
+在项目的pulbic目录存放着一个**global-config.js**文件
+
+```js
+/**
+ * 全局配置类，建议统一通过GlobalConfigReader类来读取配置项
+ */
+// 由于这里不会被webpack管理，babel不会起作用，所以不能用es6语法，防止浏览器不兼容
+(function() {
+  const config = {
+    // --是否使用反向代理，默认为true
+    // reverseProxy: false,
+    // --生产环境后端服务的地址，reverseProxy为false时生效（针对部署在Tomcat等不具备反向代理功能的容器时使用，如果使用nginx部署则不需要这个配置项）
+    // serverURL: "http://rap2.taobao.org:38080/app/mock/251389",
+    // --下面可以按需要扩展配置项，扩展之后记得一定要同时扩展/src/utils/GlobalConfigReader.ts中GlobalConfig类的属性
+  };
+  // 没有配置就不存localStorage了
+  if (config === {}) {
+    return;
+  }
+
+  const configJSONStr = JSON.stringify(config);
+  localStorage.setItem("global-config", configJSONStr);
+})();
+```
+
+目前只支持**reverseProxy**和**serverURL**两个配置项，如果需要扩展，可以在**config**对象中自行添加，需要处理自定义的配置项可以通过**GlobalConfigReader**类的**readGlobalConfig**方法获取config对象，然后按照自己的业务逻辑处理自定义的配置项。
+
+> 由于global-config.js在public目录，因此不会被Webpack打包，所以配置项可以在生产环境实现热配置。
+
+## 个性化
+
+### 自定义壁纸
+
+heart具备切换壁纸的功能，不过目前只有4张壁纸，如果嫌少的话可以自己添加哦。
+
+1. 首先把你喜欢的壁纸添加到public/wallpapers目录下
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0714/193906_c38759d4_5449551.png "屏幕截图.png")
+
+2. 在src/constants/heart/values/Global.ts文件中的**WALLPAPER_URLS**数组添加自己的图片路径
+
+```ts
+/**
+ * 壁纸路径列表，指向public/wallpapers目录
+ */
+export const WALLPAPER_URLS: Array<string> = [
+  "/wallpapers/background0.jpg",
+  "/wallpapers/background1.jpg",
+  "/wallpapers/background2.jpg",
+  "/wallpapers/background3.jpg"
+  // 这里自行添加路径
+];
+```
+
+这样你的图片也可以成为壁纸啦^_^
+
+### 自定义主题
+
+heart可以随时切换颜色主题，目前提供了4种主题颜色，当然你可以根据自己的喜好自行添加。
+
+1. 在src/assets/heart/global/scss/themes目录下创建自己的主题样式表，需要时scss文件哦，然后复制下面代码到自己的样式表文件中。
+
+```css
+@import "./variables.scss";
+
+// 红色主题
+$primary-red: #C14253;
+$lightPrimary-red: #C25D6B;
+$darkPrimary-red: #B53647;
+
+.red {
+    .heart-base-modal {
+        .ivu-modal {
+            .ivu-modal-content {
+
+                // 模态框头部
+                .ivu-modal-header {
+
+                    // 标题
+                    .title {
+                        color: $title;
+                    }
+
+                    // 按钮组
+                    .button-group {
+
+                        // 按钮默认样式
+                        .ivu-btn {
+                            color: $content;
+                        }
+
+                        // 最大化和最小化按钮
+                        .fullscreen-button:hover,
+                        .reset-screen-button:hover,
+                        .hide-button:hover {
+                            background-color: $background;
+                        }
+
+                        // 关闭按钮
+                        .close-button:hover {
+                            background-color: $error;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 开始按钮
+    .start-button {
+        background-color: rgba($color: $background, $alpha: 0.9);
+        color: $primary-red !important;
+
+        &:hover {
+            background-color: $primary-red;
+            color: white !important;
+        }
+    }
+
+    // 底部栏打开模块的小图标
+    .tab-container {
+        .ivu-dropdown {
+            .tab-icon {
+                color: white;
+
+                // 底下的小线条
+                &::after {
+                    background-color: $darkPrimary-red;
+                }
+
+                &:hover {
+                    background-color: rgba($color: white, $alpha: 0.2);
+                }
+            }
+
+            // 选中样式
+            .tab-icon-active {
+                background-color: rgba($color: white, $alpha: 0.4);
+
+                &:hover {
+                    background-color: rgba($color: white, $alpha: 0.6) !important;
+                }
+            }
+        }
+    }
+
+    // 右下角小图标
+    .icon-group {
+        .show-destop {
+            border-left: 1px solid $lightPrimary-red;
+
+            &:hover {
+                background-color: rgba($color: white, $alpha: 0.5);
+            }
+        }
+    }
+
+    // 开始菜单
+    .start-box {
+        .menu-container {
+            background-color: rgba($color: white, $alpha: 0.8);
+
+            // 菜单区域
+            .menu-box {
+                background-color: rgba($color: white, $alpha: 0);
+
+                // 菜单树
+                .menu-tree {
+                    background-color: rgba($color: white, $alpha: 0);
+
+                    .ivu-menu-item-active:not(.ivu-menu-submenu) {
+                        color: $title !important;
+
+                        &:hover {
+                            background-color: rgba($color: $lightPrimary-red, $alpha: 0.3) !important;
+                            color: $title !important;
+                        }
+                    }
+
+                    .ivu-menu-item {
+                        span {
+                            color: white;
+                        }
+                    }
+
+                    .ivu-menu-item,
+                    .ivu-menu-submenu-title {
+                        color: $title;
+
+                        &:hover {
+                            background-color: rgba($color: $lightPrimary-red, $alpha: 0.3);
+                            color: $title;
+                        }
+                    }
+                }
+            }
+
+            // 开始菜单右侧用户操作区域
+            .user-info {
+
+                .user-operation-box {
+
+                    .user-operation {
+
+                        .operations {
+                            color: $content;
+                            background-color: rgba($color: white, $alpha: 0);
+
+                            .ivu-menu-item-active:not(.ivu-menu-submenu) {
+                                color: $title !important;
+                                background: none !important;
+
+                                &:hover {
+                                    background-color: rgba($color: $lightPrimary-red, $alpha: 0.3) !important;
+                                    color: $title !important;
+                                }
+                            }
+
+                            .ivu-menu-item,
+                            .ivu-menu-submenu-title {
+
+                                &:hover {
+                                    background-color: rgba($color: $lightPrimary-red, $alpha: 0.3);
+                                    color: $title;
+                                }
+                            }
+                        }
+
+                        .logout-button {
+                            background-color: rgba($color: white, $alpha: 0);
+                            color: $primary-red;
+                            border-color: $primary-red;
+
+                            &:hover {
+                                background-color: rgba($color: $primary-red, $alpha: 0.9);
+                                color: white;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 锁定界面
+    .lock {
+
+        .login-form-box {
+
+            .login-form-lock {
+
+                .form-content {
+                    color: white;
+
+                    .form-lock {
+
+                        .ivu-input-suffix {
+
+                            // 登录按钮
+                            button {
+
+                                .icon-arrow-right {
+                                    color: white;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    // 登录页面表单
+    .login-form {
+        background-color: rgba($color: white, $alpha: 0.7);
+
+        .ivu-form {
+            .ivu-form-item {
+                .ivu-form-item-content {
+                    .ivu-input-prefix {
+                        i {
+                            color: rgba($color: $primary-red, $alpha: 0.7);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 可选则菜单样式
+    .select-menu-tree {
+        background-color: white;
+
+        .ivu-menu-item-active:not(.ivu-menu-submenu) {
+            color: $primary-red !important;
+            background: rgba($color: $darkPrimary-red, $alpha: 0.1) !important;
+
+            &::after {
+                background: $darkPrimary-red !important;
+            }
+        }
+
+        .ivu-menu-item,
+        .ivu-menu-submenu-title {
+            color: $title;
+
+            &:hover {
+                background-color: rgba($color: $lightPrimary-red, $alpha: 0.3);
+                color: $title;
+            }
+
+            span {
+                color: white;
+            }
+        }
+
+    }
+
+    // 404页面
+    .not-found {
+        color: $primary-red;
+    }
+
+    // 滚动条滑块
+    ::-webkit-scrollbar-thumb {
+        background: $primary-red;
+    }
+
+    // 滚动条轨道
+    ::-webkit-scrollbar-track {
+        background: white;
+    }
+
+    // 修改按钮默认样式
+    .ivu-btn:focus {
+        box-shadow: 0 0 3px $primary-red;
+        ;
+    }
+
+    .ivu-btn-default,
+    .ivu-btn-dashed {
+        border-color: $primary-red;
+        color: $primary-red;
+
+        &:hover {
+            border-color: $lightPrimary-red;
+            color: $lightPrimary-red;
+        }
+    }
+
+    .ivu-btn-default.active,
+    .ivu-btn-default:active,
+    .ivu-btn-dashed.active,
+    .ivu-btn-dashed:active {
+        border-color: $primary-red;
+        color: $primary-red;
+        box-shadow: 0 0 2px $primary-red;
+    }
+
+    .ivu-btn-primary {
+        background-color: $primary-red;
+        border-color: $primary-red;
+
+        &:hover {
+            background-color: $lightPrimary-red;
+            border-color: $lightPrimary-red;
+        }
+    }
+
+    .ivu-btn-primary.active,
+    .ivu-btn-primary:active {
+        background-color: $primary-red;
+        border-color: $primary-red;
+        box-shadow: 0 0 2px $primary-red;
+    }
+
+    .ivu-btn-text:hover {
+        color: $lightPrimary-red;
+    }
+
+    .ivu-btn-text.active,
+    .ivu-btn-text:active {
+        color: $primary-red;
+    }
+
+    // 顶部进度条颜色
+    #nprogress .bar {
+        background: $primary-red !important;
+    }
+}
+```
+
+2. 其实你只需要在自己的主题样式表中，定义三个主题颜色变量，把最顶层的class名称改成自己的，然后把样式表中调用到主题颜色的变量名改成自己的就可以了。
+
+3. 在src/constants/heart/values/Global.ts文件中的THEMES数组中按格式添加。
+
+```ts
+/**
+ * 主题颜色映射
+ */
+export const THEMES = [
+  { class: "red", color: "#C14253" },
+  { class: "blue", color: "#2d8cf0" },
+  { class: "purple", color: "#7952b3" },
+  { class: "black", color: "#314351" }
+  // 这里可以添加自己的主题，按照上面的格式，应该看得懂吧-_-
+]
+```
+
+> 当然，目前并不是所有ViewUI组件都适配了主题颜色，如果有用到某些组件，不适配主题颜色的话，在themes目里下的样式表中补上就可以了，**记得要所有主题都补上哦**

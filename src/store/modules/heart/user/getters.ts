@@ -47,7 +47,7 @@ export const getters: GetterTree<UserState, RootState> = {
       userCode,
       modalInfoList: [],
       wallpaperUrl: WALLPAPER_URLS[0],
-      theme: "red"
+      theme: THEMES[0].class
     };
     state.destopInfoList.push(initDestopInfo);
     return initDestopInfo.modalInfoList;
@@ -81,7 +81,7 @@ export const getters: GetterTree<UserState, RootState> = {
    * @returns 主题
    */
   getTheme(state: UserState): string {
-    if (!state.user) return "red";
+    if (!state.user) return THEMES[0].class;
     const userCode: string = state.user.userCode!;
     // 找到当前用户的桌面信息
     const currentUserDestopInfo:
@@ -94,6 +94,6 @@ export const getters: GetterTree<UserState, RootState> = {
       return currentUserDestopInfo.theme;
     }
     // 返回默认
-    return "red";
+    return THEMES[0].class;
   }
 };

@@ -33,24 +33,28 @@ export default class Theme extends Vue {
   // 主题颜色数组
   private themeColors: Array<string> = [];
   // 当前主题颜色
-  private currentThemeColor: string = THEMES.red;
+  private currentThemeColor: string = THEMES[0].color;
   // 改变之前的主题
   private originTheme = "";
 
   created(): void {
     // 遍历主题和主色映射，初始化主题颜色数组
-    for (const key in THEMES) {
-      this.themeColors.push(THEMES[key]);
-    }
+    THEMES.forEach((theme: any) => {
+      this.themeColors.push(theme.color);
+    });
 
     // 初始化主题选项
     const currentTheme: string = this.$store.getters["user/getTheme"];
-    for (const key in THEMES) {
-      if (currentTheme === key) {
-        this.currentThemeColor = THEMES[key];
+    THEMES.some((theme: any) => {
+      if (currentTheme === theme.class) {
+        // 初始化当前主题颜色
+        this.currentThemeColor = theme.color;
+        // 初始化原主题
         this.originTheme = currentTheme;
+        return true;
       }
-    }
+      return false;
+    });
   }
 
   /**
@@ -59,19 +63,19 @@ export default class Theme extends Vue {
    */
   selectTheme(themeColor: string): void {
     // 通过颜色映射主题
-    for (const key in THEMES) {
-      if (themeColor === THEMES[key]) {
+    THEMES.some((theme: any) => {
+      if (themeColor === theme.color) {
         this.currentThemeColor = themeColor;
         // 删除原来的主题配置
         document.body.classList.remove(this.originTheme);
         // 添加新的主题配置
-        document.body.classList.add(key);
+        document.body.classList.add(theme.class);
         // 将当前主题设为原主题
-        this.originTheme = key;
+        this.originTheme = theme.class;
         // 保存主题设置到localStorage
-        this.$store.commit("user/setTheme", key);
+        this.$store.commit("user/setTheme", theme.class);
       }
-    }
+    });
   }
 }
 </script>

@@ -18,6 +18,9 @@ export const MENU_ICON_COLORS: Array<string> = [
  */
 export const LOSS_MENU_COLOR = "#808695";
 
+/**
+ * 壁纸路径列表，指向public/wallpapers目录
+ */
 export const WALLPAPER_URLS: Array<string> = [
   "/wallpapers/background0.jpg",
   "/wallpapers/background1.jpg",
@@ -25,17 +28,12 @@ export const WALLPAPER_URLS: Array<string> = [
   "/wallpapers/background3.jpg"
 ];
 
-// 如果不定义一个接口，通过THEMES[key]取值会报错
-declare interface THEMES {
-  [key: string]: string;
-}
-
 /**
  * 主题颜色映射
  */
-export const THEMES: THEMES = {
-  red: "#C14253",
-  blue: "#2d8cf0",
-  purple: "#7952b3",
-  black: "#314351"
-};
+export const THEMES = [
+  { class: "red", color: "#C14253" },
+  { class: "blue", color: "#2d8cf0" },
+  { class: "purple", color: "#7952b3" },
+  { class: "black", color: "#314351" }
+];
