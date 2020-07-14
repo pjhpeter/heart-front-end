@@ -1,0 +1,328 @@
+@import "./variables.scss";
+
+// 蓝色主题
+$primary-blue: #2d8cf0;
+$lightPrimary-blue: #5cadff;
+$darkPrimary-blue: #2b85e4;
+
+.blue {
+    .heart-base-modal {
+        .ivu-modal {
+            .ivu-modal-content {
+
+                // 模态框头部
+                .ivu-modal-header {
+
+                    // 标题
+                    .title {
+                        color: $title;
+                    }
+
+                    // 按钮组
+                    .button-group {
+
+                        // 按钮默认样式
+                        .ivu-btn {
+                            color: $content;
+                        }
+
+                        // 最大化和最小化按钮
+                        .fullscreen-button:hover,
+                        .reset-screen-button:hover,
+                        .hide-button:hover {
+                            background-color: $background;
+                        }
+
+                        // 关闭按钮
+                        .close-button:hover {
+                            background-color: $error;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 开始按钮
+    .start-button {
+        background-color: rgba($color: $background, $alpha: 0.9);
+        color: $primary-blue !important;
+
+        &:hover {
+            background-color: $primary-blue;
+            color: white !important;
+        }
+    }
+
+    // 底部栏打开模块的小图标
+    .tab-container {
+        .ivu-dropdown {
+            .tab-icon {
+                color: white;
+
+                // 底下的小线条
+                &::after {
+                    background-color: $darkPrimary-blue;
+                }
+
+                &:hover {
+                    background-color: rgba($color: white, $alpha: 0.2);
+                }
+            }
+
+            // 选中样式
+            .tab-icon-active {
+                background-color: rgba($color: white, $alpha: 0.4);
+
+                &:hover {
+                    background-color: rgba($color: white, $alpha: 0.6) !important;
+                }
+            }
+        }
+    }
+
+    // 右下角小图标
+    .icon-group {
+        .show-destop {
+            border-left: 1px solid $lightPrimary-blue;
+
+            &:hover {
+                background-color: rgba($color: white, $alpha: 0.5);
+            }
+        }
+    }
+
+    // 开始菜单
+    .start-box {
+        .menu-container {
+            background-color: rgba($color: white, $alpha: 0.8);
+
+            // 菜单区域
+            .menu-box {
+                background-color: rgba($color: white, $alpha: 0);
+
+                // 菜单树
+                .menu-tree {
+                    background-color: rgba($color: white, $alpha: 0);
+
+                    .ivu-menu-item-active:not(.ivu-menu-submenu) {
+                        color: $title !important;
+
+                        &:hover {
+                            background-color: rgba($color: $lightPrimary-blue, $alpha: 0.3) !important;
+                            color: $title !important;
+                        }
+                    }
+
+                    .ivu-menu-item {
+                        span {
+                            color: white;
+                        }
+                    }
+
+                    .ivu-menu-item,
+                    .ivu-menu-submenu-title {
+                        color: $title;
+
+                        &:hover {
+                            background-color: rgba($color: $lightPrimary-blue, $alpha: 0.3);
+                            color: $title;
+                        }
+                    }
+                }
+            }
+
+            // 开始菜单右侧用户操作区域
+            .user-info {
+
+                .user-operation-box {
+
+                    .user-operation {
+
+                        .operations {
+                            color: $content;
+                            background-color: rgba($color: white, $alpha: 0);
+
+                            .ivu-menu-item-active:not(.ivu-menu-submenu) {
+                                color: $title !important;
+                                background: none !important;
+
+                                &:hover {
+                                    background-color: rgba($color: $lightPrimary-blue, $alpha: 0.3) !important;
+                                    color: $title !important;
+                                }
+                            }
+
+                            .ivu-menu-item,
+                            .ivu-menu-submenu-title {
+
+                                &:hover {
+                                    background-color: rgba($color: $lightPrimary-blue, $alpha: 0.3);
+                                    color: $title;
+                                }
+                            }
+                        }
+
+                        .logout-button {
+                            background-color: rgba($color: white, $alpha: 0);
+                            color: $primary-blue;
+                            border-color: $primary-blue;
+
+                            &:hover {
+                                background-color: rgba($color: $primary-blue, $alpha: 0.9);
+                                color: white;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 锁定界面
+    .lock {
+
+        .login-form-box {
+
+            .login-form-lock {
+
+                .form-content {
+                    color: white;
+
+                    .form-lock {
+
+                        .ivu-input-suffix {
+
+                            // 登录按钮
+                            button {
+
+                                .icon-arrow-right {
+                                    color: white;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    // 登录页面表单
+    .login-form {
+        background-color: rgba($color: white, $alpha: 0.7);
+
+        .ivu-form {
+            .ivu-form-item {
+                .ivu-form-item-content {
+                    .ivu-input-prefix {
+                        i {
+                            color: rgba($color: $primary-blue, $alpha: 0.7);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 可选则菜单样式
+    .select-menu-tree {
+        background-color: white;
+
+        .ivu-menu-item-active:not(.ivu-menu-submenu) {
+            color: $primary-blue !important;
+            background: rgba($color: $darkPrimary-blue, $alpha: 0.1) !important;
+
+            &::after {
+                background: $darkPrimary-blue !important;
+            }
+        }
+
+        .ivu-menu-item,
+        .ivu-menu-submenu-title {
+            color: $title;
+
+            &:hover {
+                background-color: rgba($color: $lightPrimary-blue, $alpha: 0.3);
+                color: $title;
+            }
+
+            span {
+                color: white;
+            }
+        }
+
+    }
+
+    // 404页面
+    .not-found {
+        color: $primary-blue;
+    }
+
+    // 滚动条滑块
+    ::-webkit-scrollbar-thumb {
+        background: $primary-blue;
+    }
+
+    // 滚动条轨道
+    ::-webkit-scrollbar-track {
+        background: white;
+    }
+
+    // 修改按钮默认样式
+    .ivu-btn:focus {
+        box-shadow: 0 0 3px $primary-blue;
+    }
+
+    .ivu-btn-default,
+    .ivu-btn-dashed {
+        border-color: $primary-blue;
+        color: $primary-blue;
+
+        &:hover {
+            border-color: $lightPrimary-blue;
+            color: $lightPrimary-blue;
+        }
+    }
+
+    .ivu-btn-default.active,
+    .ivu-btn-default:active,
+    .ivu-btn-dashed.active,
+    .ivu-btn-dashed:active {
+        border-color: $primary-blue;
+        color: $primary-blue;
+        box-shadow: 0 0 2px $primary-blue;
+    }
+
+    .ivu-btn-primary {
+        background-color: $primary-blue;
+        border-color: $primary-blue;
+
+        &:hover {
+            background-color: $lightPrimary-blue;
+            border-color: $lightPrimary-blue;
+        }
+    }
+
+    .ivu-btn-primary.active,
+    .ivu-btn-primary:active {
+        background-color: $primary-blue;
+        border-color: $primary-blue;
+        box-shadow: 0 0 2px $primary-blue;
+    }
+
+    .ivu-btn-text:hover {
+        color: $lightPrimary-blue;
+    }
+
+    .ivu-btn-text.active,
+    .ivu-btn-text:active {
+        color: $primary-blue;
+    }
+
+    // 顶部进度条颜色
+    #nprogress .bar {
+        background: $primary-blue !important;
+    }
+}

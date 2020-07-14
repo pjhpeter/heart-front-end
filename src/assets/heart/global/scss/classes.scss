@@ -1,4 +1,7 @@
-@import "./variables.scss";
+@import "./themes/red.scss";
+@import "./themes/blue.scss";
+@import "./themes//purple.scss";
+@import "./themes/black.scss";
 
 // 基础模态框高度，不包括header和footer
 $baseModalHeight: 550;
@@ -8,113 +11,602 @@ $baseModalFooterHeight: 57;
 $baseModalMinWidth: 400;
 $baseModalMinHeight: 300;
 
-.red {
-    // 基础模态框样式
-    .heart-base-modal {
-        overflow: hidden;
-        .ivu-modal{
-            top: 20px;
-            .ivu-modal-content {
-                min-width: #{$baseModalMinWidth}px;
-                min-height: #{$baseModalMinHeight}px;
-                // 模态框头部
-                .ivu-modal-header {
-                    height: #{$baseModalHeaderHeight}px;
-                    // 标题
-                    .title {
-                        color: $title;
-                        font-size: 18px;
-                    }
-                    // 按钮组
-                    .button-group {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        // 按钮默认样式
-                        .ivu-btn {
-                            box-shadow: none;
-                            color: $content;
-                            width: 40px;
-                            height: 40px;
-                            padding: 0;
-                        }
-                        // 最大化和最小化按钮
-                        .fullscreen-button:hover,.reset-screen-button:hover,.hide-button:hover {
-                            background-color: $background;
-                        }
-                        // 关闭按钮
-                        .close-button:hover {
-                            background-color: $error;
-                            color: #ffffff;
-                        }
+// 基础模态框样式
+.heart-base-modal {
+    overflow: hidden;
+
+    .ivu-modal {
+        top: 20px;
+
+        .ivu-modal-content {
+            min-width: #{$baseModalMinWidth}px;
+            min-height: #{$baseModalMinHeight}px;
+
+            // 模态框头部
+            .ivu-modal-header {
+                height: #{$baseModalHeaderHeight}px;
+
+                // 标题
+                .title {
+                    font-size: 18px;
+                }
+
+                // 按钮组
+                .button-group {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+
+                    // 按钮默认样式
+                    .ivu-btn {
+                        box-shadow: none;
+                        width: 40px;
+                        height: 40px;
+                        padding: 0;
                     }
                 }
-                // 模态框内容部分
-                .ivu-modal-body {
-                    min-height: #{$baseModalMinHeight - $baseModalHeaderHeight - $baseModalFooterHeight}px;
-                    // 这里设定模态框高度
-                    // 想要修改就写个样式覆盖这个值
-                    height: #{$baseModalHeight}px;
-                    overflow-y: auto;
+            }
+
+            // 模态框内容部分
+            .ivu-modal-body {
+                min-height: #{$baseModalMinHeight - $baseModalHeaderHeight - $baseModalFooterHeight}px;
+                // 这里设定模态框高度
+                // 想要修改就写个样式覆盖这个值
+                height: #{$baseModalHeight}px;
+                overflow-y: auto;
+            }
+        }
+    }
+}
+
+// 开始按钮
+.start-button {
+    height: $footerHeight;
+    width: $footerHeight;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+
+// 底部栏打开模块的小图标
+.tab-container {
+    height: 100%;
+
+    .ivu-dropdown {
+        // 不浮动的话在火狐和IE会出现滚动条
+        float: left;
+
+        .tab-icon {
+            position: relative;
+            height: $footerHeight;
+            width: $footerHeight;
+            font-size: 16px;
+            font-weight: 700;
+
+            // 底下的小红线
+            &::after {
+                content: "";
+                transition: width 0.5s;
+                opacity: 0;
+                width: 0;
+                height: 3px;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            &:hover {
+                &::after {
+                    width: 80%;
+                    opacity: 1;
+                }
+            }
+
+            .tab-row {
+                height: 100%;
+
+                div {
+                    height: 30px;
+                    width: 30px;
+                    text-align: center;
+                    line-height: 30px;
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        // 选中样式
+        .tab-icon-active {
+            position: relative;
+
+            &:hover {
+                &::after {
+                    width: 98%;
+                }
+            }
+
+            &::after {
+                opacity: 1;
+                width: 98%;
+            }
+        }
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+// 右下角小图标
+.icon-group {
+    display: flex;
+    color: $title;
+    padding-left: 10px;
+    justify-items: center;
+    height: 100%;
+    text-align: center;
+
+    .date {
+        flex: 2;
+        height: 100%;
+
+        p {
+            line-height: $footerHeight / 2;
+        }
+    }
+
+    .icon {
+        flex: 1;
+
+        &:hover {
+            background-color: rgba($color: white, $alpha: 0.3);
+        }
+
+        .iconfont {
+            font-size: 25px;
+            line-height: $footerHeight;
+        }
+    }
+
+    .show-destop {
+        width: 5px;
+        cursor: pointer;
+    }
+}
+
+// 开始菜单
+.start-box {
+    position: fixed;
+    left: 0;
+    bottom: $footerHeight;
+    z-index: 99997;
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+
+    .menu-container {
+        padding-top: 5px;
+        border-radius: 5px;
+        display: flex;
+        height: 500px;
+        width: 550px;
+        z-index: 1;
+
+        // 菜单区域
+        .menu-box {
+            flex: 60%;
+            overflow: auto;
+            margin-right: 5px;
+
+            &::-webkit-scrollbar {
+                opacity: 0;
+            }
+
+            &:hover {
+                &::-webkit-scrollbar {
+                    opacity: 1;
+                }
+            }
+
+            &::after {
+                width: 0;
+            }
+
+            // 菜单树
+            .menu-tree {
+                .ivu-menu-item-active:not(.ivu-menu-submenu) {
+                    background: none !important;
+                    z-index: 1 !important;
+
+                    &::after {
+                        width: 0 !important;
+                    }
+
+                }
+
+                .ivu-menu-submenu-title {
+
+                    // 设置文件夹图标样式
+                    .icon-folder {
+                        display: inline-block;
+                        color: $warning;
+                        font-size: 30px;
+                        line-height: 30px;
+                    }
+
+                    .title-content {
+                        display: inline-block;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+
+                .ivu-menu-item {
+                    span {
+                        display: inline-block;
+                        width: 30px;
+                        height: 30px;
+                        line-height: 30px;
+                        text-align: center;
+                        color: white;
+                        font-weight: 700;
+                        font-size: 16px;
+                        border-radius: 5px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+
+        // 开始菜单右侧用户操作区域
+        .user-info {
+            flex: 40%;
+            box-sizing: content-box;
+
+            .user-operation-box {
+                height: 100%;
+                position: relative;
+                text-align: center;
+
+                .user-operation {
+                    height: 100%;
+
+                    .avatar {
+                        width: 60px;
+                        height: 60px;
+                        margin: -30px auto 10px auto;
+                        box-shadow: 0 0 5px black;
+                        border-radius: 30px;
+                    }
+
+                    .operations {
+                        text-align: left;
+                        color: $content;
+                        background-color: rgba($color: white, $alpha: 0);
+
+                        .ivu-menu-item-active:not(.ivu-menu-submenu) {
+                            color: $title !important;
+                            background: none !important;
+                            z-index: 1 !important;
+
+                            &::after {
+                                width: 0 !important;
+                                opacity: 0 !important;
+                            }
+
+                        }
+
+                        .ivu-menu-item,
+                        .ivu-menu-submenu-title {
+                            font-size: 16px;
+                        }
+                    }
+
+                    .logout-button {
+                        position: absolute;
+                        bottom: 50px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 100px;
+                        height: 30px;
+                    }
                 }
             }
         }
     }
-    
-    // 滚动条整体样式
-    ::-webkit-scrollbar {
-        width: 2px;
+
+    .menu-container-background {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+        -webkit-filter: blur(10px);
+        filter: blur(10px);
     }
-    // 滚动条滑块
-    ::-webkit-scrollbar-thumb {
-        border-radius: 5px;
-        background: $primary;
-    }
-    // 滚动条轨道
-    ::-webkit-scrollbar-track {
-        border-radius: 5px;
-        background: white;
-    }
-    
-    // 修改按钮默认样式
-    .ivu-btn:focus {
-        box-shadow: 0 0 3px $primary;;
-    }
-    .ivu-btn-default, .ivu-btn-dashed {
-        border-color: $primary;
-        color: $primary;
-        &:hover {
-            border-color: $lightPrimary;
-            color: $lightPrimary;
+}
+
+.slide-fade-enter-active {
+    transition: all 0.3s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.2s;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+// 锁定界面
+.lock {
+    height: 100%;
+
+    .lock-image {
+        height: 100%;
+        background: url("../../login/images/lock.jpg") center / 100% 100% no-repeat;
+
+        .date-time {
+            position: absolute;
+            left: 60px;
+            bottom: 50px;
+            color: white;
+
+            .time {
+                font-size: 90px;
+            }
+
+            .date {
+                font-size: 50px;
+            }
         }
     }
-    .ivu-btn-default.active, .ivu-btn-default:active, .ivu-btn-dashed.active, .ivu-btn-dashed:active {
-        border-color: $primary;
-        color: $primary;
-        box-shadow: 0 0 2px $primary;
-    }
-    .ivu-btn-primary {
-        background-color: $primary;
-        border-color: $primary;
-        &:hover {
-            background-color: $lightPrimary;
-            border-color: $lightPrimary;
+
+    .login-form-box {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+
+        .login-form-lock {
+            height: 100%;
+            z-index: 1;
+            background-color: rgba($color: black, $alpha: 0.1);
+
+            .form-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: 300px;
+                width: 300px;
+
+                .user-icon {
+                    position: relative;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: rgba($color: $content, $alpha: 0.8);
+                    text-align: center;
+                    line-height: 150px;
+                    height: 150px;
+                    width: 150px;
+                    border-radius: 75px;
+
+                    .icon-user-lock {
+                        font-size: 90px;
+                    }
+                }
+
+                .username {
+                    font-size: 40px;
+                    text-align: center;
+                }
+
+                .form-lock {
+                    padding: 10px;
+
+                    .ivu-input-suffix {
+                        width: 40px;
+
+                        button {
+                            width: 40px;
+                            padding: 0;
+                            border-radius: 0 4px 4px 0;
+                        }
+                    }
+                }
+
+                .other-user {
+                    cursor: pointer;
+                    text-align: center;
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .login-form-background-lock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            background: url("../../login/images/lock.jpg") center / 100% 100% no-repeat;
+            -webkit-filter: blur(10px);
+            filter: blur(10px);
+            z-index: -1;
         }
     }
-    .ivu-btn-primary.active, .ivu-btn-primary:active {
-        background-color: $primary;
-        border-color: $primary;
-        box-shadow: 0 0 2px $primary;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+// 登录页面表单
+.login-form {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 320px;
+    width: 320px;
+    background-color: rgba($color: white, $alpha: 0.7);
+    border-radius: 5px;
+    padding: 30px;
+    z-index: 1;
+    box-shadow: 0 0 3px $border;
+
+    .ivu-form {
+        .username.ivu-form-item {
+            margin-bottom: 40px;
+        }
+
+        .ivu-form-item {
+            .ivu-form-item-content {
+                line-height: 50px;
+
+                .ivu-input {
+                    height: 50px;
+                    font-size: 16px;
+                    padding-left: 40px;
+                }
+
+                .ivu-input-prefix {
+                    width: 40px;
+
+                    i {
+                        line-height: 50px;
+                        font-size: 25px;
+                    }
+                }
+
+                .ivu-input-suffix {
+                    line-height: 50px;
+                }
+            }
+
+            .login-button {
+                width: 100%;
+                height: 50px;
+                font-size: 18px;
+            }
+        }
+
+        .remember-me {
+            margin-bottom: 5px;
+        }
     }
-    .ivu-btn-text:hover {
-        color: $lightPrimary;
+}
+
+.login-form-background {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 320px;
+    width: 320px;
+    border-radius: 5px;
+    background: url("../../login/images/login.jpg") center / 100% 100% no-repeat;
+    z-index: -1;
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+}
+
+// 可选则菜单样式（可选择的菜单都可以引用此样式）
+.select-menu-tree {
+
+    .ivu-menu-submenu-title {
+
+        // 设置文件夹图标样式
+        .icon-folder {
+            display: inline-block;
+            color: $warning;
+            font-size: 30px;
+            line-height: 30px;
+        }
+
+        .title-content {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     }
-    .ivu-btn-text.active, .ivu-btn-text:active {
-        color: $primary;
+
+    .ivu-menu-item,
+    .ivu-menu-submenu-title {
+
+        span {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
     }
-    
-    // 顶部进度条颜色
-    #nprogress .bar {
-        background: $primary !important;
+
+    &::after {
+        width: 0;
     }
+}
+
+.select-menu-tree.ivu-menu-light {
+    &::after {
+        width: 0;
+    }
+}
+
+// 404页面
+.not-found {
+    height: 100%;
+    text-align: center;
+
+    .code {
+        .icon-404 {
+            font-size: 200px;
+        }
+    }
+
+    .description {
+        font-size: 30px;
+        font-weight: 700;
+    }
+}
+
+// 滚动条整体样式
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+// 滚动条滑块
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+// 滚动条轨道
+::-webkit-scrollbar-track {
+    border-radius: 5px;
 }

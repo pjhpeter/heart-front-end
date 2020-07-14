@@ -53,9 +53,16 @@ export default class ComponentLoader extends Vue {
    */
   private getComponentName(url: string): string {
     // 获取模块名称
-    // 如url为"/mb/secfileSign/list"，只要模块名"secfileSign"
-    url = url.substring(0, url.lastIndexOf("/"));
-    return url.substring(url.lastIndexOf("/") + 1);
+    if (url.indexOf(".vue") === -1) {
+      // 后端传来的url
+      // 如url为"/mb/secfileSign/list"，只要模块名"secfileSign"
+      url = url.substring(0, url.lastIndexOf("/"));
+      return url.substring(url.lastIndexOf("/") + 1);
+    }
+    // 普通组件的url
+    // 如url为"/heart/home/menu/IndividuationModal.vue"，只要组件名"IndividuationModal"
+    url = url.substring(0, url.lastIndexOf("."));
+    return url.substring(url.lastIndexOf("/"));
   }
 }
 </script>

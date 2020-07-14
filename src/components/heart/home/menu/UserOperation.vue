@@ -3,9 +3,9 @@
     <div class="user-operation">
       <img class="avatar" :src="avatarUrl" />
       <Menu class="operations" width="auto" @on-select="onMenuItemClick">
-        <MenuItem name="changeWallpaper">
-          <i class="iconfont icon-theme"></i>
-          切换壁纸
+        <MenuItem name="individuation">
+          <i class="iconfont icon-individuation"></i>
+          个性化
         </MenuItem>
         <MenuItem name="editPassword">
           <i class="iconfont icon-edit"></i>
@@ -32,6 +32,8 @@ import { Menu, MenuItem, Button, Modal } from "view-design";
 import UserAPI from "../../../../api/heart/user/UserAPI";
 import UserInfo from "../../../../model/heart/user/UserInfo";
 import UserAPI4Jeesit from "../../../../api/heart/user/impl/UserAPI4Jeesite";
+import ModalInfo from "../../../../model/heart/global/ModalInfo";
+import Commons from "../../../../utils/heart/Commons";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
@@ -53,9 +55,9 @@ export default class UserOperation extends Vue {
    * 点击操作项
    */
   onMenuItemClick(name: string): void {
-    if (name === "changeWallpaper") {
+    if (name === "individuation") {
       // 切换壁纸
-      this.changeWallpaper();
+      this.showIndividuationModal();
     } else if (name === "lock") {
       // 锁定
       this.$store.commit("globals/setLocked", true);
@@ -67,19 +69,31 @@ export default class UserOperation extends Vue {
   /**
    * 切换壁纸
    */
-  private changeWallpaper(): void {
-    const currentWallpaperUrl: string = this.$store.getters[
-      "user/getWallpaperUrl"
-    ];
-    // 从壁纸路径集合中读取下一张壁纸路径
-    let index = WALLPAPER_URLS.indexOf(currentWallpaperUrl);
-    if (index === WALLPAPER_URLS.length - 1) {
-      index = 0;
-    } else {
-      index++;
-    }
-    // 切换壁纸
-    this.$store.commit("user/setWallpaperUrl", WALLPAPER_URLS[index]);
+  private showIndividuationModal(): void {
+    // 模拟点击最外层div，关闭开始菜单
+    document.getElementById("app")!.click();
+    const modalInfo: ModalInfo = {
+      url: "/heart/home/menu/IndividuationModal.vue",
+      backgroundColor: Commons.getIconColor(),
+      title: "个性化",
+      width: 650,
+      className: "individuation",
+      resizable: false,
+      enabledFuscreen: false
+    };
+    Commons.showModule(modalInfo);
+    // const currentWallpaperUrl: string = this.$store.getters[
+    //   "user/getWallpaperUrl"
+    // ];
+    // // 从壁纸路径集合中读取下一张壁纸路径
+    // let index = WALLPAPER_URLS.indexOf(currentWallpaperUrl);
+    // if (index === WALLPAPER_URLS.length - 1) {
+    //   index = 0;
+    // } else {
+    //   index++;
+    // }
+    // // 切换壁纸
+    // this.$store.commit("user/setWallpaperUrl", WALLPAPER_URLS[index]);
   }
 
   /**
@@ -105,61 +119,10 @@ export default class UserOperation extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.user-operation-box {
-  height: 100%;
-  position: relative;
-  text-align: center;
-  .user-operation {
-    height: 100%;
-    .avatar {
-      width: 60px;
-      height: 60px;
-      margin: -30px auto 10px auto;
-      box-shadow: 0 0 5px black;
-      border-radius: 30px;
-    }
-    .operations {
-      text-align: left;
-      color: $content;
-      background-color: rgba($color: white, $alpha: 0);
-      .ivu-menu-item-active:not(.ivu-menu-submenu) {
-        color: $title !important;
-        background: none !important;
-        z-index: 1 !important;
-        &::after {
-          width: 0 !important;
-          opacity: 0 !important;
-        }
-        &:hover {
-          background-color: rgba($color: $lightPrimary, $alpha: 0.3) !important;
-          color: $title !important;
-        }
-      }
-      .ivu-menu-item,
-      .ivu-menu-submenu-title {
-        font-size: 16px;
-        &:hover {
-          background-color: rgba($color: $lightPrimary, $alpha: 0.3);
-          color: $title;
-        }
-      }
-    }
-    .logout-button {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba($color: white, $alpha: 0);
-      width: 100px;
-      height: 30px;
-      color: $primary;
-      border-color: $primary;
-      &:hover {
-        background-color: rgba($color: $primary, $alpha: 0.9);
-        color: white;
-      }
-    }
+<style lang="scss">
+.individuation {
+  .ivu-modal-body {
+    height: 500px !important;
   }
 }
 </style>

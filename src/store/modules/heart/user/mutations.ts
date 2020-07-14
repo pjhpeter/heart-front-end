@@ -5,6 +5,7 @@ import Auth from "@/utils/heart/Auth";
 import { MutationTree } from "vuex";
 import { UserState } from "./types";
 import { Vue } from "vue-property-decorator";
+import { Themes } from "@/constants/heart/enum/Themes";
 
 export const mutations: MutationTree<UserState> = {
   /**
@@ -134,12 +135,36 @@ export const mutations: MutationTree<UserState> = {
   setWallpaperUrl(state: UserState, url: string) {
     if (!state.user) return;
     const userCode: string | undefined = state.user.userCode;
-    // 当没有任何桌面信息时，
     // 找到当前用户的桌面信息并更新壁纸路径
     const flag: boolean = state.destopInfoList.some(
       (destopInfo: DestopInfo) => {
         if (destopInfo.userCode === userCode) {
           Vue.set(destopInfo, "wallpaperUrl", url);
+          return true;
+        }
+        return false;
+      }
+    );
+
+    // 壁纸被修改，则保存到localStorage中
+    if (flag) {
+      Auth.setDestopInfoList(state.destopInfoList);
+    }
+  },
+
+  /**
+   * 更新主题
+   * @param state 用户模块状态对象
+   * @param theme 主题枚举
+   */
+  setTheme(state: UserState, theme: Themes): void {
+    if (!state.user) return;
+    const userCode: string | undefined = state.user.userCode;
+    // 找到当前用户的桌面信息并更新
+    const flag: boolean = state.destopInfoList.some(
+      (destopInfo: DestopInfo) => {
+        if (destopInfo.userCode === userCode) {
+          Vue.set(destopInfo, "theme", theme);
           return true;
         }
         return false;

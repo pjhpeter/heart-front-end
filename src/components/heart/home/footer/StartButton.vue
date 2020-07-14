@@ -26,20 +26,3 @@ export default class FooterContainer extends Vue {
   onStartClick() {}
 }
 </script>
-
-<style lang="scss" scoped>
-.start-button {
-  background-color: rgba($color: $background, $alpha: 0.9);
-  height: $footerHeight;
-  width: $footerHeight;
-  padding: 0;
-  color: $primary;
-  border-radius: 0;
-  box-shadow: none;
-  border: none;
-  &:hover {
-    background-color: $primary;
-    color: white;
-  }
-}
-</style>

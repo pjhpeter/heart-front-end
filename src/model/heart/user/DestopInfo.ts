@@ -1,4 +1,5 @@
 import ModalInfo from "../global/ModalInfo";
+import { Themes } from "@/constants/heart/enum/Themes";
 
 /**
  * 快捷方式信息
@@ -9,4 +10,6 @@ export default interface DestopInfo {
   modalInfoList: Array<ModalInfo>;
   // 壁纸路径
   wallpaperUrl?: string;
+  // 主题颜色
+  theme?: Themes;
 }

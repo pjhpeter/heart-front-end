@@ -15,6 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+// 个性化
+.icon-individuation:before {
+  content: "\e7e8";
+}
+
 // 右箭头
 .icon-arrow-right:before {
   content: "\e765";

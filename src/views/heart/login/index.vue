@@ -60,7 +60,7 @@ export default class Login extends Vue {}
         display: inline-block;
         left: 95px;
         margin-left: 20px;
-        color: $primary;
+        color: $title;
         font-size: 30px;
       }
     }

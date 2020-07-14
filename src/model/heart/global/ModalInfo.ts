@@ -21,7 +21,6 @@ export default interface ModalInfo {
   maskClosable?: boolean;
   loading?: boolean;
   scrollable?: boolean;
-  fullscreen?: boolean;
   draggable?: boolean;
   mask?: boolean;
   okText?: string;

@@ -26,10 +26,11 @@ export default class App extends Vue {
   }
 
   created(): void {
-    document.body.classList.add("red");
-    //禁止后退键 作用于Firefox、Opera
+    // 添加主题样式
+    document.body.classList.add(this.$store.getters["user/getTheme"]);
+    // 禁止后退键 作用于Firefox、Opera
     document.onkeypress = this.banBackSpace;
-    //禁止后退键  作用于IE、Chrome
+    // 禁止后退键  作用于IE、Chrome
     document.onkeydown = this.banBackSpace;
   }
 

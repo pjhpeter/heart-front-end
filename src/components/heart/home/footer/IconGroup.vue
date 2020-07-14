@@ -90,39 +90,3 @@ export default class IconGroup extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.icon-group {
-  display: flex;
-  color: $title;
-  padding-left: 10px;
-  justify-items: center;
-  height: 100%;
-  text-align: center;
-  .date {
-    flex: 2;
-    height: 100%;
-    p {
-      line-height: $footerHeight / 2;
-    }
-  }
-  .icon {
-    flex: 1;
-    &:hover {
-      background-color: rgba($color: white, $alpha: 0.3);
-    }
-    .iconfont {
-      font-size: 25px;
-      line-height: $footerHeight;
-    }
-  }
-  .show-destop {
-    width: 5px;
-    border-left: 1px solid $lightPrimary;
-    cursor: pointer;
-    &:hover {
-      background-color: rgba($color: white, $alpha: 0.5);
-    }
-  }
-}
-</style>

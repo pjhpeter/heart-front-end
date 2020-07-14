@@ -1,12 +1,11 @@
-import { Module } from "vuex";
-import { RootState } from "@/store/types";
-import { UserState } from "./types";
-import { mutations } from "./mutations";
-import { getters } from "./getters";
-import Auth from "@/utils/heart/Auth";
-import UserInfo from "@/model/heart/user/UserInfo";
-import { WALLPAPER_URLS } from "@/constants/heart/values/Global";
 import DestopInfo from "@/model/heart/user/DestopInfo";
+import UserInfo from "@/model/heart/user/UserInfo";
+import { RootState } from "@/store/types";
+import Auth from "@/utils/heart/Auth";
+import { Module } from "vuex";
+import { getters } from "./getters";
+import { mutations } from "./mutations";
+import { UserState } from "./types";
 
 const namespaced = true;
 
