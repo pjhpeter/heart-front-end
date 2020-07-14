@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { Card, Divider } from "view-design";
-import { THEMES } from "../../../../../constants/heart/values/Themes";
+import { THEMES } from "../../../../../constants/heart/values/Global";
 
 @Component({
   name: "theme",
@@ -79,7 +79,6 @@ export default class Theme extends Vue {
 <style lang="scss">
 .theme {
   padding: 20px;
-  //   background-color: $background;
   height: 100%;
   .selected-theme {
     width: 370px;

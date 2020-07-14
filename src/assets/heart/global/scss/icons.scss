@@ -15,6 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+// 图片
+.icon-image:before {
+  content: "\e66a";
+}
+
 // 个性化
 .icon-individuation:before {
   content: "\e7e8";

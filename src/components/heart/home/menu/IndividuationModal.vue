@@ -8,8 +8,8 @@
         active-name="image-preference"
       >
         <MenuItem name="image-preference">
-          <i class="iconfont icon-theme"></i>
-          图片
+          <i class="iconfont icon-image"></i>
+          背景
         </MenuItem>
         <MenuItem name="theme">
           <i class="iconfont icon-theme"></i>
@@ -51,6 +51,7 @@ export default class Individuation extends Vue {
 .individuation-modal {
   display: flex;
   height: 100%;
+  overflow: hidden;
   .menu-box-individuation {
     flex: 0 0 30%;
     padding-right: 10px;
