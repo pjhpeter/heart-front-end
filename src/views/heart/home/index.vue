@@ -99,7 +99,7 @@ export default class Home extends Vue {
   created(): void {
     // 添加点击页面隐藏开始菜单事件
     document.addEventListener("click", this.hideMenu);
-    // 不加监听器不能切换壁纸
+    // 不加监听器不能实时切换壁纸，要刷新组件才能更换
     this.$watch(
       () => this.$store.getters["user/getWallpaperUrl"],
       () => {
