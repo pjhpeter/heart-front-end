@@ -89,8 +89,7 @@ export default class Home extends Vue {
   showedMenu = false;
   // 壁纸样式
   backgroundStyles: any = {
-    background: `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat`,
-    backgroundSize: "100% 100%"
+    background: `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat`
   };
   // 底部栏背景样式，毛玻璃效果需要
   footerBackgroundStyles: any = {

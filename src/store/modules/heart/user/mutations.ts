@@ -127,6 +127,31 @@ export const mutations: MutationTree<UserState> = {
   },
 
   /**
+   * 更改锁屏图片路径
+   * @param state 用户模块状态对象
+   * @param url 壁纸路径
+   */
+  setLockImageUrl(state: UserState, url: string) {
+    if (!state.user) return;
+    const userCode: string | undefined = state.user.userCode;
+    // 找到当前用户的桌面信息并更新锁屏图片路径
+    const flag: boolean = state.destopInfoList.some(
+      (destopInfo: DestopInfo) => {
+        if (destopInfo.userCode === userCode) {
+          Vue.set(destopInfo, "lockImageUrl", url);
+          return true;
+        }
+        return false;
+      }
+    );
+
+    // 锁屏被修改，则保存到localStorage中
+    if (flag) {
+      Auth.setDestopInfoList(state.destopInfoList);
+    }
+  },
+
+  /**
    * 更改壁纸路径
    * @param state 用户模块状态对象
    * @param url 壁纸路径

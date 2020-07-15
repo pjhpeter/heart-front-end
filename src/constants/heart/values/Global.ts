@@ -25,7 +25,8 @@ export const WALLPAPER_URLS: Array<string> = [
   "/wallpapers/background0.jpg",
   "/wallpapers/background1.jpg",
   "/wallpapers/background2.jpg",
-  "/wallpapers/background3.jpg"
+  "/wallpapers/background3.jpg",
+  "/wallpapers/background4.jpg"
 ];
 
 /**

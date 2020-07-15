@@ -46,11 +46,34 @@ export const getters: GetterTree<UserState, RootState> = {
     const initDestopInfo: DestopInfo = {
       userCode,
       modalInfoList: [],
+      lockImageUrl: WALLPAPER_URLS[1],
       wallpaperUrl: WALLPAPER_URLS[0],
       theme: THEMES[0].class
     };
     state.destopInfoList.push(initDestopInfo);
     return initDestopInfo.modalInfoList;
+  },
+
+  /**
+   * 获取当前锁屏
+   * @param state 用户模块状态对象
+   * @returns 当前锁屏图片路径
+   */
+  getLockImageUrl(state: UserState): string {
+    if (!state.user) return WALLPAPER_URLS[1];
+    const userCode: string = state.user.userCode!;
+    // 找到当前用户的桌面信息
+    const currentUserDestopInfo:
+      | DestopInfo
+      | undefined = state.destopInfoList.find((destopInfo: DestopInfo) => {
+      return destopInfo.userCode === userCode;
+    });
+    if (currentUserDestopInfo && currentUserDestopInfo.lockImageUrl) {
+      // 如果用户配置了壁纸，则返回用户配置
+      return currentUserDestopInfo.lockImageUrl;
+    }
+    // 返回默认
+    return WALLPAPER_URLS[1];
   },
 
   /**

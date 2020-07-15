@@ -5,8 +5,12 @@
         class="select-menu-tree"
         width="auto"
         @on-select="showComponent"
-        active-name="image-preference"
+        active-name="lock-image-preference"
       >
+        <MenuItem name="lock-image-preference">
+          <i class="iconfont icon-lock"></i>
+          锁屏
+        </MenuItem>
         <MenuItem name="image-preference">
           <i class="iconfont icon-image"></i>
           背景
@@ -34,6 +38,8 @@ import { Menu, MenuItem } from "view-design";
 @Component({
   name: "individuation-modal",
   components: {
+    LockImagePreference: () =>
+      import("./individuation/LockImagePreference.vue"),
     ImagePreference: () => import("./individuation/ImagePreference.vue"),
     Theme: () => import("./individuation/Theme.vue"),
     Menu,
@@ -42,7 +48,7 @@ import { Menu, MenuItem } from "view-design";
 })
 export default class Individuation extends Vue {
   // 当前显示的组件
-  private activeComponent = "image-preference";
+  private activeComponent = "lock-image-preference";
 
   // 点击左侧菜单显示对应组件
   private showComponent(name: string): void {

@@ -331,7 +331,6 @@ $baseModalMinHeight: 300;
 
     .lock-image {
         height: 100%;
-        background: url("../../login/images/lock.jpg") center / 100% 100% no-repeat;
 
         .date-time {
             position: absolute;
@@ -419,7 +418,6 @@ $baseModalMinHeight: 300;
             right: 0;
             bottom: 0;
             height: 100%;
-            background: url("../../login/images/lock.jpg") center / 100% 100% no-repeat;
             -webkit-filter: blur(10px);
             filter: blur(10px);
             z-index: -1;

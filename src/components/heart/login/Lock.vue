@@ -1,7 +1,12 @@
 <template>
   <div class="lock">
     <transition name="fade">
-      <div class="lock-image" v-if="showLockImage" @click="showLoginForm">
+      <div
+        class="lock-image"
+        v-if="showLockImage"
+        @click="showLoginForm"
+        :style="backgroundStyles"
+      >
         <div class="date-time">
           <p class="time" v-text="time"></p>
           <p class="date" v-text="day"></p>
@@ -51,7 +56,10 @@
             </Form>
           </div>
         </div>
-        <div class="login-form-background-lock"></div>
+        <div
+          class="login-form-background-lock"
+          :style="blurBackgroundStyles"
+        ></div>
       </div>
     </transition>
   </div>
@@ -96,6 +104,15 @@ export default class Lock extends Vue {
   rules: object = {
     username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+  };
+
+  // 锁屏样式
+  backgroundStyles: any = {
+    background: `url(${this.$store.getters["user/getLockImageUrl"]}) center / 100% 100% no-repeat`
+  };
+  // 毛玻璃效果样式
+  blurBackgroundStyles: any = {
+    background: `url(${this.$store.getters["user/getLockImageUrl"]}) center / 100% 100% no-repeat fixed`
   };
 
   mounted(): void {
