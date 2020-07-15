@@ -135,11 +135,10 @@ export default class UserOperation extends Vue {
 
   // 全屏事件
   private handleFullScreen(): void {
-    const element: any = document.documentElement;
-    const documentToAny: any = document as any;
     // 判断是否已经是全屏
     // 如果是全屏，退出
     if (this.isFullscreen) {
+      const documentToAny: any = document as any;
       if (documentToAny.exitFullscreen) {
         // w3c
         documentToAny.exitFullscreen();
@@ -154,6 +153,7 @@ export default class UserOperation extends Vue {
         documentToAny.msExitFullscreen();
       }
     } else {
+      const element: any = document.documentElement;
       // 否则，进入全屏
       if (element.requestFullscreen) {
         // w3c
