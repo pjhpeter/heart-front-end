@@ -2,7 +2,7 @@ import LoginParams from "@/model/heart/user/LoginParams";
 import UserAPI4Jeesit from "@/api/heart/user/impl/UserAPI4Jeesite";
 import UserAPI from "@/api/heart/user/UserAPI";
 import store from "@/store";
-import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo4Jeesite";
 import { LocalStorageKeys } from "@/constants/heart/enum/LocalStorageKeys";
 
 let userAPI: UserAPI<UserInfo4Jeesite>;

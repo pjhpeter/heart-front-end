@@ -1,6 +1,6 @@
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import DestopInfo from "@/model/heart/user/DestopInfo";
-import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo4Jeesite";
 import Auth from "@/utils/heart/Auth";
 import { MutationTree } from "vuex";
 import { UserState } from "./types";

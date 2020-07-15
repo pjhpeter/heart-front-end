@@ -30,7 +30,7 @@ import { Vue, Component } from "vue-property-decorator";
 import { WALLPAPER_URLS } from "../../../../constants/heart/values/Global";
 import { Menu, MenuItem, Button, Modal } from "view-design";
 import UserAPI from "../../../../api/heart/user/UserAPI";
-import UserInfo from "../../../../model/heart/user/UserInfo";
+import UserInfo4Jeesite from "../../../../model/heart/user/UserInfo4Jeesite";
 import UserAPI4Jeesit from "../../../../api/heart/user/impl/UserAPI4Jeesite";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
@@ -109,7 +109,7 @@ export default class UserOperation extends Vue {
       content: "确认退出系统吗？",
       onOk: async () => {
         // 退出
-        const userAPI: UserAPI<UserInfo> = new UserAPI4Jeesit();
+        const userAPI: UserAPI<UserInfo4Jeesite> = new UserAPI4Jeesit();
         if (await userAPI.logout()) {
           // 回到退出页面
           this.$router.push("/login");

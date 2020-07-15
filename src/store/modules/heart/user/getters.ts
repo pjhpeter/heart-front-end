@@ -1,7 +1,7 @@
 import { GetterTree } from "vuex";
 import { UserState } from "./types";
 import { RootState } from "@/store/types";
-import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo4Jeesite";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import DestopInfo from "@/model/heart/user/DestopInfo";
 import { WALLPAPER_URLS, THEMES } from "@/constants/heart/values/Global";

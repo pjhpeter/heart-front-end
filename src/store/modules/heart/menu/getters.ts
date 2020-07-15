@@ -1,4 +1,4 @@
-import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo4Jeesite";
 import { RootState } from "@/store/types";
 import { GetterTree } from "vuex";
 import { MenuState } from "./types";

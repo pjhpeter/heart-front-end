@@ -60,7 +60,6 @@ import ModalInfo from "../../../model/heart/global/ModalInfo";
 import Commons from "../../../utils/heart/Commons";
 import BaseModal from "../../../components/heart/commons/BaseModal.vue";
 import OpenedInfo from "../../../model/heart/global/OpenedInfo";
-import UserInfo from "../../../model/heart/user/UserInfo";
 import { Layout, Content, Sider, Footer } from "view-design";
 
 // ts不识别require函数，必须要这样声明一下

@@ -1,5 +1,5 @@
 import DestopInfo from "@/model/heart/user/DestopInfo";
-import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo4Jeesite";
 import { RootState } from "@/store/types";
 import Auth from "@/utils/heart/Auth";
 import { Module } from "vuex";

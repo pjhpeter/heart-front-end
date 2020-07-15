@@ -12,7 +12,7 @@
  * @author 彭嘉辉
  */
 import { Vue, Component } from "vue-property-decorator";
-import MenuInfo from "../../../../model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "../../../../model/heart/menu/MenuInfo4Jeesite";
 import Commons from "../../../../utils/heart/Commons";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import { Menu } from "view-design";
@@ -26,7 +26,7 @@ import { Menu } from "view-design";
 })
 export default class AddShotcutModal extends Vue {
   // 菜单树
-  menuTree: Array<MenuInfo> | null = [];
+  menuTree: Array<MenuInfo4Jeesite> | null = [];
 
   // 选中的菜单项对应信息
   selectedModalInfo: ModalInfo | undefined;

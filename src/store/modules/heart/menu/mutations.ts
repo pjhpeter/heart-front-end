@@ -1,4 +1,4 @@
-import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo4Jeesite";
 import { MutationTree } from "vuex";
 import { MenuState } from "./types";
 

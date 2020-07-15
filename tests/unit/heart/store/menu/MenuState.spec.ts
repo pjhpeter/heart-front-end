@@ -1,4 +1,4 @@
-import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo4Jeesite";
 import { getters } from "@/store/modules/heart/menu/getters";
 import { mutations } from "@/store/modules/heart/menu/mutations";
 import { MenuState } from "@/store/modules/heart/menu/types";

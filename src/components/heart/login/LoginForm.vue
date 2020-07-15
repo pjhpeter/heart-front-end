@@ -42,7 +42,7 @@ import { Form, FormItem, Button, Input, Checkbox, Message } from "view-design";
 import LoginParams from "../../../model/heart/user/LoginParams";
 import UserAPI4Jeesit from "../../../api/heart/user/impl/UserAPI4Jeesite";
 import UserAPI from "../../../api/heart/user/UserAPI";
-import UserInfo from "../../../model/heart/user/UserInfo";
+import UserInfo4Jeesite from "../../../model/heart/user/UserInfo4Jeesite";
 
 @Component({
   name: "login-form",
@@ -70,7 +70,7 @@ export default class LoginForm extends Vue {
   private login(): void {
     (this.$refs["loginForm"] as any).validate(async (valid: boolean) => {
       if (valid) {
-        const userAPI: UserAPI<UserInfo> = new UserAPI4Jeesit();
+        const userAPI: UserAPI<UserInfo4Jeesite> = new UserAPI4Jeesit();
         if (await userAPI.login(this.loginParams)) {
           this.$router.push("/");
         }

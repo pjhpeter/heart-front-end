@@ -2,7 +2,7 @@ import { NavigationGuardNext, Route } from "vue-router";
 import router from "./router";
 import store from "./store";
 import UserAPI from "./api/heart/user/UserAPI";
-import UserInfo4Jeesite from "./model/heart/user/UserInfo";
+import UserInfo4Jeesite from "./model/heart/user/UserInfo4Jeesite";
 import UserAPI4Jeesit from "./api/heart/user/impl/UserAPI4Jeesite";
 import NProgress from "./utils/heart/NProgress";
 

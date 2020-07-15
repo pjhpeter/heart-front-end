@@ -1,4 +1,4 @@
-import Extend4Jeesite from "../global/Extend";
+import Extend4Jeesite from "../global/Extend4Jeesite";
 
 /**
  * 针对登录成功后，jeesite返回的用户信息接口

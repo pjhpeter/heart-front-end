@@ -66,7 +66,7 @@ import { Vue, Component } from "vue-property-decorator";
 import { Form, FormItem, Input, Button } from "view-design";
 import LoginParams from "../../../model/heart/user/LoginParams";
 import UserAPI from "../../../api/heart/user/UserAPI";
-import UserInfo from "../../../model/heart/user/UserInfo";
+import UserInfo4Jeesite from "../../../model/heart/user/UserInfo4Jeesite";
 import UserAPI4Jeesit from "../../../api/heart/user/impl/UserAPI4Jeesite";
 
 @Component({
@@ -102,7 +102,7 @@ export default class Lock extends Vue {
     this.now();
     setInterval(this.now, 1000);
     // 初始化
-    const userInfo: UserInfo = this.$store.getters["user/getUser"];
+    const userInfo: UserInfo4Jeesite = this.$store.getters["user/getUser"];
     if (userInfo) {
       this.diplayUsername = userInfo.userName;
       this.loginParams.username = userInfo.loginCode;
@@ -140,7 +140,7 @@ export default class Lock extends Vue {
     // TODO:按回车登录，不知道为什么一直不行
     (this.$refs["loginFormLock"] as any).validate(async (valid: boolean) => {
       if (valid) {
-        const userAPI: UserAPI<UserInfo> = new UserAPI4Jeesit();
+        const userAPI: UserAPI<UserInfo4Jeesite> = new UserAPI4Jeesit();
         if (await userAPI.login(this.loginParams)) {
           if (this.showUsername) {
             // 如果用其他用户登录，需要把打开的窗口全部关闭

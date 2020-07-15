@@ -29,7 +29,7 @@
  * @author 彭嘉辉
  */
 import { Vue, Component, Prop, Emit } from "vue-property-decorator";
-import MenuInfo from "../../../../model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "../../../../model/heart/menu/MenuInfo4Jeesite";
 import Commons from "../../../../utils/heart/Commons";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import { MenuItem, Submenu } from "view-design";
@@ -47,7 +47,7 @@ export default class MenuTree extends Vue {
     required: true,
     default: []
   })
-  menuTree!: Array<MenuInfo>;
+  menuTree!: Array<MenuInfo4Jeesite>;
 
   @Prop({
     type: String,
@@ -60,7 +60,7 @@ export default class MenuTree extends Vue {
    * @param menu 当前菜单
    * @returns 菜单项背景颜色
    */
-  private getMenuIconColor(menu: MenuInfo): string {
+  private getMenuIconColor(menu: MenuInfo4Jeesite): string {
     // 保存当前模块图标的背景颜色
     if (!menu.menuColor) {
       menu.menuColor = Commons.getIconColor();

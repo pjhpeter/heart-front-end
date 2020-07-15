@@ -3,7 +3,7 @@ import MenuAPI from "@/api/heart/menu/MenuAPI";
 import { MENU_ICON_COLORS } from "@/constants/heart/values/Global";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import OpenedInfo from "@/model/heart/global/OpenedInfo";
-import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo4Jeesite";
 import { Vue } from "vue-property-decorator";
 import store from "../../store";
 

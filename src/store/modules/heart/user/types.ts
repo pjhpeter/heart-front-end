@@ -1,4 +1,4 @@
-import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo4Jeesite";
 import DestopInfo from "@/model/heart/user/DestopInfo";
 
 /**

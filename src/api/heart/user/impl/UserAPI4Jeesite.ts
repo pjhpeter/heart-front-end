@@ -1,7 +1,7 @@
 import UserAPI from "../UserAPI";
 import LoginParams from "@/model/heart/user/LoginParams";
 import store from "@/store";
-import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo4Jeesite";
 import Request from "@/decorator/heart/request/Request";
 import { RequestMethod, ParamMode } from "@/constants/heart/enum/RequestEnums";
 
