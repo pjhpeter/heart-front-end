@@ -270,10 +270,10 @@ $darkPrimary-purple: #6f5499;
         background: white;
     }
 
-    // 修改按钮默认样式
+    // -------------------修改ViewUI组件默认样式 start---------------//
+    // 修改button默认样式
     .ivu-btn:focus {
         box-shadow: 0 0 3px $primary-purple;
-        ;
     }
 
     .ivu-btn-default,
@@ -321,6 +321,89 @@ $darkPrimary-purple: #6f5499;
     .ivu-btn-text:active {
         color: $primary-purple;
     }
+
+    // 修改checkbox默认样式
+    .ivu-checkbox-checked {
+        .ivu-checkbox-inner {
+            border-color: $primary-purple;
+            background-color: $primary-purple;
+        }
+    }
+
+    // 修改table的默认样式
+    .ivu-table {
+        th {
+            background-color: $primary-purple;
+            color: white;
+
+            .ivu-table-sort {
+                i.on {
+                    color: $success;
+                }
+            }
+
+            .ivu-table-filter {
+                i.on {
+                    color: $success;
+                }
+            }
+        }
+    }
+
+    // 修改page的默认样式
+    .ivu-page {
+        .ivu-page-item {
+            &:hover {
+                border-color: $primary-purple;
+            }
+        }
+
+        .ivu-page-item-jump-next {
+            a {
+                color: $primary-purple;
+            }
+        }
+    }
+
+    // 修改tree的默认样式
+    .ivu-tree {
+
+        .ivu-tree-title:hover {
+            background-color: rgba($color: $lightPrimary-purple, $alpha: .3);
+        }
+
+        .ivu-tree-title-selected,
+        .ivu-tree-title-selected:hover {
+            background-color: rgba($color: $lightPrimary-purple, $alpha: .3);
+        }
+    }
+
+    // 修改switch的默认样式
+    .ivu-switch {
+        .ivu-switch-checked {
+            border-color: $primary-purple;
+            background-color: $primary-purple;
+        }
+    }
+
+    // 修改tabs的默认样式
+    .ivu-tabs {
+        .ivu-tabs-nav {
+            .ivu-tabs-tab:hover {
+                color: $lightPrimary-purple;
+            }
+
+            .ivu-tabs-tab-active {
+                color: $primary-purple;
+            }
+
+            .ivu-tabs-ink-bar {
+                background-color: $primary-purple;
+            }
+        }
+    }
+
+    // -------------------修改ViewUI组件默认样式 end---------------//
 
     // 顶部进度条颜色
     #nprogress .bar {

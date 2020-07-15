@@ -591,7 +591,7 @@ $baseModalMinHeight: 300;
 // 向上消失，向下出现，快速过渡动画
 .fast-slide-fade-enter-acitve,
 .fast-slide-fade-leave-active {
-    transition: all 0.2s;
+    transition: all 0.2s ease-in-out;
 }
 
 .fast-slide-fade-enter,
@@ -607,10 +607,10 @@ $baseModalMinHeight: 300;
 
 // 滚动条滑块
 ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
+    border-radius: 1px;
 }
 
 // 滚动条轨道
 ::-webkit-scrollbar-track {
-    border-radius: 5px;
+    border-radius: 1px;
 }
