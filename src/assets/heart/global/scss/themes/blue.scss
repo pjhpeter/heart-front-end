@@ -330,6 +330,17 @@ $darkPrimary-blue: #2b85e4;
         }
     }
 
+    // 修改radio默认样式
+    .ivu-radio-checked {
+        .ivu-radio-inner {
+            border-color: $primary-blue;
+
+            &::after {
+                background-color: $primary-blue;
+            }
+        }
+    }
+
     // 修改table的默认样式
     .ivu-table {
         th {
