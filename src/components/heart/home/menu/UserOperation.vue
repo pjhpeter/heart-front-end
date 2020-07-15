@@ -15,6 +15,14 @@
           <i class="iconfont icon-lock"></i>
           锁定
         </MenuItem>
+        <MenuItem name="fullscreen" v-if="!isFullscreen">
+          <i class="iconfont icon-to-fullscreen"></i>
+          全屏
+        </MenuItem>
+        <MenuItem name="fullscreen" v-if="isFullscreen">
+          <i class="iconfont icon-quit-fullscreen"></i>
+          退出全屏
+        </MenuItem>
       </Menu>
       <Button class="logout-button" @click="logout">退出</Button>
     </div>
@@ -49,22 +57,29 @@ declare function require(img: string): string;
 })
 export default class UserOperation extends Vue {
   // 用户头像路径
-  avatarUrl: string = require("../../../../assets/heart/home/images/avatar.png");
+  private avatarUrl: string = require("../../../../assets/heart/home/images/avatar.png");
   // 已打开的个性化模态框id
-  individuationModalId?: number;
+  private individuationModalId?: number;
+  // 浏览器是否全屏
+  private isFullscreen = false;
 
   /**
    * 点击操作项
    */
-  onMenuItemClick(name: string): void {
+  private onMenuItemClick(name: string): void {
     if (name === "individuation") {
       // 切换壁纸
       this.showIndividuationModal();
+    } else if (name === "editPassword") {
+      // TODO:修改密码
     } else if (name === "lock") {
       // 锁定
       this.$store.commit("globals/setLocked", true);
       // 清除token，防止重新登录时随便输入密码都正确
       this.$store.commit("user/setToken", "");
+    } else if (name === "fullscreen") {
+      // 全屏
+      this.handleFullScreen();
     }
   }
 
@@ -100,7 +115,7 @@ export default class UserOperation extends Vue {
   /**
    * 登出
    */
-  logout(event: any): void {
+  private logout(event: any): void {
     // 模拟点击最外层div，关闭开始菜单
     document.getElementById("app")!.click();
     // 确认是否要退出
@@ -116,6 +131,46 @@ export default class UserOperation extends Vue {
         }
       }
     });
+  }
+
+  // 全屏事件
+  private handleFullScreen(): void {
+    const element: any = document.documentElement;
+    const documentToAny: any = document as any;
+    // 判断是否已经是全屏
+    // 如果是全屏，退出
+    if (this.isFullscreen) {
+      if (documentToAny.exitFullscreen) {
+        // w3c
+        documentToAny.exitFullscreen();
+      } else if (documentToAny.webkitCancelFullScreen) {
+        // webkit
+        documentToAny.webkitCancelFullScreen();
+      } else if (documentToAny.mozCancelFullScreen) {
+        // firefox
+        documentToAny.mozCancelFullScreen();
+      } else if (documentToAny.msExitFullscreen) {
+        // ie11
+        documentToAny.msExitFullscreen();
+      }
+    } else {
+      // 否则，进入全屏
+      if (element.requestFullscreen) {
+        // w3c
+        element.requestFullscreen();
+      } else if (element.webkitRequestFullScreen) {
+        // webkit
+        element.webkitRequestFullScreen();
+      } else if (element.mozRequestFullScreen) {
+        // firefox
+        element.mozRequestFullScreen();
+      } else if (element.msRequestFullscreen) {
+        // IE11
+        element.msRequestFullscreen();
+      }
+    }
+    // 改变当前全屏状态
+    this.isFullscreen = !this.isFullscreen;
   }
 }
 </script>

@@ -15,6 +15,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+// 退出全屏
+.icon-quit-fullscreen:before {
+  content: "\e79d";
+}
+
+// 全屏
+.icon-to-fullscreen:before {
+  content: "\e61f";
+}
+
 // 图片
 .icon-image:before {
   content: "\e66a";

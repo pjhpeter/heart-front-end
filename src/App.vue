@@ -26,6 +26,14 @@ export default class App extends Vue {
   }
 
   created(): void {
+    // 阻止F11键默认事件，用HTML5全屏API代替
+    window.addEventListener("keydown", function(event: any) {
+      event = event || window.event;
+      if (event.keyCode === 122) {
+        event.preventDefault();
+      }
+    });
+
     // 添加主题样式
     document.body.classList.add(this.$store.getters["user/getTheme"]);
     // 禁止后退键 作用于Firefox、Opera
