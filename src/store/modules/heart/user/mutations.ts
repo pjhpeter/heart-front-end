@@ -1,6 +1,6 @@
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import DestopInfo from "@/model/heart/user/DestopInfo";
-import UserInfo from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
 import Auth from "@/utils/heart/Auth";
 import { MutationTree } from "vuex";
 import { UserState } from "./types";
@@ -21,7 +21,7 @@ export const mutations: MutationTree<UserState> = {
    * @param state 用户模块状态对象
    * @param userInfo 后端返回的用户信息
    */
-  setUser(state: UserState, userInfo: UserInfo): void {
+  setUser(state: UserState, userInfo: UserInfo4Jeesite): void {
     state.user = userInfo;
     Auth.setUserInfo(userInfo);
   },

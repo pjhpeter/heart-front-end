@@ -2,7 +2,7 @@ import { mutations } from "@/store/modules/heart/user/mutations";
 import { getters } from "@/store/modules/heart/user/getters";
 import { LocalStorageKeys } from "@/constants/heart/enum/LocalStorageKeys";
 import { UserState } from "@/store/modules/heart/user/types";
-import UserInfo from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
 
 describe("测试mutations", () => {
   let state: UserState;
@@ -29,16 +29,16 @@ describe("测试mutations", () => {
 
   describe("测试setUser方法", () => {
     it("保存user", () => {
-      const userInfo: UserInfo = {
+      const userInfo: UserInfo4Jeesite = {
         userCode: "123",
         loginCode: "test",
         userName: "测试"
       };
       mutations.setUser(state, userInfo);
-      const localUserInfo: UserInfo | null = JSON.parse(
+      const localUserInfo: UserInfo4Jeesite | null = JSON.parse(
         localStorage!.getItem(LocalStorageKeys.USER_INFO)!
-      ) as UserInfo;
-      const stateUserInfo: UserInfo | null = state.user;
+      ) as UserInfo4Jeesite;
+      const stateUserInfo: UserInfo4Jeesite | null = state.user;
       expect(localUserInfo).toMatchObject({
         loginCode: "test",
         userName: "测试"
@@ -53,7 +53,7 @@ describe("测试mutations", () => {
   describe("测试clearUserState方法", () => {
     it("清空UserState和localStorage对应的属性值", () => {
       const token = "test";
-      const userInfo: UserInfo = {
+      const userInfo: UserInfo4Jeesite = {
         userCode: "123",
         loginCode: "test",
         userName: "测试"
@@ -108,7 +108,7 @@ describe("测试getters", () => {
     it("读取token", () => {
       // Getter的类型一定要传4个参数，所以只能这样了
       const token: string = getters.getToken(state, null, {}, null);
-      const user: UserInfo = getters.getUser(state, null, {}, null);
+      const user: UserInfo4Jeesite = getters.getUser(state, null, {}, null);
       expect(token).toBe("test");
       expect(user).toMatchObject({
         loginCode: "test",

@@ -1,5 +1,5 @@
 import { LocalStorageKeys } from "@/constants/heart/enum/LocalStorageKeys";
-import UserInfo from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
 import DestopInfo from "@/model/heart/user/DestopInfo";
 
 /**
@@ -32,7 +32,7 @@ export default class Auth {
    * 保存用户信息到localStorage
    * @param userInfo 用户信息
    */
-  static setUserInfo(userInfo: UserInfo): void {
+  static setUserInfo(userInfo: UserInfo4Jeesite): void {
     const userInfoStr: string = JSON.stringify(userInfo);
     localStorage.setItem(LocalStorageKeys.USER_INFO, userInfoStr);
   }
@@ -41,14 +41,14 @@ export default class Auth {
    * 从localStorage中读取用户信息
    * @returns 用户信息
    */
-  static getUserInfo(): UserInfo | null {
+  static getUserInfo(): UserInfo4Jeesite | null {
     const userInfoStr: string | null = localStorage.getItem(
       LocalStorageKeys.USER_INFO
     );
     if (!userInfoStr) {
       return null;
     }
-    return JSON.parse(userInfoStr) as UserInfo;
+    return JSON.parse(userInfoStr) as UserInfo4Jeesite;
   }
 
   /**

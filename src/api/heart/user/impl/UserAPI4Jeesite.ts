@@ -1,7 +1,7 @@
 import UserAPI from "../UserAPI";
 import LoginParams from "@/model/heart/user/LoginParams";
 import store from "@/store";
-import UserInfo from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
 import Request from "@/decorator/heart/request/Request";
 import { RequestMethod, ParamMode } from "@/constants/heart/enum/RequestEnums";
 
@@ -9,7 +9,7 @@ import { RequestMethod, ParamMode } from "@/constants/heart/enum/RequestEnums";
  * 针对Jeesite后端接口的用户操作
  * @author 彭嘉辉
  */
-export default class UserAPI4Jeesit implements UserAPI<UserInfo> {
+export default class UserAPI4Jeesit implements UserAPI<UserInfo4Jeesite> {
   /**
    * 用户登录
    * @param loginParams 登录参数
@@ -26,7 +26,7 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo> {
     if (data.result === "true") {
       // 保存用户信息
       store.commit("user/setToken", data.sessionid as string);
-      store.commit("user/setUser", data.user as UserInfo);
+      store.commit("user/setUser", data.user as UserInfo4Jeesite);
       // 解除锁屏
       store.commit("globals/setLocked", false);
       return true;
@@ -67,9 +67,9 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo> {
     undefined,
     (error: any) => null
   )
-  getUserInfo(data?: any): UserInfo | null {
+  getUserInfo(data?: any): UserInfo4Jeesite | null {
     if (data.user) {
-      return data.user as UserInfo;
+      return data.user as UserInfo4Jeesite;
     }
     return null;
   }

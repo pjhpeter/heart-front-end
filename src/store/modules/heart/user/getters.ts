@@ -1,7 +1,7 @@
 import { GetterTree } from "vuex";
 import { UserState } from "./types";
 import { RootState } from "@/store/types";
-import UserInfo from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import DestopInfo from "@/model/heart/user/DestopInfo";
 import { WALLPAPER_URLS, THEMES } from "@/constants/heart/values/Global";
@@ -21,7 +21,7 @@ export const getters: GetterTree<UserState, RootState> = {
    * @param state 用户模块状态对象
    * @returns 用户信息
    */
-  getUser(state: UserState): UserInfo | null {
+  getUser(state: UserState): UserInfo4Jeesite | null {
     return state.user;
   },
 

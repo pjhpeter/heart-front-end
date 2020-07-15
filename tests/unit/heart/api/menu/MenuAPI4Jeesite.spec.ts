@@ -1,7 +1,7 @@
 import MenuAPI4Jeesite from "@/api/heart/menu/impl/MenuAPI4Jeesite";
 import MenuAPI from "@/api/heart/menu/MenuAPI";
 import store from "@/store";
-import MenuInfo from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
 
 // doParse是私有方法，不能外部调用，所以注释掉这个测试用例，已经经过单元测试了
 // describe("测试doParse方法", () => {
@@ -56,11 +56,12 @@ import MenuInfo from "@/model/heart/menu/MenuInfo";
 
 describe("测试fetchMenuTree方法", () => {
   it("生成菜单树", async () => {
-    const menuAPI: MenuAPI<MenuInfo> = new MenuAPI4Jeesite();
-    const menuTree: Array<MenuInfo> = await menuAPI.fetchMenuTree();
+    const menuAPI: MenuAPI<MenuInfo4Jeesite> = new MenuAPI4Jeesite();
+    const menuTree: Array<MenuInfo4Jeesite> = await menuAPI.fetchMenuTree();
     expect(menuTree.length).not.toBe(0);
 
-    const stateMenuTree: Array<MenuInfo> = store.getters["menu/getMenuTree"];
+    const stateMenuTree: Array<MenuInfo4Jeesite> =
+      store.getters["menu/getMenuTree"];
     expect(stateMenuTree.length).not.toBe(0);
   });
 });

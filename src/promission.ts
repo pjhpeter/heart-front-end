@@ -2,7 +2,7 @@ import { NavigationGuardNext, Route } from "vue-router";
 import router from "./router";
 import store from "./store";
 import UserAPI from "./api/heart/user/UserAPI";
-import UserInfo from "./model/heart/user/UserInfo";
+import UserInfo4Jeesite from "./model/heart/user/UserInfo";
 import UserAPI4Jeesit from "./api/heart/user/impl/UserAPI4Jeesite";
 import NProgress from "./utils/heart/NProgress";
 
@@ -23,8 +23,8 @@ export async function beforeEach4Jeesite(
       next("/login");
     } else {
       // 有令牌，尝试当前获取用户信息
-      const userAPI: UserAPI<UserInfo> = new UserAPI4Jeesit();
-      const userInfo: UserInfo | null = await userAPI.getUserInfo();
+      const userAPI: UserAPI<UserInfo4Jeesite> = new UserAPI4Jeesit();
+      const userInfo: UserInfo4Jeesite | null = await userAPI.getUserInfo();
       if (userInfo) {
         // 获取当前用户信息成功，允许路由跳转
         next();

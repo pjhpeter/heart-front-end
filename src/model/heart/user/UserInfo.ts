@@ -1,10 +1,10 @@
-import Extend from "../global/Extend";
+import Extend4Jeesite from "../global/Extend";
 
 /**
  * 针对登录成功后，jeesite返回的用户信息接口
  * @author 彭嘉辉
  */
-export default interface UserInfo {
+export default interface UserInfo4Jeesite {
   // 用户唯一标识
   userCode: string;
   // 登录账号
@@ -16,5 +16,5 @@ export default interface UserInfo {
   // 头像地址
   avatarUrl?: string;
   // 扩展字段
-  extend?: Extend;
+  extend?: Extend4Jeesite;
 }

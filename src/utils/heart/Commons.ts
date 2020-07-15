@@ -3,7 +3,7 @@ import MenuAPI from "@/api/heart/menu/MenuAPI";
 import { MENU_ICON_COLORS } from "@/constants/heart/values/Global";
 import ModalInfo from "@/model/heart/global/ModalInfo";
 import OpenedInfo from "@/model/heart/global/OpenedInfo";
-import MenuInfo from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
 import { Vue } from "vue-property-decorator";
 import store from "../../store";
 
@@ -95,11 +95,11 @@ export default class Commons {
    * 获取菜单树
    * @returns 菜单树
    */
-  static async loadMenuTreeData(): Promise<Array<MenuInfo> | null> {
-    let menuTree: Array<MenuInfo> = store.getters["menu/getMenuTree"];
+  static async loadMenuTreeData(): Promise<Array<MenuInfo4Jeesite> | null> {
+    let menuTree: Array<MenuInfo4Jeesite> = store.getters["menu/getMenuTree"];
     if (menuTree.length === 0) {
       // 如果状态数据中没有则向后端发请求获取
-      const menuAPI: MenuAPI<MenuInfo> = new MenuAPI4Jeesite();
+      const menuAPI: MenuAPI<MenuInfo4Jeesite> = new MenuAPI4Jeesite();
       menuTree = await menuAPI.fetchMenuTree();
     }
     return menuTree;
@@ -110,8 +110,8 @@ export default class Commons {
    * @param 菜单url
    * @returns 对应菜单节点对象
    */
-  static findMenuByUrl(url: string): MenuInfo | undefined {
-    const menuTree: Array<MenuInfo> = store.getters["menu/getMenuTree"];
+  static findMenuByUrl(url: string): MenuInfo4Jeesite | undefined {
+    const menuTree: Array<MenuInfo4Jeesite> = store.getters["menu/getMenuTree"];
     return Commons.doFindMenu(menuTree, url);
   }
 
@@ -121,11 +121,11 @@ export default class Commons {
    * @param url 菜单url
    */
   private static doFindMenu(
-    menuList: Array<MenuInfo>,
+    menuList: Array<MenuInfo4Jeesite>,
     url: string
-  ): MenuInfo | undefined {
+  ): MenuInfo4Jeesite | undefined {
     for (let index = 0; index < menuList.length; index++) {
-      const menu: MenuInfo = menuList[index];
+      const menu: MenuInfo4Jeesite = menuList[index];
       if (menu.children) {
         return Commons.doFindMenu(menu.children, url);
       }

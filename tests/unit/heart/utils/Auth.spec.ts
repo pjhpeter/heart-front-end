@@ -1,6 +1,6 @@
 import { LocalStorageKeys } from "@/constants/heart/enum/LocalStorageKeys";
 import Auth from "@/utils/heart/Auth";
-import UserInfo from "@/model/heart/user/UserInfo";
+import UserInfo4Jeesite from "@/model/heart/user/UserInfo";
 
 describe("测试setToken方法", () => {
   it("保存token-'test'", () => {
@@ -38,7 +38,7 @@ describe("测试setUserInfo方法", () => {
       LocalStorageKeys.USER_INFO
     );
     if (userInfoStr) {
-      const userInfo: UserInfo = JSON.parse(userInfoStr);
+      const userInfo: UserInfo4Jeesite = JSON.parse(userInfoStr);
       expect(userInfo).toMatchObject({
         loginCode: "test",
         userName: "测试"
@@ -49,13 +49,13 @@ describe("测试setUserInfo方法", () => {
 
 describe("测试getUserInfo方法", () => {
   it("读取保存好的用户信息", () => {
-    const userInfo: UserInfo = {
+    const userInfo: UserInfo4Jeesite = {
       userCode: "123",
       loginCode: "test",
       userName: "测试"
     };
     localStorage.setItem(LocalStorageKeys.USER_INFO, JSON.stringify(userInfo));
-    const result: UserInfo | null = Auth.getUserInfo();
+    const result: UserInfo4Jeesite | null = Auth.getUserInfo();
     expect(result).toMatchObject({
       loginCode: "test",
       userName: "测试"
@@ -63,7 +63,7 @@ describe("测试getUserInfo方法", () => {
   });
 
   it("读取空用户信息", () => {
-    const userInfo: UserInfo | null = Auth.getUserInfo();
+    const userInfo: UserInfo4Jeesite | null = Auth.getUserInfo();
     expect(userInfo).toBeNull();
   });
 });
@@ -71,7 +71,7 @@ describe("测试getUserInfo方法", () => {
 describe("测试clearAuth方法", () => {
   it("清空令牌和用户信息", () => {
     localStorage.setItem(LocalStorageKeys.USER_TOKEN, "test");
-    const userInfo: UserInfo = {
+    const userInfo: UserInfo4Jeesite = {
       userCode: "123",
       loginCode: "test",
       userName: "测试"

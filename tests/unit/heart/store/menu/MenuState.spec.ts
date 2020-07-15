@@ -1,4 +1,4 @@
-import MenuInfo from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
 import { getters } from "@/store/modules/heart/menu/getters";
 import { mutations } from "@/store/modules/heart/menu/mutations";
 import { MenuState } from "@/store/modules/heart/menu/types";
@@ -14,7 +14,7 @@ describe("测试mutations", () => {
 
   describe("测试setMenuTree方法", () => {
     it("保存menuTree", () => {
-      const menuTree: Array<MenuInfo> = [
+      const menuTree: Array<MenuInfo4Jeesite> = [
         {
           menuUrl: "/test1",
           menuName: "测试模块1"
@@ -51,7 +51,7 @@ describe("测试getters", () => {
 
   describe("测试getMenuTree方法", () => {
     it("获取菜单树", () => {
-      const menuTree: Array<MenuInfo> = getters.getMenuTree(
+      const menuTree: Array<MenuInfo4Jeesite> = getters.getMenuTree(
         state,
         null,
         {},

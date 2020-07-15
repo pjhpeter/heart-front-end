@@ -1,4 +1,4 @@
-import MenuInfo from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
 import { MutationTree } from "vuex";
 import { MenuState } from "./types";
 
@@ -8,7 +8,7 @@ export const mutations: MutationTree<MenuState> = {
    * @param state 菜单模块状态对象
    * @param menuTree 菜单树
    */
-  setMenuTree(state: MenuState, menuTree: Array<MenuInfo>): void {
+  setMenuTree(state: MenuState, menuTree: Array<MenuInfo4Jeesite>): void {
     state.menuTree = menuTree;
   }
 };

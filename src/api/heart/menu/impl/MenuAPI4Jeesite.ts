@@ -1,5 +1,5 @@
 import MenuAPI from "../MenuAPI";
-import MenuInfo from "@/model/heart/menu/MenuInfo";
+import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo";
 import Request from "@/decorator/heart/request/Request";
 import { RequestMethod } from "@/constants/heart/enum/RequestEnums";
 import store from "@/store";
@@ -8,16 +8,16 @@ import store from "@/store";
  * 针对Jeesite的菜单数据解析
  * @author 彭嘉辉
  */
-export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
+export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo4Jeesite> {
   /**
    * 生成菜单树
    * @param data 响应的数据，调用方法时不必传入
    * @returns 菜单树对象
    */
   @Request("/menuTree.json", RequestMethod.GET, undefined, (error: any) => [])
-  fetchMenuTree(data?: any): Array<MenuInfo> {
+  fetchMenuTree(data?: any): Array<MenuInfo4Jeesite> {
     try {
-      const menuTree: Array<MenuInfo> = [];
+      const menuTree: Array<MenuInfo4Jeesite> = [];
       this.parseMenuData(data, menuTree);
       store.commit("menu/setMenuTree", menuTree);
       return menuTree;
@@ -35,8 +35,8 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
    */
   private parseMenuData(
     menuData: any,
-    menuTree: Array<MenuInfo>,
-    parent?: MenuInfo
+    menuTree: Array<MenuInfo4Jeesite>,
+    parent?: MenuInfo4Jeesite
   ) {
     if (menuData._root_) {
       this.doParse(menuData._root_, menuTree, parent);
@@ -51,7 +51,11 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
    * @param menuTree 前端需要的菜单对象数组
    * @param parent 上级菜单对象
    */
-  private doParse(menuData: any, menuTree: Array<MenuInfo>, parent?: MenuInfo) {
+  private doParse(
+    menuData: any,
+    menuTree: Array<MenuInfo4Jeesite>,
+    parent?: MenuInfo4Jeesite
+  ) {
     menuData.forEach((menu: any) => {
       if (!menu.childList && !menu.menuUrl) return;
       // Jeesite响应的模块路径都会有/XX/a/前缀的，把多余的url去掉部分
@@ -59,7 +63,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
       // 是否叶子节点，有menuUrl属性，及不存在子节点则认定为叶子节点
       const isLeaf: boolean = menuUrl && !menu.childList;
       // 生成菜单对象
-      const menuItem: MenuInfo = {
+      const menuItem: MenuInfo4Jeesite = {
         menuCode: menu.menuCode,
         menuIcon: menu.menuIcon,
         menuName: menu.menuName,
@@ -72,7 +76,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo> {
 
       // 如果有子菜单则继续递归解析
       if (menu.childList) {
-        const children: Array<MenuInfo> = [];
+        const children: Array<MenuInfo4Jeesite> = [];
         this.doParse(menu.childList, children, menuItem);
         if (children.length > 0) {
           menuItem.children = children;
