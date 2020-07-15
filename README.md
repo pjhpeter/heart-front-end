@@ -242,7 +242,7 @@ this.addShotcutModalId = Commons.showModule(modalInfo);
 
 **返回值：**
 
-一个Promise对象：Promise<Array<MenuInfo> | null>
+一个Promise对象：Promise&lt;Array&lt;MenuInfo&gt; | null&gt;
 
 **参数：**
 
@@ -755,3 +755,9 @@ export const THEMES = [
 ```
 
 > 当然，目前并不是所有ViewUI组件都适配了主题颜色，如果有用到某些组件，不适配主题颜色的话，在themes目里下的样式表中补上就可以了，**记得要所有主题都补上哦**
+
+## 对接自己的后端
+
+前面提过，由于公司要求，heart默认会对接Jeesite的后端，但是考虑到扩展性，在heart开发的时候，与Jeesite耦合的类或方法都标记了"4Jeesite"的后缀，只要搜索**4Jeesite**就可以知道对接其他后端时，需要修改哪些地方了，api部分还定义了接口，对接其他后端时，api部分只需要按自己的业务需求实现对应的接口即可。
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0715/104937_8103df4d_5449551.png "屏幕截图.png")
