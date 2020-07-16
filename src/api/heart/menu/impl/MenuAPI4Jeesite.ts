@@ -61,7 +61,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo4Jeesite> {
       // Jeesite响应的模块路径都会有/XX/a/前缀的，把多余的url去掉部分
       const menuUrl = menu.menuUrl.substr(menu.menuUrl.indexOf("/a/") + 2);
       // 是否叶子节点，有menuUrl属性，及不存在子节点则认定为叶子节点
-      const isLeaf: boolean = menuUrl && !menu.childList;
+      const isLeaf: boolean = this.isLeaf(menu);
       // 生成菜单对象
       const menuItem: MenuInfo4Jeesite = {
         menuCode: menu.menuCode,
@@ -86,5 +86,28 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo4Jeesite> {
       // 生成菜单树
       menuTree.push(menuItem);
     });
+  }
+
+  /**
+   * 判断菜单是否叶子菜单
+   * @menu 菜单对象
+   */
+  private isLeaf(menu: any): boolean {
+    const url: string = menu.menuUrl;
+    // 如果有url，可能就是叶子节点
+    if (url) {
+      // 判断是否有childList
+      if (!menu.childList || menu.childList.length === 0) {
+        // 没有childList，肯定是叶子了
+        return true;
+      }
+
+      // 遍历childList，看看是否只有权限配置节点
+      return menu.childList.every((child: any) => {
+        return child.menuType === "2";
+      });
+    }
+    // 没有url，肯定不是叶子
+    return false;
   }
 }

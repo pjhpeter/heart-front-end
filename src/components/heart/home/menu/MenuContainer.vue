@@ -50,9 +50,12 @@ export default class MenuContainer extends Vue {
   async mounted() {
     // 先从状态数据读取菜单树
     this.menuTree = await Commons.loadMenuTreeData();
+    // 必须确保菜单树渲染结束
     this.$nextTick(() => {
-      // 更新桌面快捷方式图标颜色
-      this.updateDestopShotcutIcon();
+      setTimeout(() => {
+        // 更新桌面快捷方式图标颜色
+        this.updateDestopShotcutIcon();
+      }, 300);
     });
   }
 

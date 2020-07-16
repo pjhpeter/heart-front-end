@@ -24,7 +24,6 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo4Jeesite> {
   )
   login(loginParams: LoginParams, data?: any): boolean {
     if (data.result === "true") {
-      debugger;
       // 保存用户信息
       store.commit("user/setToken", data.sessionid as string);
       store.commit("user/setUser", data.user as UserInfo4Jeesite);
