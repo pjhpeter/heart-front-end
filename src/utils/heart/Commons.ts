@@ -127,7 +127,13 @@ export default class Commons {
     for (let index = 0; index < menuList.length; index++) {
       const menu: MenuInfo4Jeesite = menuList[index];
       if (menu.children) {
-        return Commons.doFindMenu(menu.children, url);
+        const findMenu: MenuInfo4Jeesite | undefined = Commons.doFindMenu(
+          menu.children,
+          url
+        );
+        if (findMenu) {
+          return findMenu;
+        }
       }
       if (url === menu.menuUrl) {
         return menu;

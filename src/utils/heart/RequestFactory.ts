@@ -16,7 +16,7 @@ function requestInterceptor4Jeesite(
 ): AxiosRequestConfig {
   if (config && config.url) {
     // 验证token，有则进行url添加token，然后发送请求
-    const token: string = store.getters.getToken;
+    const token: string = store.getters["user/getToken"];
     if (token) {
       // 这里是url只能有一个？号，如果url已有问号，则拼接为&
       let end = `__sid=${token}`;
@@ -56,7 +56,7 @@ function responseInterceptor4Jeestie(
   if (response.data.result === "login") {
     // 清理本地的用户信息
     // 进行登出的function(){}。。。
-    store.dispatch("doRemoveUser");
+    store.commit("user/clearUserState");
     router.push("/login");
   }
   if (

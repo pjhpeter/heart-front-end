@@ -19,11 +19,12 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo4Jeesite> {
   @Request(
     "/login?__login=true&__ajax=json",
     RequestMethod.POST,
-    ParamMode.REQUEST_PAYLOAD,
+    ParamMode.FORM_DATA,
     (loginParams: LoginParams, error: any) => false
   )
   login(loginParams: LoginParams, data?: any): boolean {
     if (data.result === "true") {
+      debugger;
       // 保存用户信息
       store.commit("user/setToken", data.sessionid as string);
       store.commit("user/setUser", data.user as UserInfo4Jeesite);

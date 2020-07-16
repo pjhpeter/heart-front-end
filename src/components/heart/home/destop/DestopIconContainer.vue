@@ -93,7 +93,8 @@ export default class DestopIconContainer extends Vue {
     const targetDom: any = event.target;
     if (targetDom.className.indexOf("icon-box") > -1) {
       // 关联图标和网格
-      this.currentDragModalInfo.parentBoxId = targetDom.id;
+      Vue.set(this.currentDragModalInfo, "parentBoxId", targetDom.id);
+      // this.currentDragModalInfo.parentBoxId = targetDom.id;
       // 保存图标位置到Vuex，Vuex的数据改变
       // destop-icon组件的v-if与parentBoxId绑定
       // 所以只需要改变modalInfo的parentBoxId值
