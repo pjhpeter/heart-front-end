@@ -128,6 +128,7 @@ export default class RequestFactory {
           return responseInterceptor4Jeestie(response);
         },
         error => {
+          NProgress.done();
           // 这回后台真的抛异常了
           // 异常处理
           const resp = error.response;

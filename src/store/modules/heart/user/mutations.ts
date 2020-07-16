@@ -93,6 +93,38 @@ export const mutations: MutationTree<UserState> = {
   },
 
   /**
+   * 更新快捷方式
+   * @param state 用户模块状态对象
+   * @param modalInfo 快捷方式对应的模态框信息
+   */
+  updateDestopShotcut(state: UserState, modalInfo: ModalInfo): void {
+    if (!state.user) return;
+    const userCode: string | undefined = state.user.userCode;
+    // 判断是否有当前用户用户快捷方式信息，有则把模态框信息更新
+    let flag = false;
+    state.destopInfoList.some((destopShotcutInfo: DestopInfo) => {
+      if (userCode === destopShotcutInfo.userCode) {
+        destopShotcutInfo.modalInfoList.some((modal: ModalInfo) => {
+          // 找到对应的模态框信息，并更新
+          if (modalInfo.url === modal.url) {
+            modal = modalInfo;
+            flag = true;
+            return true;
+          }
+          return false;
+        });
+        return true;
+      }
+      return false;
+    });
+
+    if (flag) {
+      // 数据产生变化，则将快捷方式数据写入localStoraage
+      Auth.setDestopInfoList(state.destopInfoList);
+    }
+  },
+
+  /**
    * 移除快捷方式
    * @param state 用户模块状态对象
    * @param modalInfo 快捷方式对应的模态框信息

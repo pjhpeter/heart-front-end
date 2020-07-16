@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @contextmenu.prevent="disabledContextMenu">
+  <div id="app" @contextmenu.prevent>
     <transition v-if="!$store.getters['globals/isLocked']" name="fade">
       <router-view></router-view>
     </transition>
@@ -18,13 +18,6 @@ import { Vue, Component } from "vue-property-decorator";
   }
 })
 export default class App extends Vue {
-  /**
-   * 禁用右键默认行为
-   */
-  disabledContextMenu(): void {
-    // 什么都不做
-  }
-
   created(): void {
     // 阻止F11键默认事件，用HTML5全屏API代替
     window.addEventListener("keydown", function(event: any) {
