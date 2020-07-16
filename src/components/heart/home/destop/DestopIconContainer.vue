@@ -33,7 +33,7 @@
         />
       </template>
     </div>
-    <add-shotcut-button />
+    <!-- <add-shotcut-button /> -->
   </div>
 </template>
 
