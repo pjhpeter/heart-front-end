@@ -6,6 +6,7 @@ import OpenedInfo from "@/model/heart/global/OpenedInfo";
 import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo4Jeesite";
 import { Vue } from "vue-property-decorator";
 import store from "../../store";
+import screenfull from "screenfull";
 
 /**
  * 公共工具类
@@ -139,5 +140,18 @@ export default class Commons {
         return menu;
       }
     }
+  }
+
+  /**
+   * 切换浏览器全屏状态
+   */
+  static fullscreen(): void {
+    if (!screenfull.isEnabled) {
+      console.warn("不支持全屏");
+      return;
+    }
+    screenfull.toggle();
+    // 不知道为什么screenfull.isFullscreen返回值是反的
+    store.commit("globals/setFullscreen", !screenfull.isFullscreen);
   }
 }

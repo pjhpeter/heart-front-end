@@ -10,7 +10,8 @@ const namespaced = true;
 export const state: GlobalState = {
   openedList: [],
   showedFooter: true,
-  locked: Auth.getLocked()
+  locked: Auth.getLocked(),
+  fullscreen: false
 };
 
 export const globals: Module<GlobalState, RootState> = {

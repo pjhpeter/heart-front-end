@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import Commons from "./utils/heart/Commons";
 
 @Component({
   components: {
@@ -20,10 +21,11 @@ import { Vue, Component } from "vue-property-decorator";
 export default class App extends Vue {
   created(): void {
     // 阻止F11键默认事件，用HTML5全屏API代替
-    window.addEventListener("keydown", function(event: any) {
+    window.addEventListener("keydown", (event: any) => {
       event = event || window.event;
       if (event.keyCode === 122) {
         event.preventDefault();
+        Commons.fullscreen();
       }
     });
 

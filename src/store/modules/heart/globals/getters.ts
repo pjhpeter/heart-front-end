@@ -29,5 +29,14 @@ export const getters: GetterTree<GlobalState, RootState> = {
    */
   isLocked(state: GlobalState): boolean {
     return state.locked;
+  },
+
+  /**
+   * 获取浏览器全屏状态
+   * @param state 全局状态数据
+   * @returns 是否全屏
+   */
+  isFullscreen(state: GlobalState): boolean {
+    return state.fullscreen;
   }
 };

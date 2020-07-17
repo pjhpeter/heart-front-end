@@ -16,6 +16,7 @@
     "core-js": "^3.6.5",
     "md5-typescript": "^1.0.5",
     "nprogress": "^0.2.0",
+    "screenfull": "^5.0.2",
     "view-design": "^4.2.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",

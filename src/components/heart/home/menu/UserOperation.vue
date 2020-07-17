@@ -15,14 +15,6 @@
           <i class="iconfont icon-lock"></i>
           锁定
         </MenuItem>
-        <MenuItem name="fullscreen" v-if="!isFullscreen">
-          <i class="iconfont icon-to-fullscreen"></i>
-          全屏
-        </MenuItem>
-        <MenuItem name="fullscreen" v-if="isFullscreen">
-          <i class="iconfont icon-quit-fullscreen"></i>
-          退出全屏
-        </MenuItem>
       </Menu>
       <Button class="logout-button" @click="logout">退出</Button>
     </div>
@@ -60,8 +52,6 @@ export default class UserOperation extends Vue {
   private avatarUrl: string = require("../../../../assets/heart/home/images/avatar.png");
   // 已打开的个性化模态框id
   private individuationModalId?: number;
-  // 浏览器是否全屏
-  private isFullscreen = false;
 
   /**
    * 点击操作项
@@ -77,9 +67,6 @@ export default class UserOperation extends Vue {
       this.$store.commit("globals/setLocked", true);
       // 清除token，防止重新登录时随便输入密码都正确
       this.$store.commit("user/setToken", "");
-    } else if (name === "fullscreen") {
-      // 全屏
-      this.handleFullScreen();
     }
   }
 
@@ -131,46 +118,6 @@ export default class UserOperation extends Vue {
         }
       }
     });
-  }
-
-  // 全屏事件
-  private handleFullScreen(): void {
-    // 判断是否已经是全屏
-    // 如果是全屏，退出
-    if (this.isFullscreen) {
-      const documentToAny: any = document as any;
-      if (documentToAny.exitFullscreen) {
-        // w3c
-        documentToAny.exitFullscreen();
-      } else if (documentToAny.webkitCancelFullScreen) {
-        // webkit
-        documentToAny.webkitCancelFullScreen();
-      } else if (documentToAny.mozCancelFullScreen) {
-        // firefox
-        documentToAny.mozCancelFullScreen();
-      } else if (documentToAny.msExitFullscreen) {
-        // ie11
-        documentToAny.msExitFullscreen();
-      }
-    } else {
-      const element: any = document.documentElement;
-      // 否则，进入全屏
-      if (element.requestFullscreen) {
-        // w3c
-        element.requestFullscreen();
-      } else if (element.webkitRequestFullScreen) {
-        // webkit
-        element.webkitRequestFullScreen();
-      } else if (element.mozRequestFullScreen) {
-        // firefox
-        element.mozRequestFullScreen();
-      } else if (element.msRequestFullscreen) {
-        // IE11
-        element.msRequestFullscreen();
-      }
-    }
-    // 改变当前全屏状态
-    this.isFullscreen = !this.isFullscreen;
   }
 }
 </script>

@@ -42,8 +42,14 @@
           >添加快捷方式</DropdownItem
         >
         <DropdownItem :name="`addGroup_box-${index}`">新建功能组</DropdownItem>
-        <DropdownItem :name="`fullscreen_box-${index}`">全屏</DropdownItem>
-        <DropdownItem :name="`quit-fullscreen_box-${index}`"
+        <DropdownItem
+          :name="`fullscreen_box-${index}`"
+          v-if="!$store.getters['globals/isFullscreen']"
+          >全屏</DropdownItem
+        >
+        <DropdownItem
+          :name="`fullscreen_box-${index}`"
+          v-if="$store.getters['globals/isFullscreen']"
           >取消全屏</DropdownItem
         >
       </DropdownMenu>
@@ -155,9 +161,8 @@ export default class DestopIconContainer extends Vue {
     } else if (operation === "addGroup") {
       // 新建功能组
     } else if (operation === "fullscreen") {
-      // 全屏
-    } else if (operation === "quit-fullscreen") {
-      // 退出全屏
+      // 全屏或取消全屏
+      Commons.fullscreen();
     }
   }
 

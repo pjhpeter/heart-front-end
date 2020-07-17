@@ -5,6 +5,8 @@
 export default interface ModalInfo {
   // 所在网格的id
   parentBoxId?: string;
+  // 快捷方式类型
+  type?: number;
   // 模态框内渲染的组件路径，如果不是后端返回的模块入口路径，则必须以.vue结尾
   url: string;
   // 模块图标背景颜色

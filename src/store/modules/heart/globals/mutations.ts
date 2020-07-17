@@ -67,5 +67,14 @@ export const mutations: MutationTree<GlobalState> = {
   setLocked(state: GlobalState, locked: boolean): void {
     state.locked = locked;
     Auth.setLocked(locked);
+  },
+
+  /**
+   * 设置浏览器全屏状态
+   * @param state 全局状态数据
+   * @param fullscreen 浏览器全屏状态
+   */
+  setFullscreen(state: GlobalState, fullscreen: boolean): void {
+    state.fullscreen = fullscreen;
   }
 };

@@ -11,4 +11,6 @@ export interface GlobalState {
   showedFooter: boolean;
   // 是否锁定屏幕
   locked: boolean;
+  // 浏览器是否全屏
+  fullscreen: boolean;
 }

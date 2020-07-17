@@ -10,7 +10,8 @@ describe("测试mutations", () => {
     globalState = {
       openedList: [],
       showedFooter: true,
-      locked: true
+      locked: true,
+      fullscreen: true
     };
     openedInfo = {
       id: 1,
@@ -65,7 +66,8 @@ describe("测试getters", () => {
         }
       ],
       showedFooter: true,
-      locked: true
+      locked: true,
+      fullscreen: true
     };
   });
 
