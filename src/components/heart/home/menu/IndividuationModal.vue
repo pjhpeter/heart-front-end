@@ -32,6 +32,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * 个性化模态框组件
+ * @author 彭嘉辉
+ */
 import { Vue, Component } from "vue-property-decorator";
 import { Menu, MenuItem } from "view-design";
 

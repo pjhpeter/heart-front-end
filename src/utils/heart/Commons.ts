@@ -117,6 +117,22 @@ export default class Commons {
   }
 
   /**
+   * 根据功能组id获取功能组信息
+   * @param groupId 功能组id
+   * @returns 功能组信息
+   */
+  static findGroupInfoByGroupId(groupId: number): ModalInfo | undefined {
+    const destopShotcutList: Array<ModalInfo> =
+      store.getters["user/getDestopShotcutList"];
+    const groupModalInfo: ModalInfo | undefined = destopShotcutList.find(
+      (modalInfo: ModalInfo) => {
+        return modalInfo.groupId === groupId;
+      }
+    );
+    return groupModalInfo;
+  }
+
+  /**
    * 根据url从菜单数组中寻找对应的菜单
    * @param menuList 菜单对象数组
    * @param url 菜单url

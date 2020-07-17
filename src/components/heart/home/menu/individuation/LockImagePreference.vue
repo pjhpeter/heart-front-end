@@ -15,6 +15,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * 锁屏背景选择组件
+ * @author 彭嘉辉
+ */
 import { Vue, Component } from "vue-property-decorator";
 import { Card, Divider } from "view-design";
 import { WALLPAPER_URLS } from "../../../../../constants/heart/values/Global";

@@ -15,24 +15,31 @@
           marginBottom: '10px'
         }"
         @dragover.stop.prevent
-        @drop.prevent.stop="drop"
+        @drop.stop.prevent="drop"
       >
         <!-- v-for和v-if不能在一起用，所以要这样写 -->
         <template
-          v-for="(modalInfo, destopIconIndex) in $store.getters[
-            'user/getDestopShotcutList'
-          ]"
+          v-for="modalInfo in $store.getters['user/getDestopShotcutList']"
         >
           <destop-icon
-            class="draggable-icon"
             :key="modalInfo.url"
             :modalInfo="modalInfo"
             :draggable="true"
             @dragstart.native="dragstart(modalInfo, $event)"
             v-if="
-              modalInfo.parentBoxId
-                ? modalInfo.parentBoxId === `box-${index}`
-                : destopIconIndex + 1 === index
+              modalInfo.type === moduleType &&
+                modalInfo.parentBoxId === `box-${index}`
+            "
+          />
+          <group-icon
+            :key="modalInfo.groupId"
+            :modalInfo="modalInfo"
+            @dragstart.native="dragstart(modalInfo, $event)"
+            @dragover.stop.prevent
+            :draggable="true"
+            v-if="
+              modalInfo.type === groupType &&
+                modalInfo.parentBoxId === `box-${index}`
             "
           />
         </template>
@@ -66,11 +73,13 @@ import { Vue, Component } from "vue-property-decorator";
 import { Dropdown, DropdownMenu, DropdownItem } from "view-design";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
+import { ModalInfoType } from "../../../../constants/heart/enum/ModalInfoType";
 
 @Component({
   name: "destop-icon-container",
   components: {
     DestopIcon: () => import("./DestopIcon.vue"),
+    GroupIcon: () => import("./GroupIcon.vue"),
     Dropdown,
     DropdownMenu,
     DropdownItem
@@ -91,6 +100,10 @@ export default class DestopIconContainer extends Vue {
   private destopIconConainerDom: any;
   // 添加快捷方式模态框id
   private addShotcutModalId?: number;
+  // 模块图标类型
+  private moduleType: ModalInfoType = ModalInfoType.MODULE;
+  // 功能组图标类型
+  private groupType: ModalInfoType = ModalInfoType.GROUP;
 
   mounted() {
     this.destopIconConainerDom = document.getElementsByClassName(
@@ -127,6 +140,39 @@ export default class DestopIconContainer extends Vue {
       // 图标自动会移动到目标网格中，不需要操作dom
       this.$store.commit("user/updateDestopShotcut", this.currentDragModalInfo);
     }
+
+    // 功能组暂时不支持嵌套，也不想做嵌套，像手机操作系统那样只有一层就挺好的
+    if (this.currentDragModalInfo.type === ModalInfoType.GROUP) return;
+
+    const groupDom: any = this.getGroupDom(targetDom);
+    if (!groupDom) return;
+    // 拖放到了功能组中
+    const groupModalInfo:
+      | ModalInfo
+      | undefined = Commons.findGroupInfoByGroupId(parseInt(groupDom.id));
+    if (groupModalInfo) {
+      // 与网格切断联系
+      this.currentDragModalInfo.parentBoxId = "";
+      // 将模块图标放入功能组中
+      groupModalInfo.children!.push(this.currentDragModalInfo);
+      this.$store.commit("user/updateDestopShotcut", groupModalInfo);
+      // 删除模块的快捷方式
+      this.$store.commit("user/removeDestopShotcut", this.currentDragModalInfo);
+    }
+  }
+
+  /**
+   * 获取功能组的dom对象
+   * @returns 功能组的dom对象
+   */
+  private getGroupDom(dom: any): any {
+    if (dom.className.indexOf("group-icon") > -1) {
+      return dom;
+    }
+    if (dom.tagName === "BODY") {
+      return;
+    }
+    return this.getGroupDom(dom.parentNode);
   }
 
   /**
@@ -160,6 +206,7 @@ export default class DestopIconContainer extends Vue {
       this.showAddShotcutModal(parentBoxId);
     } else if (operation === "addGroup") {
       // 新建功能组
+      this.addGroup(parentBoxId);
     } else if (operation === "fullscreen") {
       // 全屏或取消全屏
       Commons.fullscreen();
@@ -191,18 +238,40 @@ export default class DestopIconContainer extends Vue {
       className: "select-menu-modal",
       enabledFuscreen: false,
       onOk(addShotcutModal: any) {
-        if (addShotcutModal.selectedModalInfo) {
+        const selectedModalInfo: ModalInfo = addShotcutModal.selectedModalInfo;
+        if (selectedModalInfo) {
           // 将模态框信息与对应网格信息关联
-          addShotcutModal.selectedModalInfo.parentBoxId = parentBoxId;
+          selectedModalInfo.parentBoxId = parentBoxId;
+          // 添加的快捷方式一定是模块图标
+          selectedModalInfo.type = ModalInfoType.MODULE;
           // 添加快捷方式
           (this as any).$store.commit(
             "user/addDestopShotcut",
-            addShotcutModal.selectedModalInfo
+            selectedModalInfo
           );
         }
       }
     };
     this.addShotcutModalId = Commons.showModule(modalInfo);
+  }
+
+  /**
+   * 新建功能组
+   * @param parentBoxId 网格id
+   */
+  private addGroup(parentBoxId: string): void {
+    const id: number = Commons.createId();
+    const groupModalInfo: ModalInfo = {
+      url: id + "",
+      backgroundColor: "",
+      title: "功能组",
+      groupId: id,
+      parentBoxId,
+      type: ModalInfoType.GROUP,
+      children: []
+    };
+    // 添加快捷方式
+    this.$store.commit("user/addDestopShotcut", groupModalInfo);
   }
 }
 </script>

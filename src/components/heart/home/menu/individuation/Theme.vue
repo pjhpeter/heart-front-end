@@ -18,6 +18,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * 主题选择组件
+ * @author 彭嘉辉
+ */
 import { Vue, Component } from "vue-property-decorator";
 import { Card, Divider } from "view-design";
 import { THEMES } from "../../../../../constants/heart/values/Global";

@@ -42,7 +42,7 @@
 
 <script lang="ts">
 /**
- * 桌面快捷方式组件
+ * 桌面快捷方式模块图标组件
  * @author 彭嘉辉
  */
 import { Vue, Component, Prop } from "vue-property-decorator";
@@ -66,13 +66,11 @@ export default class DestopIcon extends Vue {
   })
   modalInfo!: ModalInfo;
 
-  // 右键菜单显示状态
-  dropdownMenuVisiabled = false;
-
   lossMenuColor: string = LOSS_MENU_COLOR;
 
   /**
-   * 移出快捷方式
+   * 快捷方式右击菜单点击事件
+   * @param 菜单的name属性值
    */
   private handleItemClick(name: string): void {
     if (name === "open") {
@@ -106,7 +104,7 @@ export default class DestopIcon extends Vue {
     margin-right: 10px;
     border-radius: 5px;
     // IE11不支持flex+margin:auto的垂直居中方式，所以选择了padding的方式比较保险，虽然low了些
-    padding: 20px 0;
+    padding: 15px 0;
     &:hover {
       background-color: rgba($color: white, $alpha: 0.3);
     }
@@ -132,7 +130,6 @@ export default class DestopIcon extends Vue {
     }
   }
 }
-
 .delete-icon {
   color: $error;
 }

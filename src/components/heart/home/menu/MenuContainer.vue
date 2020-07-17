@@ -30,6 +30,7 @@ import Commons from "../../../../utils/heart/Commons";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import { LOSS_MENU_COLOR } from "../../../../constants/heart/values/Global";
 import { Menu } from "view-design";
+import { ModalInfoType } from "../../../../constants/heart/enum/ModalInfoType";
 
 @Component({
   name: "menu-container",
@@ -68,6 +69,8 @@ export default class MenuContainer extends Vue {
     ];
     let flag = false;
     modalInfoList.forEach((modalInfo: ModalInfo) => {
+      // 功能组不需要调整颜色
+      if (modalInfo.type === ModalInfoType.GROUP) return;
       // 寻找对应的菜单对象
       const menu: MenuInfo4Jeesite | undefined = Commons.findMenuByUrl(
         modalInfo.url
