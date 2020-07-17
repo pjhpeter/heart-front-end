@@ -5,6 +5,7 @@
       trigger="contextMenu"
       transfer
       @on-click="handleItemClick"
+      @contextmenu.native.stop
     >
       <div
         class="destop-icon"

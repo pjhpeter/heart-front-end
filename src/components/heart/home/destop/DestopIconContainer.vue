@@ -1,39 +1,53 @@
 <template>
   <div class="destop-icon-container">
-    <div
-      :id="`box-${index}`"
-      class="icon-box"
-      :style="{
-        width: `${cellWidth}px`,
-        height: `${cellHeight - 10}px`,
-        marginBottom: '10px'
-      }"
+    <Dropdown
+      trigger="contextMenu"
       v-for="index in cellTotalCount"
       :key="index"
-      @dragover.stop.prevent
-      @drop.prevent.stop="drop"
+      @on-click="menuItemClick"
     >
-      <!-- v-for和v-if不能在一起用，所以要这样写 -->
-      <template
-        v-for="(modalInfo, destopIconIndex) in $store.getters[
-          'user/getDestopShotcutList'
-        ]"
+      <div
+        :id="`box-${index}`"
+        class="icon-box"
+        :style="{
+          width: `${cellWidth}px`,
+          height: `${cellHeight - 10}px`,
+          marginBottom: '10px'
+        }"
+        @dragover.stop.prevent
+        @drop.prevent.stop="drop"
       >
-        <destop-icon
-          class="draggable-icon"
-          :key="modalInfo.url"
-          :modalInfo="modalInfo"
-          :draggable="true"
-          @dragstart.native="dragstart(modalInfo, $event)"
-          v-if="
-            modalInfo.parentBoxId
-              ? modalInfo.parentBoxId === `box-${index}`
-              : destopIconIndex + 1 === index
-          "
-        />
-      </template>
-    </div>
-    <!-- <add-shotcut-button /> -->
+        <!-- v-for和v-if不能在一起用，所以要这样写 -->
+        <template
+          v-for="(modalInfo, destopIconIndex) in $store.getters[
+            'user/getDestopShotcutList'
+          ]"
+        >
+          <destop-icon
+            class="draggable-icon"
+            :key="modalInfo.url"
+            :modalInfo="modalInfo"
+            :draggable="true"
+            @dragstart.native="dragstart(modalInfo, $event)"
+            v-if="
+              modalInfo.parentBoxId
+                ? modalInfo.parentBoxId === `box-${index}`
+                : destopIconIndex + 1 === index
+            "
+          />
+        </template>
+      </div>
+      <DropdownMenu slot="list">
+        <DropdownItem :name="`addDestopShotcut_box-${index}`"
+          >添加快捷方式</DropdownItem
+        >
+        <DropdownItem :name="`addGroup_box-${index}`">新建功能组</DropdownItem>
+        <DropdownItem :name="`fullscreen_box-${index}`">全屏</DropdownItem>
+        <DropdownItem :name="`quit-fullscreen_box-${index}`"
+          >取消全屏</DropdownItem
+        >
+      </DropdownMenu>
+    </Dropdown>
   </div>
 </template>
 
@@ -43,13 +57,17 @@
  * @author 彭嘉辉
  */
 import { Vue, Component } from "vue-property-decorator";
+import { Dropdown, DropdownMenu, DropdownItem } from "view-design";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
+import Commons from "../../../../utils/heart/Commons";
 
 @Component({
   name: "destop-icon-container",
   components: {
     DestopIcon: () => import("./DestopIcon.vue"),
-    AddShotcutButton: () => import("./AddShotcutButton.vue")
+    Dropdown,
+    DropdownMenu,
+    DropdownItem
   }
 })
 export default class DestopIconContainer extends Vue {
@@ -65,6 +83,8 @@ export default class DestopIconContainer extends Vue {
   private cellTotalCount = 0;
   // 桌面容器元素
   private destopIconConainerDom: any;
+  // 添加快捷方式模态框id
+  private addShotcutModalId?: number;
 
   mounted() {
     this.destopIconConainerDom = document.getElementsByClassName(
@@ -79,7 +99,7 @@ export default class DestopIconContainer extends Vue {
    * 拖动开始触发的事件
    * @param modalInfo 模态框信息
    */
-  dragstart(modalInfo: ModalInfo, event: DragEvent): void {
+  private dragstart(modalInfo: ModalInfo, event: DragEvent): void {
     this.currentDragDom = event.target;
     this.currentDragModalInfo = modalInfo;
     // 兼容火狐
@@ -89,7 +109,7 @@ export default class DestopIconContainer extends Vue {
   }
 
   // 拖动结束触发的事件
-  drop(event: DragEvent): void {
+  private drop(event: DragEvent): void {
     const targetDom: any = event.target;
     if (targetDom.className.indexOf("icon-box") > -1) {
       // 关联图标和网格
@@ -117,15 +137,83 @@ export default class DestopIconContainer extends Vue {
     );
     this.cellTotalCount = cellCountPerRow * rowCount;
   }
+
+  /**
+   * 桌面右击菜单项点击事件
+   * @param name 菜单项name属性值
+   */
+  private menuItemClick(name: string): void {
+    const nameArr: Array<string> = name.split("_");
+    // 操作类型
+    const operation: string = nameArr[0];
+    // 网格id
+    const parentBoxId: string = nameArr[1];
+
+    if (operation === "addDestopShotcut") {
+      // 添加快捷方式
+      this.showAddShotcutModal(parentBoxId);
+    } else if (operation === "addGroup") {
+      // 新建功能组
+    } else if (operation === "fullscreen") {
+      // 全屏
+    } else if (operation === "quit-fullscreen") {
+      // 退出全屏
+    }
+  }
+
+  /**
+   * 打开添加快捷方式的模态框
+   * @param parentBoxId 网格id
+   */
+  private showAddShotcutModal(parentBoxId: string): void {
+    if (this.addShotcutModalId) {
+      // 如果原来已经打开了添加快捷方式的模态框，则不重复创建，直接显示
+      const modal: any = Commons.findModalById(this.addShotcutModalId);
+      if (modal) {
+        modal.isShow = true;
+        // 模拟点击模态框中ViewUI的Modal组件
+        modal.$children[0].handleClickModal();
+        return;
+      }
+    }
+    const modalInfo: ModalInfo = {
+      url: "/heart/home/destop/AddShotcutModal.vue",
+      title: "添加快捷方式",
+      backgroundColor: Commons.getIconColor(),
+      footerHide: false,
+      resizable: false,
+      width: 400,
+      className: "select-menu-modal",
+      enabledFuscreen: false,
+      onOk(addShotcutModal: any) {
+        if (addShotcutModal.selectedModalInfo) {
+          // 将模态框信息与对应网格信息关联
+          addShotcutModal.selectedModalInfo.parentBoxId = parentBoxId;
+          // 添加快捷方式
+          (this as any).$store.commit(
+            "user/addDestopShotcut",
+            addShotcutModal.selectedModalInfo
+          );
+        }
+      }
+    };
+    this.addShotcutModalId = Commons.showModule(modalInfo);
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .destop-icon-container {
-  height: calc(100% - #{$footerHeight});
   display: flex;
+  height: calc(100vh - #{$footerHeight});
   flex-flow: column wrap;
   align-content: flex-start;
   padding: 5px;
+}
+
+.select-menu-modal {
+  .ivu-modal-body {
+    height: 350px !important;
+  }
 }
 </style>
