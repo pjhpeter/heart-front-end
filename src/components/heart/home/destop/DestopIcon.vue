@@ -45,7 +45,7 @@
  * 桌面快捷方式模块图标组件
  * @author 彭嘉辉
  */
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Emit } from "vue-property-decorator";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
 import { LOSS_MENU_COLOR } from "../../../../constants/heart/values/Global";
@@ -66,6 +66,12 @@ export default class DestopIcon extends Vue {
   })
   modalInfo!: ModalInfo;
 
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  isInGroup!: boolean;
+
   lossMenuColor: string = LOSS_MENU_COLOR;
 
   /**
@@ -76,7 +82,13 @@ export default class DestopIcon extends Vue {
     if (name === "open") {
       this.showModal();
     } else if (name === "remove") {
-      this.$store.commit("user/removeDestopShotcut", this.modalInfo);
+      if (this.isInGroup) {
+        // 在工作组模态框点的右键
+        this.onRemove();
+      } else {
+        // 在桌面点的右键
+        this.$store.commit("user/removeDestopShotcut", this.modalInfo);
+      }
     }
   }
 
@@ -85,6 +97,14 @@ export default class DestopIcon extends Vue {
    */
   private showModal() {
     Commons.showModule(this.modalInfo);
+  }
+
+  /**
+   * 触发功能组模态框的删除快捷方式事件
+   */
+  @Emit("on-remove")
+  private onRemove() {
+    return this.modalInfo;
   }
 }
 </script>

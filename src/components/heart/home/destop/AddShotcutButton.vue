@@ -9,7 +9,7 @@
  * 添加桌面快捷方式按钮
  * @author 彭嘉辉
  */
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
 import Commons from "../../../../utils/heart/Commons";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
 
@@ -17,6 +17,12 @@ import ModalInfo from "../../../../model/heart/global/ModalInfo";
   name: "add-shotcut-button"
 })
 export default class AddShotcutButton extends Vue {
+  // 功能组id
+  @Prop({
+    type: Object,
+    required: true
+  })
+  groupModalInfo!: ModalInfo;
   private addShotcutModalId?: number;
 
   /**
@@ -42,17 +48,22 @@ export default class AddShotcutButton extends Vue {
       width: 400,
       className: "select-menu-modal",
       enabledFuscreen: false,
-      onOk(addShotcutModal: any) {
-        if (addShotcutModal.selectedModalInfo) {
-          // 添加快捷方式
-          (this as any).$store.commit(
-            "user/addDestopShotcut",
-            addShotcutModal.selectedModalInfo
-          );
-        }
-      }
+      onOk: this.onOk
     };
     this.addShotcutModalId = Commons.showModule(modalInfo);
+  }
+
+  /**
+   * 点击确定按钮事件
+   * @param addShotcutModal 选中的模块信息
+   */
+  onOk(addShotcutModal: any): void {
+    if (addShotcutModal.selectedModalInfo) {
+      // 添加快捷方式当功能组
+      this.groupModalInfo.children.push(addShotcutModal.selectedModalInfo);
+      // 添加快捷方式
+      this.$store.commit("user/addDestopShotcut", this.groupModalInfo);
+    }
   }
 }
 </script>
@@ -67,7 +78,7 @@ export default class AddShotcutButton extends Vue {
   margin: 10px;
   cursor: pointer;
   .icon-add-shotcut {
-    color: rgba($color: white, $alpha: 0.9);
+    color: rgba($color: $info, $alpha: 0.6);
     font-size: 60px;
   }
 }

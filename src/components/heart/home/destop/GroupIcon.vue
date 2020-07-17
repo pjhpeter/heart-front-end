@@ -7,7 +7,11 @@
       @on-click="handleItemClick"
       @contextmenu.native.stop
     >
-      <div class="group-icon" :id="modalInfo.groupId">
+      <div
+        class="group-icon"
+        :id="modalInfo.groupId"
+        @dblclick="showGroupModal"
+      >
         <div class="group-content">
           <div class="icon">
             <template v-for="(child, index) in modalInfo.children">
@@ -53,6 +57,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Dropdown, DropdownMenu, DropdownItem, Input } from "view-design";
 import ModalInfo from "../../../../model/heart/global/ModalInfo";
+import Commons from "../../../../utils/heart/Commons";
 
 @Component({
   name: "group-icon",
@@ -102,6 +107,19 @@ export default class GroupIcon extends Vue {
       // 重命名结束，保存信息
       this.$store.commit("user/updateDestopShotcut", this.modalInfo);
     }
+  }
+
+  private showGroupModal(): void {
+    const modalInfo: ModalInfo = {
+      url: "/heart/home/destop/GroupModal.vue",
+      backgroundColor: Commons.getIconColor(),
+      title: this.modalInfo.title,
+      groupId: this.modalInfo.groupId,
+      data: this.modalInfo,
+      width: 400,
+      className: "group-modal-set-height"
+    };
+    Commons.showModule(modalInfo);
   }
 }
 </script>
@@ -169,6 +187,12 @@ export default class GroupIcon extends Vue {
 
 .delete-icon {
   color: $error;
+}
+
+.group-modal-set-height {
+  .ivu-modal-body {
+    height: 350px !important;
+  }
 }
 
 .fade-enter-active,

@@ -16,6 +16,13 @@ export default class ComponentLoader extends Vue {
     default: "/error/404/page"
   })
   url!: string;
+  @Prop({
+    type: Object,
+    default: () => {
+      return {};
+    }
+  })
+  data: any;
   componentName!: string;
 
   created(): void {

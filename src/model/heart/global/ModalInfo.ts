@@ -16,16 +16,30 @@ export default interface ModalInfo {
   children?: Array<ModalInfo>;
   // ----------------------------------------------//
 
-  // 模态框内渲染的组件路径，如果不是后端返回的模块入口路径，则必须以.vue结尾
-  // 如果是功能组快捷方式，url的值与groupId的值相等
+  /**
+   * 模态框内渲染的组件路径，如果不是后端返回的模块入口路径，则必须以.vue结尾
+   * 如果是功能组快捷方式，url的值与groupId的值相等
+   */
   url: string;
-  // 模块图标背景颜色
+  /**
+   * 模块图标背景颜色
+   */
   backgroundColor: string;
-  // 是否允许最大化
+  /**
+   * 是否允许最大化
+   */
   enabledFuscreen?: boolean;
-  // 是否可拉伸，默认可拉伸
+  /**
+   * 是否可拉伸，默认可拉伸
+   */
   resizable?: boolean;
-  // 模态框关闭时的回调函数
+  /**
+   * 传入子组件的数据，JSON格式
+   */
+  data?: any;
+  /**
+   * 模态框关闭时的回调函数
+   */
   onClose?: Function;
 
   /**

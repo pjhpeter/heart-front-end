@@ -54,7 +54,11 @@
           </div>
         </div>
       </template>
-      <component-loader :url="url" ref="componentLoader" />
+      <component-loader
+        :url="url"
+        ref="componentLoader"
+        :data="modalInfo.data"
+      />
     </Modal>
   </div>
 </template>
