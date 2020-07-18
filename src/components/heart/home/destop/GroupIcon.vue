@@ -109,6 +109,9 @@ export default class GroupIcon extends Vue {
     }
   }
 
+  /**
+   * 打开功能组模态框
+   */
   private showGroupModal(): void {
     const modalInfo: ModalInfo = {
       url: "/heart/home/destop/GroupModal.vue",

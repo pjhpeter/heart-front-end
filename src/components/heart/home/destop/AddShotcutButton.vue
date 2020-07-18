@@ -1,5 +1,5 @@
 <template>
-  <div class="add-shotcut-button" @click="showAddShotcutModal">
+  <div class="add-shotcut-button" @click.stop="showAddShotcutModal">
     <i class="iconfont icon-add-shotcut"></i>
   </div>
 </template>
@@ -60,7 +60,7 @@ export default class AddShotcutButton extends Vue {
   onOk(addShotcutModal: any): void {
     if (addShotcutModal.selectedModalInfo) {
       // 添加快捷方式当功能组
-      this.groupModalInfo.children.push(addShotcutModal.selectedModalInfo);
+      this.groupModalInfo!.children!.push(addShotcutModal.selectedModalInfo);
       // 添加快捷方式
       this.$store.commit("user/addDestopShotcut", this.groupModalInfo);
     }

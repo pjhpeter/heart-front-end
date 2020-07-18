@@ -35,7 +35,7 @@ export default class GroupModal extends Vue {
 
   created(): void {
     this.groupModalInfo = (this.$parent as any).data as ModalInfo;
-    this.children = this.groupModalInfo.children;
+    this.children = this.groupModalInfo.children!;
   }
 
   /**

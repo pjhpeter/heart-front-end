@@ -9,7 +9,7 @@
     >
       <div
         class="destop-icon"
-        @dblclick="showModal"
+        @dblclick.stop="showModal"
         :title="
           modalInfo.backgroundColor === lossMenuColor
             ? '快捷方式对应的菜单已经不存在，请删除'
