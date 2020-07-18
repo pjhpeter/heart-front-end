@@ -84,7 +84,14 @@ yarn serve
 | backgroundColor | **必须项**，图标的背景颜色 | string | 无 |
 | enabledFuscreen | 允许最大化 | boolean | true |
 | resizable | 允许拉伸 | boolean | true |
+| data | 传入子组件的数据，JSON格式 | any | 无 |
 | onClose | 模态框关闭时触发的回调函数，隐藏的时候不会触发，函数接收一个参数 | Function | 无 |
+
+> 如果在模态框中的组件获取传入的data值，需要从其父组件中获取，即：
+
+```ts
+(this.$parent as any).data
+```
 
 同时还支持ViewUI的Modal组件API中的一些属性，相关的属性都封装在ModalInfo.ts属性接口中。
 
@@ -102,6 +109,8 @@ export default interface ModalInfo {
   enabledFuscreen?: boolean;
   // 是否可拉伸，默认可拉伸
   resizable?: boolean;
+  // 传入子组件的数据，JSON格式
+  data?: any;
   // 模态框关闭时的回调函数
   onClose?: Function;
 
