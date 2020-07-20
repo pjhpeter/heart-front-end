@@ -21,6 +21,12 @@ heart-front-end是一个类Windows界面的前端项目，基于Vue 2.x + TypeSc
 yarn install
 ```
 
+> heart使用了image-webpack-loader做图片压缩优化，但由于网络原因，image-webpack-loader可能会卡住或者安装失败，这是需要用cnpm来单独安装image-webpack-loader
+
+```cmd
+cnpm install image-webpack-loader -D
+```
+
 ## 启动服务
 
 ```cmd

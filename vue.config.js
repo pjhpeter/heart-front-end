@@ -37,12 +37,12 @@ module.exports = {
     // 移除 preload 插件，避免加载多余的资源
     config.plugins.delete("preload-index");
     // 图片压缩
-    // config.module
-    //   .rule("images")
-    //   .use("image-webpack-loader")
-    //   .loader("image-webpack-loader")
-    //   .options({ bypassOnDebug: true })
-    //   .end();
+    config.module
+      .rule("images")
+      .use("image-webpack-loader")
+      .loader("image-webpack-loader")
+      .options({ bypassOnDebug: true })
+      .end();
   },
 
   pluginOptions: {
@@ -60,7 +60,7 @@ module.exports = {
     // 支持IE
     config.entry.app = ["babel-polyfill", "./src/main.ts"];
 
-    // 生成环境
+    // 生产环境
     if (process.env.NODE_ENV === "production") {
       //gzip压缩
       const productionGzipExtensions = ["html", "js", "css"];
@@ -82,7 +82,7 @@ module.exports = {
           cacheGroups: {
             //公用模块抽离
             common: {
-              chunks: "initial",
+              chunks: "all",
               minSize: 0, //大于0个字节
               minChunks: 2 //抽离公共代码时，这个代码块最小被引用的次数
             },
@@ -90,11 +90,21 @@ module.exports = {
             vendor: {
               priority: 1, //权重
               test: /node_modules/,
-              chunks: "initial",
+              chunks: "all",
               minSize: 0, //大于0个字节
               minChunks: 2 //在分割之前，这个代码块最小应该被引用的次数
+            },
+            styles: {
+              name: "styles",
+              test: /\.(sa|sc|c)ss$/,
+              chunks: "all",
+              enforce: true
             }
           }
+        },
+        // 优化持久化缓存
+        runtimeChunk: {
+          name: "manifest"
         }
       };
     }
