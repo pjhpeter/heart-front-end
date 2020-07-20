@@ -1,11 +1,11 @@
 <template>
   <div class="image-preference">
-    <img class="selected-image" :src="currentWallpaperUrl" alt />
+    <img class="selected-image" v-lazy="currentWallpaperUrl" alt />
     <p class="description-image">请选择背景图片</p>
     <div class="image-cards">
       <img
         class="image-card"
-        :src="image"
+        v-lazy="image"
         v-for="(image, index) in images"
         :key="index"
         @click="selectWallpaper(image)"

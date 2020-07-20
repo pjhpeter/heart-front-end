@@ -87,37 +87,41 @@ import UserAPI4Jeesit from "../../../api/heart/user/impl/UserAPI4Jeesite";
   }
 })
 export default class Lock extends Vue {
-  time = "";
-  day = "";
+  private time = "";
+  private day = "";
   // 显示在中间的用户名
-  diplayUsername = "";
+  private diplayUsername = "";
   // 是否显示登录表单
-  showLockImage = true;
+  private showLockImage = true;
   // 是否显示登录账号，使用其他用户登录时需要
-  showUsername = false;
+  private showUsername = false;
 
-  loginParams: LoginParams = {
+  private loginParams: LoginParams = {
     username: "",
     password: ""
   };
 
-  rules: object = {
+  private rules: object = {
     username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }]
   };
 
   // 锁屏样式
-  backgroundStyles: any = {
+  private backgroundStyles: any = {
     background: `url(${this.$store.getters["user/getLockImageUrl"]}) center / 100% 100% no-repeat`
   };
   // 毛玻璃效果样式
-  blurBackgroundStyles: any = {
+  private blurBackgroundStyles: any = {
     background: `url(${this.$store.getters["user/getLockImageUrl"]}) center / 100% 100% no-repeat fixed`
   };
 
   mounted(): void {
     this.now();
-    setInterval(this.now, 1000);
+    const timer: number = setInterval(this.now, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      // 销毁组件前清空计时器
+      clearInterval(timer);
+    });
     // 初始化
     const userInfo: UserInfo4Jeesite = this.$store.getters["user/getUser"];
     if (userInfo) {

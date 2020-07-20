@@ -8,7 +8,10 @@ export const mutations: MutationTree<MenuState> = {
    * @param state 菜单模块状态对象
    * @param menuTree 菜单树
    */
-  setMenuTree(state: MenuState, menuTree: Array<MenuInfo4Jeesite>): void {
+  setMenuTree(
+    state: MenuState,
+    menuTree: Readonly<Array<MenuInfo4Jeesite>>
+  ): void {
     state.menuTree = menuTree;
   }
 };

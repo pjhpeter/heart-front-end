@@ -1,6 +1,8 @@
 // 兼容IE
 import "babel-polyfill";
 import Vue from "vue";
+// 图片懒加载
+import VueLazyload from "vue-lazyload";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -11,6 +13,11 @@ import "./assets/heart/global/scss/index.scss";
 import "nprogress/nprogress.css";
 
 import "./promission";
+
+Vue.use(VueLazyload, {
+  loading: require("./assets/heart/global/images/image-loading.png"),
+  error: require("./assets/heart/global/images/image-error.png")
+});
 
 Vue.config.productionTip = process.env.NODE_ENV !== "production";
 

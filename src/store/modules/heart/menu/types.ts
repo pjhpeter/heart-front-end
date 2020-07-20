@@ -6,5 +6,5 @@ import MenuInfo4Jeesite from "@/model/heart/menu/MenuInfo4Jeesite";
  * @author 彭嘉辉
  */
 export interface MenuState {
-  menuTree: Array<MenuInfo4Jeesite>;
+  menuTree: Readonly<Array<MenuInfo4Jeesite>>;
 }

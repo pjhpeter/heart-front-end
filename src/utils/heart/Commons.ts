@@ -96,14 +96,18 @@ export default class Commons {
    * 获取菜单树
    * @returns 菜单树
    */
-  static async loadMenuTreeData(): Promise<Array<MenuInfo4Jeesite> | null> {
+  static async loadMenuTreeData(): Promise<Readonly<
+    Array<MenuInfo4Jeesite>
+  > | null> {
     let menuTree: Array<MenuInfo4Jeesite> = store.getters["menu/getMenuTree"];
     if (menuTree.length === 0) {
       // 如果状态数据中没有则向后端发请求获取
       const menuAPI: MenuAPI<MenuInfo4Jeesite> = new MenuAPI4Jeesite();
       menuTree = await menuAPI.fetchMenuTree();
     }
-    return menuTree;
+    // 菜单树是大型对象，且只用于展示，无需改变其中的值
+    // 所以设置未只读对象，避免Vue劫持setter和getter，提升性能
+    return Object.freeze(menuTree);
   }
 
   /**

@@ -9,7 +9,7 @@ export const getters: GetterTree<MenuState, RootState> = {
    * @param state 菜单状态信息
    * @returns 菜单树
    */
-  getMenuTree(state: MenuState): Array<MenuInfo4Jeesite> {
+  getMenuTree(state: MenuState): Readonly<Array<MenuInfo4Jeesite>> {
     if (state.menuTree) {
       return state.menuTree;
     }

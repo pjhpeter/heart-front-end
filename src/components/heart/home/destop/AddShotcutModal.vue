@@ -26,7 +26,7 @@ import { Menu } from "view-design";
 })
 export default class AddShotcutModal extends Vue {
   // 菜单树
-  menuTree: Array<MenuInfo4Jeesite> | null = [];
+  menuTree: Readonly<Array<MenuInfo4Jeesite>> | null = [];
 
   // 选中的菜单项对应信息
   selectedModalInfo: ModalInfo | undefined;

@@ -1,11 +1,11 @@
 <template>
   <div class="lock-image-preference">
-    <img class="selected-image" :src="currentLockImageUrl" alt />
+    <img class="selected-image" v-lazy="currentLockImageUrl" alt />
     <p class="description-image">请选择锁屏图片</p>
     <div class="image-cards">
       <img
         class="image-card"
-        :src="image"
+        v-lazy="image"
         v-for="(image, index) in images"
         :key="index"
         @click="selectLockImage(image)"

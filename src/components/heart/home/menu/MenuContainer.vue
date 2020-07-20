@@ -41,7 +41,7 @@ import { ModalInfoType } from "../../../../constants/heart/enum/ModalInfoType";
   }
 })
 export default class MenuContainer extends Vue {
-  menuTree: Array<MenuInfo4Jeesite> | null = [];
+  menuTree: Readonly<Array<MenuInfo4Jeesite>> | null = [];
 
   // 开始菜单背景样式，毛玻璃效果需要
   menuContainerBackgroundStyles: object = {

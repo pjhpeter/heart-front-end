@@ -36,6 +36,13 @@ module.exports = {
     config.plugins.delete("prefetch-index");
     // 移除 preload 插件，避免加载多余的资源
     config.plugins.delete("preload-index");
+    // 图片压缩
+    // config.module
+    //   .rule("images")
+    //   .use("image-webpack-loader")
+    //   .loader("image-webpack-loader")
+    //   .options({ bypassOnDebug: true })
+    //   .end();
   },
 
   pluginOptions: {

@@ -34,14 +34,18 @@ import { Badge } from "view-design";
   }
 })
 export default class IconGroup extends Vue {
-  time = "";
-  day = "";
+  private time = "";
+  private day = "";
   // 缓存已经打开的模态框对象集合，用于显示桌面后再次恢复显示
   private openedModalList: Array<any> = [];
 
   mounted(): void {
     this.now();
-    setInterval(this.now, 1000);
+    const timer: number = setInterval(this.now, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      // 销毁组件前清空计时器
+      clearInterval(timer);
+    });
   }
 
   /**
