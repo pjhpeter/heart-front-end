@@ -59,6 +59,15 @@ export default class AddShotcutButton extends Vue {
    */
   onOk(addShotcutModal: any): void {
     if (addShotcutModal.selectedModalInfo) {
+      const index: number = this.groupModalInfo!.children!.findIndex(
+        (child: ModalInfo) => {
+          return child.url === addShotcutModal.selectedModalInfo.url;
+        }
+      );
+      if (index > -1) {
+        // 快捷方式已经存在
+        return;
+      }
       // 添加快捷方式当功能组
       this.groupModalInfo!.children!.push(addShotcutModal.selectedModalInfo);
       // 添加快捷方式
