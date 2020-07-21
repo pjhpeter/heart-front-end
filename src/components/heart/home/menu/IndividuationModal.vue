@@ -7,13 +7,13 @@
         @on-select="showComponent"
         active-name="lock-image-preference"
       >
-        <MenuItem name="lock-image-preference">
-          <i class="iconfont icon-lock"></i>
-          锁屏
-        </MenuItem>
         <MenuItem name="image-preference">
           <i class="iconfont icon-image"></i>
           背景
+        </MenuItem>
+        <MenuItem name="lock-image-preference">
+          <i class="iconfont icon-lock"></i>
+          锁屏
         </MenuItem>
         <MenuItem name="theme">
           <i class="iconfont icon-theme"></i>
