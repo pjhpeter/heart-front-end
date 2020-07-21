@@ -5,7 +5,7 @@
         class="select-menu-tree"
         width="auto"
         @on-select="showComponent"
-        active-name="lock-image-preference"
+        active-name="image-preference"
       >
         <MenuItem name="image-preference">
           <i class="iconfont icon-image"></i>
@@ -52,7 +52,7 @@ import { Menu, MenuItem } from "view-design";
 })
 export default class Individuation extends Vue {
   // 当前显示的组件
-  private activeComponent = "lock-image-preference";
+  private activeComponent = "image-preference";
 
   // 点击左侧菜单显示对应组件
   private showComponent(name: string): void {

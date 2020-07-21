@@ -44,11 +44,19 @@ export default class MenuContainer extends Vue {
   menuTree: Readonly<Array<MenuInfo4Jeesite>> | null = [];
 
   // 开始菜单背景样式，毛玻璃效果需要
-  menuContainerBackgroundStyles: object = {
-    background: `url(${this.$store.getters["user/getWallpaperUrl"]}) center / cover no-repeat fixed`,
+  menuContainerBackgroundStyles: any = {
+    background: `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat fixed`,
     backgroundSize: "100% 100%"
   };
   async mounted() {
+    // 不加监听器不能实时切换壁纸，要刷新组件才能更换
+    this.$watch(
+      () => this.$store.getters["user/getWallpaperUrl"],
+      () => {
+        Vue.set(this, "backgroundStyles", {});
+        this.menuContainerBackgroundStyles.background = `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat fixed`;
+      }
+    );
     // 先从状态数据读取菜单树
     this.menuTree = await Commons.loadMenuTreeData();
     // 必须确保菜单树渲染结束
