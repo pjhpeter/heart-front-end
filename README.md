@@ -24,6 +24,9 @@ yarn install
 > heart使用了image-webpack-loader做图片压缩优化，但由于网络原因，image-webpack-loader可能会卡住或者安装失败，这是需要用cnpm来单独安装image-webpack-loader
 
 ```cmd
+# 没有装cnpm的要先安装
+npm install cnpm -g --registry=https://registry.npm.taobao.org
+
 cnpm install image-webpack-loader -D
 ```
 
