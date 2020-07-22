@@ -61,6 +61,7 @@ import Commons from "../../../utils/heart/Commons";
 import BaseModal from "../../../components/heart/commons/BaseModal.vue";
 import OpenedInfo from "../../../model/heart/global/OpenedInfo";
 import { Layout, Content, Sider, Footer } from "view-design";
+import MenuInfo4Jeesite from "../../../model/heart/menu/MenuInfo4Jeesite";
 
 // ts不识别require函数，必须要这样声明一下
 declare function require(img: string): string;
@@ -118,11 +119,15 @@ export default class Home extends Vue {
     this.showOrHideMenu();
     // menuUrl-menuName-menuIcon
     const menuInfoArr: Array<string> = menuInfo.split("-");
+    const menuInfo4Jeesite:
+      | MenuInfo4Jeesite
+      | undefined = Commons.findMenuByUrl(menuInfoArr[0]);
     // 打开一个模态框
     const modalInfo: ModalInfo = {
       url: menuInfoArr[0],
       title: menuInfoArr[1],
-      backgroundColor: menuInfoArr[2]
+      backgroundColor: menuInfoArr[2],
+      data: { permissions: menuInfo4Jeesite!.permissions }
     };
     Commons.showModule(modalInfo);
   }

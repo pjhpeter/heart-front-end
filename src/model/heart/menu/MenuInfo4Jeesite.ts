@@ -8,7 +8,14 @@ export default interface MenuInfo4Jeesite {
   menuColor?: string;
   menuUrl?: string;
   menuName?: string;
+  /**
+   * 组件地址
+   */
   component?: any;
   parent?: MenuInfo4Jeesite;
   children?: Array<MenuInfo4Jeesite>;
+  /**
+   * 对于模块内各请求的权限
+   */
+  permissions?: Array<string>;
 }

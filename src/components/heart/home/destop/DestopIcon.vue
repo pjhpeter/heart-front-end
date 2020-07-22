@@ -50,6 +50,7 @@ import ModalInfo from "../../../../model/heart/global/ModalInfo";
 import Commons from "../../../../utils/heart/Commons";
 import { LOSS_MENU_COLOR } from "../../../../constants/heart/values/Global";
 import { Dropdown, DropdownMenu, DropdownItem } from "view-design";
+import MenuInfo4Jeesite from "../../../../model/heart/menu/MenuInfo4Jeesite";
 
 @Component({
   name: "destop-icon",
@@ -96,6 +97,12 @@ export default class DestopIcon extends Vue {
    * 打开对应的模态框
    */
   private showModal() {
+    // 获取对应菜单信息
+    const menuInfo: MenuInfo4Jeesite | undefined = Commons.findMenuByUrl(
+      this.modalInfo.url
+    );
+    // 读取权限信息
+    this.modalInfo.data = { permissions: menuInfo!.permissions };
     Commons.showModule(this.modalInfo);
   }
 
