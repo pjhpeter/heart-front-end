@@ -103,6 +103,7 @@ export default function Request(
         }
         return originalMethod.call(this, response.data);
       } catch (error) {
+        console.error(error);
         if (failure) {
           if (params) {
             // 为了不影响方法参数逻辑，如果方法需要传入参数的话，响应数据则在传入参数的后一个参数
