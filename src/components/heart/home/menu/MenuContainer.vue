@@ -53,7 +53,7 @@ export default class MenuContainer extends Vue {
     this.$watch(
       () => this.$store.getters["user/getWallpaperUrl"],
       () => {
-        Vue.set(this, "backgroundStyles", {});
+        Vue.set(this, "menuContainerBackgroundStyles", {});
         this.menuContainerBackgroundStyles.background = `url(${this.$store.getters["user/getWallpaperUrl"]}) center / 100% 100% no-repeat fixed`;
       }
     );
