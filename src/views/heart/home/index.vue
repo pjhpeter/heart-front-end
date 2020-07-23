@@ -54,7 +54,6 @@
  */
 import { Vue, Component } from "vue-property-decorator";
 import { VueConstructor, VNode } from "vue";
-import { Md5 } from "md5-typescript";
 import { CombinedVueInstance, CreateElement } from "vue/types/vue";
 import ModalInfo from "../../../model/heart/global/ModalInfo";
 import Commons from "../../../utils/heart/Commons";
