@@ -200,13 +200,13 @@ export default class DestopIconContainer extends Vue {
   private showDropdownMenu(refString: string): void {
     Object.keys(this.$refs).forEach((key: string) => {
       // 隐藏其他菜单
-      if (key !== refString) (this.$refs as any)[key][0].visible = false;
+      if (key !== refString) (this.$refs as any)[key][0].currentVisible = false;
       // 显示当前菜单
-      else (this.$refs as any)[key][0].visible = true;
+      else (this.$refs as any)[key][0].currentVisible = true;
     });
     // 绑定点击其他地方隐藏菜单事件
     document.onmousedown = () => {
-      (this.$refs as any)[refString][0].visible = false;
+      (this.$refs as any)[refString][0].currentVisible = false;
     };
     document.onmouseup = () => {
       document.onmousedown = null;
