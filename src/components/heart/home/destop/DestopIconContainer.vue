@@ -1,10 +1,13 @@
 <template>
   <div class="destop-icon-container">
     <Dropdown
-      trigger="contextMenu"
+      trigger="custom"
+      :visible="false"
       v-for="index in cellTotalCount"
+      :ref="`dropdown-${index}`"
       :key="index"
       @on-click="menuItemClick"
+      @contextmenu.native="showDropdownMenu(`dropdown-${index}`)"
     >
       <div
         :id="`box-${index}`"
@@ -188,6 +191,27 @@ export default class DestopIconContainer extends Vue {
       this.destopIconConainerDom.offsetHeight / this.cellHeight
     );
     this.cellTotalCount = cellCountPerRow * rowCount;
+  }
+
+  /**
+   * 显示下拉菜单
+   * @param refString 下拉菜单标识
+   */
+  private showDropdownMenu(refString: string): void {
+    Object.keys(this.$refs).forEach((key: string) => {
+      // 隐藏其他菜单
+      if (key !== refString) (this.$refs as any)[key][0].visible = false;
+      // 显示当前菜单
+      else (this.$refs as any)[key][0].visible = true;
+    });
+    // 绑定点击其他地方隐藏菜单事件
+    document.onmousedown = () => {
+      (this.$refs as any)[refString][0].visible = false;
+    };
+    document.onmouseup = () => {
+      document.onmousedown = null;
+      document.onmouseup = null;
+    };
   }
 
   /**
