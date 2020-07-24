@@ -69,8 +69,7 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo4Jeesite> {
         menuName: menu.menuName,
         menuColor: menu.menuColor,
         menuUrl: isLeaf ? menuUrl : Math.random() + "",
-        // 动态加载组件，这里可以看出每个模块的入口组件必须放在views目录下，并且目录结构与menuUrl的值保持一致
-        component: isLeaf ? () => import(`@/views${menuUrl}`) : undefined,
+        permissions: isLeaf ? this.getPermissions(menu) : [],
         parent
       };
 
@@ -109,5 +108,21 @@ export default class MenuAPI4Jeesite implements MenuAPI<MenuInfo4Jeesite> {
     }
     // 没有url，肯定不是叶子
     return false;
+  }
+
+  /**
+   * 获取用户对当前叶子节点的访问权限
+   * @param menu 菜单信息对象 n
+   * @returns 访问权限字符串
+   */
+  private getPermissions(menu: any): Array<string> {
+    if (!menu.childList) return [];
+    const permissions: Array<string> = [];
+    menu.childList.forEach((child: any) => {
+      if (child.menuType === "2") {
+        permissions.push(child.permission);
+      }
+    });
+    return permissions;
   }
 }
