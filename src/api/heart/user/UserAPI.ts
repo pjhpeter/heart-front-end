@@ -25,4 +25,11 @@ export default interface UserAPI<T> {
    * @returns 用户信息对象
    */
   getUserInfo(requestParams?: object): T | null;
+
+  /**
+   * 修改密码
+   * @param requestParams 根据具体业务需要传递请求参数，可以不传，一般传递用户令牌，JSON格式对象
+   * @returns 是否修改成功
+   */
+  changePassword(requestParams?: object): boolean;
 }

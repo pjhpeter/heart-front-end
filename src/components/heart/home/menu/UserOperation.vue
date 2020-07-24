@@ -15,6 +15,12 @@
           <i class="iconfont icon-lock"></i>
           锁定
         </MenuItem>
+        <!-- ===================测试上传用====================== -->
+        <!-- <MenuItem name="upload">
+          <i class="iconfont icon-edit"></i>
+          上传
+        </MenuItem> -->
+        <!-- =====end============测试上传用=============end=========== -->
       </Menu>
       <Button class="logout-button" @click="logout">退出</Button>
     </div>
@@ -52,6 +58,10 @@ export default class UserOperation extends Vue {
   private avatarUrl: string = require("../../../../assets/heart/home/images/avatar.png");
   // 已打开的个性化模态框id
   private individuationModalId?: number;
+  // 已打开的修改密码模态框id
+  private changePasswordModalId?: number;
+  // 测试：已打开的上传组件的模态框id
+  // private uploadModalId?: number;
 
   /**
    * 点击操作项
@@ -61,13 +71,18 @@ export default class UserOperation extends Vue {
       // 切换壁纸
       this.showIndividuationModal();
     } else if (name === "editPassword") {
-      // TODO:修改密码
+      // 修改密码
+      this.showChangePasswordModal();
     } else if (name === "lock") {
       // 锁定
       this.$store.commit("globals/setLocked", true);
       // 清除token，防止重新登录时随便输入密码都正确
       this.$store.commit("user/setToken", "");
     }
+    /*  else if (name === "upload") {
+      // 上传组件测试
+      this.showUploadModal();
+    } */
   }
 
   /**
@@ -119,6 +134,70 @@ export default class UserOperation extends Vue {
       }
     });
   }
+
+  /**
+   * 打开修改密码模态框
+   */
+  private showChangePasswordModal(): void {
+    // 模拟点击最外层div，关闭开始菜单
+    document.getElementById("app")!.click();
+    // 判断修改密码模态框是否已经打开
+    if (this.changePasswordModalId) {
+      const modal: any = Commons.findModalById(this.changePasswordModalId);
+      if (modal) {
+        // 如果已经打开，则不再次打开，只是让其显示
+        modal.isShow = true;
+        // 模拟点击模态框中ViewUI的Modal组件
+        modal.$children[0].handleClickModal();
+        return;
+      }
+    }
+    const modalInfo: ModalInfo = {
+      url: "/heart/home/menu/changePasswordModal.vue",
+      backgroundColor: Commons.getIconColor(),
+      title: "修改密码",
+      width: 250,
+      className: "changePasswordM",
+      resizable: false,
+      enabledFuscreen: false,
+      footerHide: false,
+      onOk: function(component: any) {
+        component.submit();
+      }
+    };
+    this.changePasswordModalId = Commons.showModule(modalInfo);
+  }
+
+  /**
+   * 测试：打开上传组件模态框
+   */
+  /* private showUploadModal(): void {
+    // 模拟点击最外层div，关闭开始菜单
+    document.getElementById("app")!.click();
+    // 判断修改密码模态框是否已经打开
+    if (this.uploadModalId) {
+      const modal: any = Commons.findModalById(this.uploadModalId);
+      if (modal) {
+        // 如果已经打开，则不再次打开，只是让其显示
+        modal.isShow = true;
+        // 模拟点击模态框中ViewUI的Modal组件
+        modal.$children[0].handleClickModal();
+        return;
+      }
+    }
+    const modalInfo: ModalInfo = {
+      // url: "./UploadModal.vue",
+      url: "/heart/home/menu/UploadModal.vue",
+      backgroundColor: Commons.getIconColor(),
+      title: "上传组件",
+      width: 650,
+      className: "uploadModalM",
+      resizable: false,
+      enabledFuscreen: false,
+      footerHide: false,
+    };
+    this.uploadModalId = Commons.showModule(modalInfo);
+  } */
 }
 </script>
 
@@ -128,4 +207,14 @@ export default class UserOperation extends Vue {
     height: 500px !important;
   }
 }
+.changePasswordM {
+  .ivu-modal-body {
+    height: 210px !important;
+  }
+}
+/* .uploadModalM {
+  .ivu-modal-body {
+    height: 500px !important;
+  }
+} */
 </style>

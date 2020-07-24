@@ -4,6 +4,8 @@ import store from "@/store";
 import UserInfo4Jeesite from "@/model/heart/user/UserInfo4Jeesite";
 import Request from "@/decorator/heart/request/Request";
 import { RequestMethod, ParamMode } from "@/constants/heart/enum/RequestEnums";
+import ChangePasswordParams from "@/model/heart/user/changePasswordParams";
+import { Message } from "view-design";
 
 /**
  * 针对Jeesite后端接口的用户操作
@@ -72,5 +74,25 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo4Jeesite> {
       return data.user as UserInfo4Jeesite;
     }
     return null;
+  }
+
+  @Request(
+    "/sys/user/infoSavePwd",
+    RequestMethod.POST,
+    ParamMode.FORM_DATA,
+    (error: any) => false
+  )
+  changePassword(passwordParams: ChangePasswordParams, data?: any): boolean {
+    if (data.result == "true") {
+      const msg = data.message
+        ? data.message + "！请在3秒后重新登录！"
+        : "修改密码成功！请在3秒后重新登录！";
+      (Message as any).success({
+        content: msg,
+        duration: 3
+      });
+      return true;
+    }
+    return false;
   }
 }
