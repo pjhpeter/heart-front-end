@@ -9,10 +9,8 @@ $darkPrimary-purple: #6f5499;
     .heart-base-modal {
         .ivu-modal {
             .ivu-modal-content {
-
                 // 模态框头部
                 .ivu-modal-header {
-
                     // 标题
                     .title {
                         color: $title;
@@ -20,7 +18,6 @@ $darkPrimary-purple: #6f5499;
 
                     // 按钮组
                     .button-group {
-
                         // 按钮默认样式
                         .ivu-btn {
                             color: $content;
@@ -135,11 +132,8 @@ $darkPrimary-purple: #6f5499;
 
             // 开始菜单右侧用户操作区域
             .user-info {
-
                 .user-operation-box {
-
                     .user-operation {
-
                         .operations {
                             color: $content;
                             background-color: rgba($color: white, $alpha: 0);
@@ -156,7 +150,6 @@ $darkPrimary-purple: #6f5499;
 
                             .ivu-menu-item,
                             .ivu-menu-submenu-title {
-
                                 &:hover {
                                     background-color: rgba($color: $lightPrimary-purple, $alpha: 0.3);
                                     color: $title;
@@ -182,28 +175,21 @@ $darkPrimary-purple: #6f5499;
 
     // 锁定界面
     .lock {
-
         .login-form-box {
-
             .login-form-lock {
-
                 .form-content {
                     color: white;
 
                     .form-lock {
-
                         .ivu-input-suffix {
-
                             // 登录按钮
                             button {
-
                                 .icon-arrow-right {
                                     color: white;
                                 }
                             }
                         }
                     }
-
                 }
             }
         }
@@ -252,7 +238,6 @@ $darkPrimary-purple: #6f5499;
                 color: white;
             }
         }
-
     }
 
     // 404页面
@@ -378,14 +363,13 @@ $darkPrimary-purple: #6f5499;
 
     // 修改tree的默认样式
     .ivu-tree {
-
         .ivu-tree-title:hover {
-            background-color: rgba($color: $lightPrimary-purple, $alpha: .3);
+            background-color: rgba($color: $lightPrimary-purple, $alpha: 0.3);
         }
 
         .ivu-tree-title-selected,
         .ivu-tree-title-selected:hover {
-            background-color: rgba($color: $lightPrimary-purple, $alpha: .3);
+            background-color: rgba($color: $lightPrimary-purple, $alpha: 0.3);
         }
     }
 
@@ -411,6 +395,22 @@ $darkPrimary-purple: #6f5499;
             .ivu-tabs-ink-bar {
                 background-color: $primary-purple;
             }
+        }
+    }
+
+    // 修改Upload上传组件颜色
+    .ivu-upload {
+        .ivu-upload-drag {
+            border: 1px dashed #dcdee2;
+        }
+        .ivu-upload-drag:hover {
+            border: 1px dashed $darkPrimary-purple;
+        }
+        div i.ivu-icon-ios-cloud-upload {
+            color: $primary-purple;
+        }
+        div p {
+            color: $content;
         }
     }
 

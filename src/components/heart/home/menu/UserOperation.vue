@@ -16,10 +16,10 @@
           锁定
         </MenuItem>
         <!-- ===================测试上传用====================== -->
-        <!-- <MenuItem name="upload">
+        <MenuItem name="upload">
           <i class="iconfont icon-edit"></i>
           上传
-        </MenuItem> -->
+        </MenuItem>
         <!-- =====end============测试上传用=============end=========== -->
       </Menu>
       <Button class="logout-button" @click="logout">退出</Button>
@@ -61,7 +61,7 @@ export default class UserOperation extends Vue {
   // 已打开的修改密码模态框id
   private changePasswordModalId?: number;
   // 测试：已打开的上传组件的模态框id
-  // private uploadModalId?: number;
+  private uploadModalId?: number;
 
   /**
    * 点击操作项
@@ -78,11 +78,10 @@ export default class UserOperation extends Vue {
       this.$store.commit("globals/setLocked", true);
       // 清除token，防止重新登录时随便输入密码都正确
       this.$store.commit("user/setToken", "");
-    }
-    /*  else if (name === "upload") {
+    } else if (name === "upload") {
       // 上传组件测试
       this.showUploadModal();
-    } */
+    }
   }
 
   /**
@@ -171,7 +170,7 @@ export default class UserOperation extends Vue {
   /**
    * 测试：打开上传组件模态框
    */
-  /* private showUploadModal(): void {
+  private showUploadModal(): void {
     // 模拟点击最外层div，关闭开始菜单
     document.getElementById("app")!.click();
     // 判断修改密码模态框是否已经打开
@@ -194,10 +193,10 @@ export default class UserOperation extends Vue {
       className: "uploadModalM",
       resizable: false,
       enabledFuscreen: false,
-      footerHide: false,
+      footerHide: false
     };
     this.uploadModalId = Commons.showModule(modalInfo);
-  } */
+  }
 }
 </script>
 
@@ -212,9 +211,9 @@ export default class UserOperation extends Vue {
     height: 210px !important;
   }
 }
-/* .uploadModalM {
+.uploadModalM {
   .ivu-modal-body {
     height: 500px !important;
   }
-} */
+}
 </style>

@@ -69,12 +69,6 @@ function responseInterceptor4Jeestie(
     router.push("/login");
   }
   const resp = response;
-  if (resp.data.result != undefined && resp.data.result !== "true") {
-    (Message as any).warning(
-      resp.data.message ? resp.data.message : "系统异常"
-    );
-    return Promise.reject(response);
-  }
   return response;
 }
 

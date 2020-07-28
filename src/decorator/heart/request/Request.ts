@@ -1,6 +1,6 @@
 import { RequestMethod, ParamMode } from "@/constants/heart/enum/RequestEnums";
 import RequestFactory from "@/utils/heart/RequestFactory";
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 
 /**
  * JSON转FormData
@@ -71,7 +71,8 @@ export default function Request(
   url: string,
   method?: RequestMethod,
   paramMode?: ParamMode,
-  failure?: Function
+  failure?: Function,
+  onProgress?: any
 ) {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
     const request: AxiosInstance = RequestFactory.getRequestInstance();
@@ -92,11 +93,25 @@ export default function Request(
         }
       }
       try {
-        const response: AxiosResponse<any> = await request({
+        const config: AxiosRequestConfig = {
           url,
           method: method ? method : RequestMethod.GET,
-          data: requestParams
-        });
+          onUploadProgress: (event: ProgressEvent) => {
+            if (onProgress && typeof onProgress === "function") {
+              if (params) {
+                onProgress(params, event);
+              } else {
+                onProgress(event);
+              }
+            }
+          }
+        };
+        if (method === RequestMethod.GET) {
+          config.params = requestParams;
+        } else {
+          config.data = requestParams;
+        }
+        const response: AxiosResponse<any> = await request(config);
         if (params) {
           // 为了不影响方法参数逻辑，如果方法需要传入参数的话，响应数据则在传入参数的后一个参数
           return originalMethod.call(this, params, response.data);
