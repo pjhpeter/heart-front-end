@@ -135,7 +135,7 @@ export default class UploadModal extends Vue {
         2否，进行截取前面10m
         3.读取的fun，先判断是否还是同一文件（用大小判断），不一致就返回不行
     */
-    const $this: any = this as any;
+    const $this = this as any;
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.onload = function(e) {
@@ -202,11 +202,11 @@ export default class UploadModal extends Vue {
       // (Message as any).success(msg);
       /* 如若这里“秒传成功”，则需要把传回来的值附上去，至少要有fileId,下载时需要用 */
       putFile.fileUploadId = data.fileUpload.id;
-      if (data.fileEntity) {
-        putFile.fileSizeFormat = data.fileEntity.fileSizeFormat
-          ? data.fileEntity.fileSizeFormat
-          : this.dofileSizeParse(data.fileEntity.fileSize);
-        putFile.fileEntityId = data.fileEntityId;
+      if (data.fileUpload.fileEntity) {
+        putFile.fileSizeFormat = this.dofileSizeParse(
+          data.fileUpload.fileEntity.fileSize
+        );
+        putFile.fileEntityId = data.fileUpload.fileEntity.id;
       }
       return true;
     }
@@ -216,6 +216,7 @@ export default class UploadModal extends Vue {
     putFile.uploadType = "all";
     putFile.chunkSize = 10485760;
     putFile.__ajax = "json";
+
     return false;
   }
   @Request(
@@ -237,6 +238,14 @@ export default class UploadModal extends Vue {
     if (data.result === "true") {
       putFile.uploadStatus = UploadStatus.SUCCESS;
       // 之前上传过此文件，直接成功了
+      putFile.fileUploadId = data.fileUpload.id;
+      if (data.fileUpload.fileEntity) {
+        putFile.fileSizeFormat = this.dofileSizeParse(
+          data.fileUpload.fileEntity.fileSize
+        );
+        putFile.fileEntityId = data.fileUpload.fileEntity.id;
+      }
+
       const msg: string = data.message ? data.message : "上传成功!";
       // (Message as any).success(msg);
       return;
@@ -254,14 +263,14 @@ export default class UploadModal extends Vue {
   }
   @Request("/file/fileList/", RequestMethod.GET)
   getFileList(params: any, data?: any) {
-    const $this: any = this as any;
+    const $this = this as any;
     data.forEach(item => {
       const temp: UploadInfo4Jeeste = {};
       temp.bizKey = item.bizKey;
       temp.bizType = item.bizType;
       temp.uploadType = "all"; /* 一般是all */
-      temp.imageMaxWidth = item.bizKey;
-      temp.imageMaxHeight = item.bizKey;
+      // temp.imageMaxWidth = item.bizKey; /* =================== */
+      // temp.imageMaxHeight = item.bizKey;/* ================ */
       temp.chunkSize = 10485760; /* 这个好像是jeesite写死的10485760 */
       temp.__ajax = "json"; /* 写死json,这个是jeesite的规定 */
       temp.fileName = item.fileName;
@@ -275,9 +284,7 @@ export default class UploadModal extends Vue {
         temp.fileMd5 = item.fileEntity.fileMd5;
         temp.fileEntityId = item.fileEntity.id;
         temp.size = item.fileEntity.fileSize;
-        temp.fileSizeFormat = item.fileEntity.fileSizeFormat
-          ? item.fileEntity.fileSizeFormat
-          : $this.dofileSizeParse(item.fileEntity.fileSize);
+        temp.fileSizeFormat = $this.dofileSizeParse(item.fileEntity.fileSize);
       }
       temp.uploadStatus = this.uploadStatusParse.success;
       temp.progress = 100;
@@ -322,9 +329,11 @@ export default class UploadModal extends Vue {
   mounted() {
     this.$nextTick(() => {
       /* 给组件各元素高度,模块高度从父组件获得,上传组件是115固定，算fileList高度 */
-      const uploadBoxH = document.querySelector(".uploadBox").offsetHeight;
+      const uploadBoxH = (document.querySelector(".uploadBox") as any)
+        .offsetHeight;
       const fileListBoxH = this.uploadModalHeight - uploadBoxH;
-      document.querySelector(".fileListBox").style.height = fileListBoxH + "px";
+      (document.querySelector(".fileListBox") as any).style.height =
+        fileListBoxH + "px";
     });
   }
 }
