@@ -74,6 +74,7 @@ import OpenedInfo from "../../../model/heart/global/OpenedInfo";
 import ModalInfo from "../../../model/heart/global/ModalInfo";
 import { Modal, Button } from "view-design";
 import { VNode } from "vue";
+import Commons from "../../../utils/heart/Commons";
 
 @Component({
   components: {
@@ -296,7 +297,24 @@ export default class BaseModal extends Vue {
    * 触发桌面底部栏显示
    */
   private showFooter(): void {
-    this.$store.commit("globals/setShowedFooter", true);
+    // 获取当前已打开的模块信息
+    const openedList: Array<OpenedInfo> = this.$store.getters[
+      "globals/getOpenedList"
+    ];
+    // 判断是否所有打开的模态框都处于非最大化状态
+    const hasNotFullscreen: boolean = openedList.every(
+      (openedInfo: OpenedInfo) => {
+        const model: any = Commons.findModalById(openedInfo.id);
+        if (model) {
+          return !model.modalInfo.fullscreen;
+        }
+        return true;
+      }
+    );
+    // 如果还有其他模态框处于最大化则仍然不显示桌面底部栏
+    if (hasNotFullscreen) {
+      this.$store.commit("globals/setShowedFooter", true);
+    }
   }
 
   /**
