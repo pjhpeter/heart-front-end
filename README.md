@@ -304,7 +304,8 @@ this.addShotcutModalId = Commons.showModule(modalInfo);
 | url    | **必须项**，请求地址 | string   | 无  |
 | method | 请求方式，使用RequestMethod枚举赋值 | RequestMethod | RequestMethod.GET |
 | paramMode    | 请求参数传递模式,request payload或者form data，使用ParamMode枚举赋值 | ParamMode | ParamMode.REQUEST_PAYLOAD |
-| failure    | 请求失败时的回调函数 | Function   | 无  |
+| failure    | 请求失败时的回调函数 | Function 或者 string，如果是string，会调用类中同名的方法   | 无  |
+| onProgress | 文件上传进度事件 | Function 或者 string，如果是string，会调用类中同名的方法 | 无 |
 
 使用例子：
 ```ts

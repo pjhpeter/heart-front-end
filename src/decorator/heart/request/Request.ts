@@ -65,14 +65,15 @@ function buildFormData(param: any): FormData {
  * @param method 请求方法，默认是get，建议使用RequestMethod枚举赋值
  * @param paramMode 请求参数传递模式,request payload或者form data，默认是request payload，建议使用ParamMode枚举赋值
  * @param failure 请求失败回调函数，接收错误信息error
+ * @param onProgress 文件上传进度事件
  * @author 彭嘉辉
  */
 export default function Request(
   url: string,
   method?: RequestMethod,
   paramMode?: ParamMode,
-  failure?: Function,
-  onProgress?: any
+  failure?: Function | string,
+  onProgress?: Function | string
 ) {
   return (target: any, methodName: string, descriptor: PropertyDescriptor) => {
     const request: AxiosInstance = RequestFactory.getRequestInstance();
@@ -96,15 +97,19 @@ export default function Request(
         const config: AxiosRequestConfig = {
           url,
           method: method ? method : RequestMethod.GET,
-          onUploadProgress: (event: ProgressEvent) => {
-            if (onProgress && typeof onProgress === "function") {
-              if (params) {
-                onProgress(params, event);
-              } else {
-                onProgress(event);
+          onUploadProgress: onProgress
+            ? (event: ProgressEvent) => {
+                if (params) {
+                  typeof onProgress === "function"
+                    ? onProgress.call(this, params, event)
+                    : target[onProgress].call(this, params, event);
+                } else {
+                  typeof onProgress === "function"
+                    ? onProgress.call(this, event)
+                    : target[onProgress].call(this, event);
+                }
               }
-            }
-          }
+            : undefined
         };
         if (method === RequestMethod.GET) {
           config.params = requestParams;
@@ -122,9 +127,13 @@ export default function Request(
         if (failure) {
           if (params) {
             // 为了不影响方法参数逻辑，如果方法需要传入参数的话，响应数据则在传入参数的后一个参数
-            return failure.call(this, params, error);
+            return typeof failure === "function"
+              ? failure.call(this, params, error)
+              : target[failure].call(this, params, error);
           }
-          return failure.call(this, error);
+          return typeof failure === "function"
+            ? failure.call(this, error)
+            : target[failure].call(this, error);
         }
         throw error;
       }

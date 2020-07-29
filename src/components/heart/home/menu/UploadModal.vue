@@ -36,8 +36,7 @@
                 ? 'wrong'
                 : 'success'
             "
-          >
-          </Progress>
+          ></Progress>
         </Col>
         <Col span="4">
           <Button
@@ -227,11 +226,7 @@ export default class UploadModal extends Vue {
       putFile.uploadStatus = UploadStatus.FAILURE;
       return;
     },
-    (putFile: UploadInfo4Jeeste, event: ProgressEvent) => {
-      /* 第四个参数(返回两个参数1文件2事件)，返回来axios的事件是进度内容，在这里进行进度条的赋值 */
-      const number = Math.floor((event.loaded / event.total) * 100);
-      putFile.progress = number;
-    }
+    "onProgress"
   )
   uploadFile(putFile: UploadInfo4Jeeste, data?: any): void {
     /* 标记请求修饰器，发请求，传参数在第一个参数，只能是一个对象，所有参数包含在里面 */
@@ -316,6 +311,13 @@ export default class UploadModal extends Vue {
       return false;
     });
   }
+
+  onProgress(putFile: UploadInfo4Jeeste, event: ProgressEvent) {
+    /* 第四个参数(返回两个参数1文件2事件)，返回来axios的事件是进度内容，在这里进行进度条的赋值 */
+    const number = Math.floor((event.loaded / event.total) * 100);
+    putFile.progress = number;
+  }
+
   created() {
     const bizKey = this.bizKey;
     const bizType = this.bizType;
