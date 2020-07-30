@@ -16,10 +16,10 @@
     </Upload>
     <div class="fileListBox" ref="fileListBox">
       <Row v-for="item in fileList" :key="item.fileUploadId">
-        <Col span="11">
+        <Col span="10">
           <p class="textEllipsis" v-text="item.fileName"></p>
         </Col>
-        <Col span="2">
+        <Col span="3">
           <p
             class="textEllipsis"
             v-text="item.fileSizeFormat ? item.fileSizeFormat : '未知'"
@@ -66,15 +66,15 @@
 import { Vue, Component, Watch, Prop } from "vue-property-decorator";
 import { Upload, Button, Icon, Message, Progress, Row, Col } from "view-design";
 import { Md5 } from "md5-typescript";
-import Request from "../../../../decorator/heart/request/Request";
+import Request from "../../../decorator/heart/request/Request";
 import {
   RequestMethod,
   ParamMode
-} from "../../../../constants/heart/enum/RequestEnums";
-import Upload4Jeesite from "../../../../model/heart/global/Upload4Jeesite";
-import UploadInfo4Jeeste from "../../../../model/heart/global/Upload4Jeesite";
-import { UploadStatus } from "../../../../constants/heart/enum/UploadStatus";
-import RequestFactory from "../../../../utils/heart/RequestFactory";
+} from "../../../constants/heart/enum/RequestEnums";
+import Upload4Jeesite from "../../../model/heart/global/Upload4Jeesite";
+import UploadInfo4Jeeste from "../../../model/heart/global/Upload4Jeesite";
+import { UploadStatus } from "../../../constants/heart/enum/UploadStatus";
+import RequestFactory from "../../../utils/heart/RequestFactory";
 
 @Component({
   name: "upload-modal",
@@ -89,18 +89,21 @@ import RequestFactory from "../../../../utils/heart/RequestFactory";
   }
 })
 export default class UploadModal extends Vue {
-  /* ！！！！！！！！注：bizKey、bizTYpe、uploadModalHeight这仨值需要从父组件传过来 ！！！！！！！！！！！！*/
-  // @Prop()
-  // bizKey: string = "1286542627743350784";
-  // @Prop()
-  // bizType: string = "sbosEduFile";
-  // @Prop()
-  // uploadModalHeight?: number = 115;
-  /* 这里的bizKey和bizType是省局项目sbos-普通涉密人员-日常管理-保密教育培训-grid广州市-测试两下 */
-  bizKey = "1250591760890486784";
-  bizType = "sbosEduFile";
-  uploadModalHeight?: number = 460;
-
+  @Prop({
+    type: String,
+    required: true
+  })
+  bizKey!: string;
+  @Prop({
+    type: String,
+    required: true
+  })
+  bizType!: string;
+  @Prop({
+    type: Number,
+    default: 115
+  })
+  uploadModalHeight?: number;
   fileList: Array<UploadInfo4Jeeste> = [];
   file: any = null;
   file4BinarySize: number = 10 * 1024 * 1024;
@@ -198,7 +201,6 @@ export default class UploadModal extends Vue {
       putFile.uploadStatus = UploadStatus.SUCCESS;
       putFile.progress = 100;
       const msg: string = data.message ? data.message : "上传成功!";
-      // (Message as any).success(msg);
       /* 如若这里“秒传成功”，则需要把传回来的值附上去，至少要有fileId,下载时需要用 */
       putFile.fileUploadId = data.fileUpload.id;
       if (data.fileUpload.fileEntity) {
@@ -242,7 +244,6 @@ export default class UploadModal extends Vue {
       }
 
       const msg: string = data.message ? data.message : "上传成功!";
-      // (Message as any).success(msg);
       return;
     }
     putFile.uploadStatus = UploadStatus.FAILURE;
@@ -250,7 +251,7 @@ export default class UploadModal extends Vue {
   }
   // 下载文件
   download(id: string, data: UploadInfo4Jeeste) {
-    // 这里应该传一个id
+    // 这里传一个id
     const url = `${RequestFactory.buildBaseURL()}/file/download/${id}?__sid=${
       this["$store"].getters["user/getToken"]
     }`;
@@ -264,8 +265,6 @@ export default class UploadModal extends Vue {
       temp.bizKey = item.bizKey;
       temp.bizType = item.bizType;
       temp.uploadType = "all"; /* 一般是all */
-      // temp.imageMaxWidth = item.bizKey; /* =================== */
-      // temp.imageMaxHeight = item.bizKey;/* ================ */
       temp.chunkSize = 10485760; /* 这个好像是jeesite写死的10485760 */
       temp.__ajax = "json"; /* 写死json,这个是jeesite的规定 */
       temp.fileName = item.fileName;
@@ -292,7 +291,7 @@ export default class UploadModal extends Vue {
     const GB = 1024 * MB;
     let fileSizeParse = "";
     if (val < KB) {
-      fileSizeParse = `${val}B`;
+      fileSizeParse = `${val.toFixed(1)}B`;
     } else if (val >= KB && val < MB) {
       fileSizeParse = `${(val / KB).toFixed(1)}KB`;
     } else if (val >= MB && val < GB) {
@@ -321,8 +320,6 @@ export default class UploadModal extends Vue {
   created() {
     const bizKey = this.bizKey;
     const bizType = this.bizType;
-    // let bizKey = "1248884448124768256";
-    // let bizType = "fileUploadCheckFile";
     const params = { bizKey, bizType };
     // 每次都清空fileList
     this.fileList = [];
