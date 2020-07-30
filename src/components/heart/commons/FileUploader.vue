@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-modal">
+  <div class="file-uploader">
     <Upload
       multiple
       type="drag"
@@ -77,7 +77,7 @@ import { UploadStatus } from "../../../constants/heart/enum/UploadStatus";
 import RequestFactory from "../../../utils/heart/RequestFactory";
 
 @Component({
-  name: "upload-modal",
+  name: "file-uploader",
   components: {
     Upload,
     Button,
@@ -88,7 +88,7 @@ import RequestFactory from "../../../utils/heart/RequestFactory";
     Col
   }
 })
-export default class UploadModal extends Vue {
+export default class FileUploader extends Vue {
   @Prop({
     type: String,
     required: true
@@ -338,7 +338,7 @@ export default class UploadModal extends Vue {
 }
 </script>
 <style lang="scss">
-.upload-modal {
+.file-uploader {
   .Upload {
     position: fixed;
     top: 0;

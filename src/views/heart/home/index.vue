@@ -35,7 +35,7 @@
     <menu-container @menu-click="showModule" v-show="showedMenu" />
     <!-- 模态框组件占位标签 -->
     <component
-      :is="BaseModal"
+      :is="'base-modal'"
       v-for="openedInfo in $store.getters['globals/getOpenedList']"
       :key="openedInfo.id"
       :title="openedInfo.title"
@@ -80,11 +80,11 @@ declare function require(img: string): string;
     Layout,
     Content,
     Sider,
-    Footer
+    Footer,
+    BaseModal
   }
 })
 export default class Home extends Vue {
-  BaseModal: any = BaseModal;
   // 开始菜单是否显示
   showedMenu = false;
   // 壁纸样式

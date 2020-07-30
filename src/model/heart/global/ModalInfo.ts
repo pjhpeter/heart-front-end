@@ -10,7 +10,7 @@ export default interface ModalInfo {
   parentBoxId?: string;
   // 快捷方式类型
   type?: ModalInfoType;
-  // 功能组id
+  // 功能组id，功能组图标才会有值
   groupId?: number;
   // 功能组中的模块列表，功能组图标才会有值
   children?: Array<ModalInfo>;

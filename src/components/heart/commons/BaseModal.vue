@@ -77,6 +77,7 @@ import { VNode } from "vue";
 import Commons from "../../../utils/heart/Commons";
 
 @Component({
+  name: "base-modal",
   components: {
     ComponentLoader,
     Modal,
