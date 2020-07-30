@@ -137,14 +137,14 @@ export default class UploadModal extends Vue {
     const $this = this as any;
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
-      fileReader.onload = function(e) {
+      fileReader.onload = function(e: any) {
         // 文件读取成功完成时触发
         // file.size === e.target.length
         // 判断是否同一个文件（是否未改动）---长度
         // 这里e的结果只能是10m或者是文件的大小
         if (
           file.size !== (e.target.result as any).length &&
-          $this.file4BinarySize !== (e.target.result as any).length
+          $this.file4BinarySize !== (e as any).target.result.length
         ) {
           (Message as any).warning("读取文件出错");
           reject(null);
@@ -249,17 +249,17 @@ export default class UploadModal extends Vue {
     return;
   }
   // 下载文件
-  download(id, data: UploadInfo4Jeeste) {
+  download(id: string, data: UploadInfo4Jeeste) {
     // 这里应该传一个id
     const url = `${RequestFactory.buildBaseURL()}/file/download/${id}?__sid=${
-      this.$store.getters["user/getToken"]
+      this["$store"].getters["user/getToken"]
     }`;
     window.open(url);
   }
   @Request("/file/fileList/", RequestMethod.GET)
   getFileList(params: any, data?: any) {
     const $this = this as any;
-    data.forEach(item => {
+    data.forEach((item: any) => {
       const temp: UploadInfo4Jeeste = {};
       temp.bizKey = item.bizKey;
       temp.bizType = item.bizType;
@@ -333,7 +333,7 @@ export default class UploadModal extends Vue {
       /* 给组件各元素高度,模块高度从父组件获得,上传组件是115固定，算fileList高度 */
       const uploadBoxH = (document.querySelector(".uploadBox") as any)
         .offsetHeight;
-      const fileListBoxH = this.uploadModalHeight - uploadBoxH;
+      const fileListBoxH = this.uploadModalHeight! - uploadBoxH;
       (document.querySelector(".fileListBox") as any).style.height =
         fileListBoxH + "px";
     });

@@ -45,7 +45,7 @@ import UserAPI4Jeesit from "../../../../api/heart/user/impl/UserAPI4Jeesite";
 import UserAPI from "../../../../api/heart/user/UserAPI";
 import UserInfo4Jeesite from "../../../../model/heart/user/UserInfo4Jeesite";
 import { Message, FormItem, Form, Input, Button } from "view-design";
-import { callbackify } from "util";
+// import { callbackify } from "util";
 @Component({
   name: "changePassword-modal",
   components: {
@@ -96,7 +96,7 @@ export default class ChangePasswordModal extends Vue {
       ?**4.新密码修改后，与验证密码不同，需要在新密码调用验证面密码，验证新与验证密码是否相同
       (this.$refs.passwordForm as any).validateField("confirmPassword");
   */
-  private checkNewPassword(rule, value, callback) {
+  private checkNewPassword(rule: any, value: any, callback: any) {
     const con = value == this.psdItem.oldPassword && this.psdItem.oldPassword;
     if (con) {
       callback(new Error("新密码与旧密码相同！"));
@@ -114,7 +114,7 @@ export default class ChangePasswordModal extends Vue {
   //   }
   //   callback();
   // }
-  private checkConfirmPassword(rule, value, callback) {
+  private checkConfirmPassword(rule: any, value: any, callback: any) {
     let con;
     if (callback) {
       con = value !== this.psdItem.newPassword && this.psdItem.newPassword;
@@ -128,14 +128,15 @@ export default class ChangePasswordModal extends Vue {
   private submit(): void {
     (this.$refs.passwordForm as any).validate(async (valid: boolean) => {
       if (valid) {
-        const userAPI: UserAPI<UserAPI4Jeesit> = new UserAPI4Jeesit();
+        const userAPI: UserAPI<UserInfo4Jeesite> = new UserAPI4Jeesit();
         if (await userAPI.changePassword(this.psdItem)) {
           /* 这里返回boolean，true或false，false有捕捉，不用管
             定时器3秒后退出系统logout()，回到登录页this.$router.push("/login");
           */
           setTimeout(() => {
             userAPI.logout();
-            this.$router.push("/login");
+            /* REMIND: 原本写 this.$router 报错，上网查改为 this["$router"]，就不报错了 */
+            this["$router"].push("/login");
           }, 3000);
         }
       }
