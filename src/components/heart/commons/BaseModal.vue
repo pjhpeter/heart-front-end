@@ -102,8 +102,8 @@ import Commons from "../../../utils/heart/Commons";
             // 保证模态框已经存在
             baseModal.modalOriginHeight = modalContent.style.height;
             baseModal.modalBodyOriginHeight = modalBody.style.height;
-            modalContent.onmousemove = baseModal.setCursor(modalContent);
-            modalContent.onmousedown = baseModal.resize(modalContent);
+            modalContent.onmousemove = baseModal.setCursor();
+            modalContent.onmousedown = baseModal.resize();
           });
         }
       }
