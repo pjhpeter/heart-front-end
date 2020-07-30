@@ -10,6 +10,8 @@
     "test:coverage": "vue-cli-service test:unit --coverage"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^3.2.2",
+    "@types/tinymce": "^4.5.24",
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
     "class-transformer": "^0.2.3",
@@ -17,6 +19,7 @@
     "md5-typescript": "^1.0.5",
     "nprogress": "^0.2.0",
     "screenfull": "^5.0.2",
+    "tinymce": "^5.4.1",
     "view-design": "^4.2.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
