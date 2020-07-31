@@ -7,5 +7,6 @@ export enum LocalStorageKeys {
   USER_TOKEN = "user.token",
   USER_INFO = "user.info",
   DESTOP_SHOTCUT = "user.destop-shotcut",
-  LOCKED = "locked"
+  LOCKED = "locked",
+  REMRMBER_ME = "remember-me"
 }

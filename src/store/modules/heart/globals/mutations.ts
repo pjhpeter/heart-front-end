@@ -76,5 +76,15 @@ export const mutations: MutationTree<GlobalState> = {
    */
   setFullscreen(state: GlobalState, fullscreen: boolean): void {
     state.fullscreen = fullscreen;
+  },
+
+  /**
+   * 记住登录账号
+   * @param state 全局状态数据
+   * @param rememberMe 记住当前用户登录账号
+   */
+  setRememberMe(state: GlobalState, rememberMe: string): void {
+    state.rememberMe = rememberMe;
+    Auth.setRememberMe(rememberMe);
   }
 };

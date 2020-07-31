@@ -24,7 +24,7 @@
             <i class="iconfont icon-password" slot="prefix"></i>
           </Input>
         </FormItem>
-        <Checkbox class="remember-me" v-model="rememberMe">记住我</Checkbox>
+        <Checkbox class="remember-me" v-model="isRememberMe">记住我</Checkbox>
         <FormItem>
           <Button type="primary" @click="login" class="login-button"
             >登录</Button
@@ -55,10 +55,10 @@ import UserInfo4Jeesite from "../../../model/heart/user/UserInfo4Jeesite";
   }
 })
 export default class LoginForm extends Vue {
-  rememberMe = false;
+  isRememberMe = false;
 
   loginParams: LoginParams = {
-    username: "",
+    username: this.$store.getters["globals/getRememberMe"],
     password: ""
   };
 
@@ -72,6 +72,12 @@ export default class LoginForm extends Vue {
       if (valid) {
         const userAPI: UserAPI<UserInfo4Jeesite> = new UserAPI4Jeesit();
         if (await userAPI.login(this.loginParams)) {
+          if (this.isRememberMe) {
+            this.$store.commit(
+              "globals/setRememberMe",
+              this.loginParams.username
+            );
+          }
           this.$router.push("/");
         }
       }

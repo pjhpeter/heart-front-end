@@ -11,7 +11,8 @@ export const state: GlobalState = {
   openedList: [],
   showedFooter: true,
   locked: Auth.getLocked(),
-  fullscreen: false
+  fullscreen: false,
+  rememberMe: Auth.getRememberMe()
 };
 
 export const globals: Module<GlobalState, RootState> = {

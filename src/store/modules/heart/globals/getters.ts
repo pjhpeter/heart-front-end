@@ -38,5 +38,14 @@ export const getters: GetterTree<GlobalState, RootState> = {
    */
   isFullscreen(state: GlobalState): boolean {
     return state.fullscreen;
+  },
+
+  /**
+   * 记住我
+   * @param state 全局状态数据
+   * @returns 当前记住的用户登录账号
+   */
+  getRememberMe(state: GlobalState): string {
+    return state.rememberMe;
   }
 };

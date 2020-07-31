@@ -13,4 +13,6 @@ export interface GlobalState {
   locked: boolean;
   // 浏览器是否全屏
   fullscreen: boolean;
+  // 记住我
+  rememberMe: string;
 }

@@ -106,4 +106,21 @@ export default class Auth {
     // 默认不锁定
     return false;
   }
+
+  /**
+   * 记住我
+   * @param rememberMe 当前要记住的用户登录账号
+   */
+  static setRememberMe(rememberMe: string): void {
+    localStorage.setItem(LocalStorageKeys.REMRMBER_ME, rememberMe);
+  }
+
+  /**
+   * 获取记住我
+   * @return 当前记住的用户登录账号
+   */
+  static getRememberMe(): string {
+    const rememberMe = localStorage.getItem(LocalStorageKeys.REMRMBER_ME);
+    return rememberMe ? rememberMe : "";
+  }
 }
