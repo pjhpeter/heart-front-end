@@ -11,7 +11,8 @@ describe("测试mutations", () => {
       openedList: [],
       showedFooter: true,
       locked: true,
-      fullscreen: true
+      fullscreen: true,
+      rememberMe: "string"
     };
     openedInfo = {
       id: 1,
@@ -67,7 +68,8 @@ describe("测试getters", () => {
       ],
       showedFooter: true,
       locked: true,
-      fullscreen: true
+      fullscreen: true,
+      rememberMe: "string"
     };
   });
 
