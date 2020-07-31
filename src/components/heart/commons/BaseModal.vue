@@ -6,7 +6,9 @@
       :mask-closable="modalInfo.maskClosable"
       :loading="modalInfo.loading"
       :scrollable="modalInfo.scrollable"
-      :fullscreen="modalInfo.fullscreen"
+      :fullscreen="
+        modalInfo.fullscreen === undefined ? modalInfo.fullscreean : false
+      "
       :draggable="modalInfo.draggable"
       :mask="modalInfo.mask"
       :ok-text="modalInfo.okText"
@@ -159,6 +161,7 @@ export default class BaseModal extends Vue {
 
   created() {
     // 初始化必要的参数
+    this.modalInfo.fullscreen = false;
     if (!this.modalInfo.draggable) {
       this.modalInfo.draggable = true;
     }
@@ -192,6 +195,29 @@ export default class BaseModal extends Vue {
         return false;
       }
     );
+  }
+
+  /**
+   * 显示模态框
+   */
+  show(): void {
+    this.isShow = true;
+    // 获取当前已打开的模块信息
+    const openedList: Array<OpenedInfo> = this.$store.getters[
+      "globals/getOpenedList"
+    ];
+    // 判断是否所有打开的模态框都处于非最大化状态
+    const hasFullscreen: boolean = openedList.some((openedInfo: OpenedInfo) => {
+      const model: any = Commons.findModalById(openedInfo.id);
+      if (model) {
+        return model.modalInfo.fullscreen;
+      }
+      return false;
+    });
+    // 如果还有其他模态框处于最大化则仍然不显示桌面底部栏
+    if (hasFullscreen) {
+      this.$store.commit("globals/setShowedFooter", false);
+    }
   }
 
   /**
@@ -241,8 +267,8 @@ export default class BaseModal extends Vue {
    */
   close(): void {
     this.isShow = false;
-    this.showFooter();
     this.removeOpened();
+    this.showFooter();
     if (this.modalInfo.onClose) {
       // 触发自定义关闭处理方法，将模态框内渲染的组件对象传回
       this.modalInfo.onClose.call(
@@ -305,9 +331,11 @@ export default class BaseModal extends Vue {
     // 判断是否所有打开的模态框都处于非最大化状态
     const hasNotFullscreen: boolean = openedList.every(
       (openedInfo: OpenedInfo) => {
-        const model: any = Commons.findModalById(openedInfo.id);
-        if (model) {
-          return !model.modalInfo.fullscreen;
+        if (openedInfo.id !== this._id) {
+          const model: any = Commons.findModalById(openedInfo.id);
+          if (model) {
+            return !model.modalInfo.fullscreen;
+          }
         }
         return true;
       }

@@ -86,7 +86,7 @@ export default class IconGroup extends Vue {
     if (!hasOpened) {
       // 如果没有模态框打开过，说明是在显示桌面的情况下点击“显示桌面按钮”，将曾经显示的模态框全部还原成显示状态
       this.openedModalList.forEach((modal: any) => {
-        modal.isShow = true;
+        modal.show();
       });
       // 清空缓存
       this.openedModalList = [];
