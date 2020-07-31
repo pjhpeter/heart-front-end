@@ -109,9 +109,9 @@ export default class DestopIconContainer extends Vue {
   private groupType: ModalInfoType = ModalInfoType.GROUP;
 
   mounted() {
-    this.destopIconConainerDom = document.getElementsByClassName(
-      "destop-icon-container"
-    )[0];
+    this.destopIconConainerDom = document.querySelector(
+      ".destop-icon-container"
+    );
 
     // 计算桌面网格数量
     this.buildGrid();

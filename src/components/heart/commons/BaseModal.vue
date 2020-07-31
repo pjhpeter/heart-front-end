@@ -388,7 +388,7 @@ export default class BaseModal extends Vue {
       // 正在拉伸直接返回，不能影响方向
       if (this.resizing) return;
       // 获取模态框的位置
-      const box: any = this.modalContent.getBoundingClientRect();
+      const box: DOMRect = this.modalContent.getBoundingClientRect();
       const left: number = box.left;
       const top: number = box.top;
       // 鼠标位置

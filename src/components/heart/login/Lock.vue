@@ -158,7 +158,6 @@ export default class Lock extends Vue {
    * 登录
    */
   private login(): void {
-    // TODO:按回车登录，不知道为什么一直不行
     (this.$refs["loginFormLock"] as any).validate(async (valid: boolean) => {
       if (valid) {
         const userAPI: UserAPI<UserInfo4Jeesite> = new UserAPI4Jeesit();

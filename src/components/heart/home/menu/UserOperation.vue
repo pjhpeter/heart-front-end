@@ -49,7 +49,7 @@ declare function require(img: string): string;
 })
 export default class UserOperation extends Vue {
   // 用户头像路径
-  private avatarUrl: string = require("../../../../assets/heart/home/images/avatar.png");
+  private avatarUrl: string = this.$store.getters["user/getUser"].avatarUrl;
   // 已打开的个性化模态框id
   private individuationModalId?: number;
   // 已打开的修改密码模态框id
