@@ -13,5 +13,12 @@ export const mutations: MutationTree<MenuState> = {
     menuTree: Readonly<Array<MenuInfo4Jeesite>>
   ): void {
     state.menuTree = menuTree;
+  },
+  /**
+   *
+   * @param state 菜单模块状态对象
+   */
+  removeMenuTree(state: MenuState): void {
+    state.menuTree = [];
   }
 };

@@ -53,6 +53,8 @@ export default class UserAPI4Jeesit implements UserAPI<UserInfo4Jeesite> {
       store.commit("user/clearUserState");
       // 清空打开模块信息
       store.commit("globals/clearOpenedInfoList");
+      // 清空menuTree菜单
+      store.commit("menu/removeMenuTree");
       return true;
     }
     return false;
