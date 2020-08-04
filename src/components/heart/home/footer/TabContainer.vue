@@ -73,7 +73,7 @@ export default class TabContainer extends Vue {
     // 判断标签对应的模态框是否隐藏
     if (!openedInfo.modal.isShow) {
       // 隐藏则显示
-      Vue.set(openedInfo.modal, "isShow", true);
+      openedInfo.modal.show();
     }
 
     // 模拟点击模态框操作，使其至于最顶层，查看源代码发现的

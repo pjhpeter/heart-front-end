@@ -50,6 +50,7 @@ export default interface ModalInfo {
   loading?: boolean;
   scrollable?: boolean;
   draggable?: boolean;
+  fullscreen?: boolean;
   mask?: boolean;
   okText?: string;
   cancelText?: string;
