@@ -58,7 +58,6 @@ export default class InboxTable extends Vue {
       }
     };
     Commons.showModule(modalInfo);
-    console.log("row", row);
   }
   columns: Array<any> = [
     {

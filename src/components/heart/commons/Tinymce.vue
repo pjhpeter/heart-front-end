@@ -29,8 +29,6 @@ import "tinymce/plugins/hr";
 import "tinymce/plugins/paste";
 import "tinymce/icons/default/icons";
 
-console.log(tinymce);
-
 @Component({
   name: "TinymceEditer",
   components: { Editor }
